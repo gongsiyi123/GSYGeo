@@ -1,0 +1,43 @@
+﻿<Window x:Class="GSYGeo.NewProject"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GSYGeo"
+        mc:Ignorable="d"
+        Title="新建项目" Height="210" Width="350" WindowStyle="ToolWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.CommandBindings>
+        <CommandBinding Command="Save" Executed="CommandBindingSave_Executed" CanExecute="CommandBindingSave_CanExecute"/>
+    </Window.CommandBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="项目名称：" Margin="5"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="所在省份：" Margin="5"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="所在县市：" Margin="5"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Name="ProjectNameTextBox" Margin="5"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="ProjectProvinceTextBox" Margin="5"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="ProjectCityTextBox" Margin="5"/>
+        <Button Grid.Row="3" Grid.Column="1" Name="ProjectLayerSettingButton" Content="项目划分岩土层设置" Margin="5" Click="ProjectLayerSettingButton_Click"/>
+        <Button Grid.Row="4" Grid.Column="1" Name="ProjectCompanySettingButton" Content="项目公司信息设置" Margin="5" Click="ProjectCompanySettingButton_Click"/>
+        <Grid Grid.Row="5" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Name="CommitProjectSetting" Content="确定" Margin="5" Command="Save"/>
+            <Button Grid.Column="2" Name="CancelProjectSetting" Content="取消" Margin="5" Click="CancelProjectSetting_Click"/>
+        </Grid>
+    </Grid>
+</Window>

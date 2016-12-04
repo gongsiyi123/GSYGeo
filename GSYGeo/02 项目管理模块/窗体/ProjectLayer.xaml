@@ -1,0 +1,44 @@
+﻿<Window x:Class="GSYGeo.ProjectLayer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GSYGeo"
+        mc:Ignorable="d"
+        Title="项目岩土分层设置" Height="300" Width="450" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" Name="LayerListDataGrid" Margin="5" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SelectionMode="Single" CanUserResizeRows="False" IsReadOnly="True" MouseDown="LayerListDataGrid_MouseDown">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="分层编号" Width="auto" Binding="{Binding Path=numberList}"/>
+                <DataGridTextColumn Header="岩土名称" Width="auto" Binding="{Binding Path=nameList}"/>
+                <DataGridTextColumn Header="年代成因" Width="auto" Binding="{Binding Path=geoList}"/>
+                <DataGridTextColumn Header="地质描述" Width="*" Binding="{Binding Path=descriptionList}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Name="AddLayerButton" Content="添加" Margin="5" Click="AddLayerButton_Click"/>
+            <Button Grid.Column="1" Name="EditLayerButton" Content="编辑" Margin="5" IsEnabled="{Binding ElementName=LayerListDataGrid,Path=SelectedItems.Count}" Click="EditLayerButton_Click"/>
+            <Button Grid.Column="2" Name="DeleteLayerButton" Content="删除" Margin="5" IsEnabled="{Binding ElementName=LayerListDataGrid,Path=SelectedItems.Count}" Click="DeleteLayerButton_Click"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Name="CommitButton" Content="确定" Margin="5" Click="CommitButton_Click"/>
+            <Button Grid.Column="2" Name="CancelButton" Content="取消" Margin="5" Click="CancelButton_Click"/>
+        </Grid>
+    </Grid>
+</Window>
