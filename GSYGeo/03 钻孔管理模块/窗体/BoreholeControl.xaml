@@ -1,0 +1,210 @@
+﻿<UserControl x:Class="GSYGeo.BoreholeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GSYGeo"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="800" BorderBrush="Gray" BorderThickness="0,1,1,1">
+    <Control.Resources>
+        <local:BoolToStringConverter x:Key="BooleanToStringSample" FalseValue="原状样" TrueValue="扰动样"/>
+    </Control.Resources>
+    <Control.CommandBindings>
+        <CommandBinding Command="Save" Executed="CommandBindingSave_Executed" CanExecute="CommandBindingSave_CanExecute"/>
+    </Control.CommandBindings>
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="Gray" BorderThickness="0,0,1,0">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Width="auto">
+                        <Expander Header="基本信息" Width="auto" Margin="5" IsExpanded="True">
+                            <Expander.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="钻孔编号：" Margin="5" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="孔口高程(m)：" Margin="5" HorizontalAlignment="Right"/>
+                                    <TextBox Grid.Row="0" Grid.Column="1" Name="ZKNameTextBox" Margin="5" MinWidth="100" TextChanged="ZKNameTextBox_TextChanged"/>
+                                    <TextBox Grid.Row="1" Grid.Column="1" Name="ZKAltitudeTextBox" Margin="5" MinWidth="100" TextChanged="ZKAltitudeTextBox_TextChanged"/>
+                                </Grid>
+                            </Expander.Content>
+                        </Expander>
+                        <Expander Header="其他信息" Width="auto" Margin="5" IsExpanded="True">
+                            <Expander.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="X坐标：" Margin="5" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Y坐标：" Margin="5" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="初见水位(m)：" Margin="5" HorizontalAlignment="Right"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="稳定水位(m)：" Margin="5" HorizontalAlignment="Right"/>
+                                    <TextBox Grid.Row="0" Grid.Column="1" Name="AxisXTextBox" Margin="5" MinWidth="100" TextChanged="AxisXTextBox_TextChanged"/>
+                                    <TextBox Grid.Row="1" Grid.Column="1" Name="AxisYTextBox" Margin="5" MinWidth="100" TextChanged="AxisYTextBox_TextChanged"/>
+                                    <TextBox Grid.Row="2" Grid.Column="1" Name="InitialWaterLevelTextBox" Margin="5" MinWidth="100" TextChanged="InitialWaterLevelTextBox_TextChanged"/>
+                                    <TextBox Grid.Row="3" Grid.Column="1" Name="StableWaterLevelTextBox" Margin="5" MinWidth="100" TextChanged="StableWaterLevelTextBox_TextChanged"/>
+                                </Grid>
+                            </Expander.Content>
+                        </Expander>
+                        <Expander Header="钻孔分层" Margin="5" Width="auto" IsExpanded="True">
+                            <Expander.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="1" Name="AddLayerButton" Content="添加" Margin="5" Click="AddLayerButton_Click"/>
+                                        <Button Grid.Column="2" Name="EditLayerButton" Content="编辑" Margin="5" IsEnabled="{Binding ElementName=LayerListDataGrid,Path=SelectedItems.Count}" Click="EditLayerButton_Click"/>
+                                        <Button Grid.Column="3" Name="DeleteLayerButton" Content="删除" Margin="5" IsEnabled="{Binding ElementName=LayerListDataGrid,Path=SelectedItems.Count}" Click="DeleteLayerButton_Click"/>
+                                    </Grid>
+                                    <DataGrid Grid.Row="1" Name="LayerListDataGrid" Margin="5" MinWidth="225" MinHeight="50" MaxWidth="300" Height="auto" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SelectionMode="Single" CanUserResizeRows="False" IsReadOnly="True">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="分层编号" Width="auto" Binding="{Binding Path=numberList}"/>
+                                            <DataGridTextColumn Header="岩土名称" Width="auto" Binding="{Binding Path=nameList}"/>
+                                            <DataGridTextColumn Header="年代成因" Width="auto" Binding="{Binding Path=geoList}"/>
+                                            <DataGridTextColumn Header="层底深度" Width="auto" Binding="{Binding Path=depthList}"/>
+                                            <DataGridTextColumn Header="地质描述" Width="auto" Binding="{Binding Path=descriptionList}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </Expander.Content>
+                        </Expander>
+                        <Expander Header="钻孔取样" Margin="5" Width="auto" IsExpanded="True">
+                            <Expander.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="1" Name="AddSampleButton" Content="添加" Margin="5" Click="AddSampleButton_Click"/>
+                                        <Button Grid.Column="2" Name="EditSampleButton" Content="编辑" Margin="5" IsEnabled="{Binding ElementName=SampleListDataGrid,Path=SelectedItems.Count}" Click="EditSampleButton_Click"/>
+                                        <Button Grid.Column="3" Name="DeleteSampleButton" Content="删除" Margin="5" IsEnabled="{Binding ElementName=SampleListDataGrid,Path=SelectedItems.Count}" Click="DeleteSampleButton_Click"/>
+                                    </Grid>
+                                    <DataGrid Grid.Row="1" Name="SampleListDataGrid" Margin="5" MinWidth="225" MinHeight="50" Height="auto" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SelectionMode="Single" CanUserResizeRows="False" IsReadOnly="True">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="取样编号" Width="auto" Binding="{Binding Path=numberList}"/>
+                                            <DataGridTextColumn Header="取样深度" Width="auto" Binding="{Binding Path=depthList}"/>
+                                            <DataGridTextColumn Header="取样类型" Width="auto" Binding="{Binding Path=isDisturbedList,Converter={StaticResource BooleanToStringSample}}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </Expander.Content>
+                        </Expander>
+                        <Expander Header="标贯/动探试验" Margin="5" Width="auto" IsExpanded="True">
+                            <Expander.Content>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Grid.Column="1" Name="AddNTestButton" Content="添加" Margin="5" Click="AddNTestButton_Click"/>
+                                        <Button Grid.Column="2" Name="EditNTestButton" Content="编辑" Margin="5" IsEnabled="{Binding ElementName=NTestListDataGrid,Path=SelectedItems.Count}" Click="EditNTestButton_Click"/>
+                                        <Button Grid.Column="3" Name="DeleteNTestButton" Content="删除" Margin="5" IsEnabled="{Binding ElementName=NTestListDataGrid,Path=SelectedItems.Count}" Click="DeleteNTestButton_Click"/>
+                                    </Grid>
+                                    <DataGrid Grid.Row="1" Name="NTestListDataGrid" Margin="5" MinWidth="225" MinHeight="50" Height="auto" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SelectionMode="Single" CanUserResizeRows="False" IsReadOnly="True">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="试验编号" Width="auto" Binding="{Binding Path=numberList}"/>
+                                            <DataGridTextColumn Header="试验深度" Width="auto" Binding="{Binding Path=depthList}"/>
+                                            <DataGridTextColumn Header="试验击数" Width="auto" Binding="{Binding Path=valueList}"/>
+                                            <DataGridTextColumn Header="试验类型" Width="auto" Binding="{Binding Path=typeList}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </Grid>
+                            </Expander.Content>
+                        </Expander>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+            <Border Grid.Row="1" MinWidth="300" Background="LightGray" BorderBrush="Gray" BorderThickness="0,1,1,1">
+                <Grid Grid.Row="1" Margin="0,5,3,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Name="IsChangedTextBlock" Text="新建钻孔" Foreground="Red" Margin="5"/>
+                    <Button Grid.Column="2" Name="DeleteZkButton" Content="删除此钻孔" FontWeight="Bold" Margin="5" Click="DeleteZkButton_Click"/>
+                    <Button Grid.Column="3" Name="SaveZkButton" Content="保存更改" FontWeight="Bold" Margin="5" Command="Save"/>
+                </Grid>
+            </Border>
+        </Grid>
+        <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <StackPanel Name="ZkDrawerStackPanel" Width="auto" HorizontalAlignment="Center">
+                <TextBlock Text="简易钻孔柱状图" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="5"/>
+                <Canvas Name="ZkCanvas" Width="400" MinWidth="400" Height="550" MinHeight="550" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </ScrollViewer>
+        <Border Grid.Column="2" BorderBrush="Gray" BorderThickness="1,0,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="钻孔图片" HorizontalAlignment="Center" Margin="5" FontWeight="Bold" FontSize="20"/>
+                <Image Grid.Row="1" Margin="5"/>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Name="LastPictureButton" Content="上一张" Margin="5"/>
+                    <Button Grid.Column="1" Name="NextPictureButton" Content="下一站" Margin="5"/>
+                    <Button Grid.Column="2" Name="RotatePictureButton" Content="旋转" Margin="5"/>
+                    <Button Grid.Column="3" Name="OpenPictureButton" Content="打开原图" Margin="5"/>
+                    <Button Grid.Column="4" Name="AddPictureButton" Content="添加图片" Margin="5"/>
+                    <Button Grid.Column="5" Name="OpenPictureFolderButton" Content="打开文件夹" Margin="5"/>
+                </Grid>
+            </Grid>
+        </Border>
+        
+    </Grid>
+</UserControl>

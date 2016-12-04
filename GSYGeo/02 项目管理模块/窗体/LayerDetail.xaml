@@ -1,0 +1,42 @@
+﻿<Window x:Class="GSYGeo.LayerDetail"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GSYGeo"
+        mc:Ignorable="d"
+        Title="添加分层" Height="300" Width="300" WindowStartupLocation="CenterScreen">
+    <Window.CommandBindings>
+        <CommandBinding Command="Save" Executed="CommandBindingSave_Executed" CanExecute="CommandBindingSave_CanExecute"/>
+    </Window.CommandBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="分层编号：" Margin="5"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="岩土名称：" Margin="5"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="年代成因：" Margin="5"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="地质描述：" Margin="5"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Name="LayerNumberTextBox" Margin="5"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="LayerNameTextBox" Margin="5"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" Name="LayerGeoComboBox" Margin="5"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Name="LayerDescriptionTextBox" Margin="5" TextWrapping="Wrap"/>
+        <Grid Grid.Row="4" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Name="CommitButton" Content="确定" Margin="5" Command="Save" IsDefault="True"/>
+            <Button Grid.Column="2" Name="CancelButton" Content="取消" Margin="5" Click="CancelButton_Click"/>
+        </Grid>
+    </Grid>
+</Window>
