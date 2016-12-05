@@ -68,6 +68,7 @@
     </Compile>
     <Compile Include="0 通用类\ProgramPath.cs" />
     <Compile Include="03 钻孔管理模块\类\ZkNTest.cs" />
+    <Compile Include="0 通用类\DtOperation.cs" />
     <Compile Include="10 帮助模块\窗体\UpdateLog.xaml.cs">
       <DependentUpon>UpdateLog.xaml</DependentUpon>
     </Compile>
@@ -86,6 +87,7 @@
     <Compile Include="05 室内试验-常规试验模块\窗体\RoutineSoilTestControl.xaml.cs">
       <DependentUpon>RoutineSoilTestControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="05 室内试验-常规试验模块\类\RoutineSoilTestDataBase.cs" />
     <Page Include="01 设置模块\窗体\EditPeople.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -99,6 +101,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="04 原位测试-静力触探模块\窗体\CPTControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="10 帮助模块\窗体\FeedBack.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -125,6 +131,9 @@
       <DependentUpon>CPTControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="04 原位测试-静力触探模块\类\CPTDataBase.cs" />
+    <Compile Include="10 帮助模块\窗体\FeedBack.xaml.cs">
+      <DependentUpon>FeedBack.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

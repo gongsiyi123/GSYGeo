@@ -37,18 +37,12 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="筛选" Margin="5,6,2,2"/>
-            <ComboBox Grid.Column="1" Name="SelectByZkComboBox" Margin="5" MinWidth="80" SelectionChanged="SelectByZkComboBox_SelectionChanged"/>
-            <ComboBox Grid.Column="2" Name="SelectByLayerComboBox" Margin="5" MinWidth="80" SelectionChanged="SelectByLayerComboBox_SelectionChanged"/>
-            <Button Grid.Column="4" Name="EditButton" Content="编辑" Margin="5" Click="EditButton_Click"/>
-            <Button Grid.Column="5" Name="SaveButton" Content="保存" Margin="5" Click="SaveButton_Click"/>
-            <Button Grid.Column="6" Name="ClearButton" Content="清空" Margin="5"/>
+            <Button Grid.Column="0" Name="SelectButton" Content="筛选" Margin="5"/>
+            <Button Grid.Column="1" Name="ClearButton" Content="清空" Margin="5"/>
+            <Button Grid.Column="3" Name="SaveButton" Content="保存" Margin="5" Click="SaveButton_Click"/>
         </Grid>
     </Grid>
 </UserControl>

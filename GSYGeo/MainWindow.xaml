@@ -90,6 +90,7 @@
             <MenuItem Header="帮助" Name="HelpMenu">
                 <MenuItem Header="使用帮助" Name="UsingHelpMenu"/>
                 <MenuItem Header="更新日志" Name="UpdateLogMenu" Click="UpdateLogMenu_Click"/>
+                <MenuItem Header="用户反馈" Name="FeedBackMenu" Click="FeedBackMenu_Click"/>
                 <MenuItem Header="关于" Name="AboutMenu"/>
             </MenuItem>
         </Menu>

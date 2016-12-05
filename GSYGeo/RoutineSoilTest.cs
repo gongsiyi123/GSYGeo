@@ -13,11 +13,10 @@ namespace GSYGeo
         public RoutineSoilTest() { }
 
         // 带参数的构造函数
-        public RoutineSoilTest(string _zkNumber,double _sampleDepth,string _sampleLayer,double _waterLevel,double _density,double _specificGravity,double _voidRatio,double _saturation,double _liquidLimit,double _plasticLimit,double _plasticIndex,double _liquidityIndex,double _compressibility,double _modulus,double _frictionAngle,double _cohesion,double _permeability)
+        public RoutineSoilTest(string _zkNumber,double _sampleDepth,double _waterLevel,double _density,double _specificGravity,double _voidRatio,double _saturation,double _liquidLimit,double _plasticLimit,double _plasticIndex,double _liquidityIndex,double _compressibility,double _modulus,double _frictionAngle,double _cohesion,double _permeability)
         {
             zkNumber = _zkNumber;
             sampleDepth = _sampleDepth;
-            sampleLayer = _sampleLayer;
             waterLevel = _waterLevel;
             density = _density;
             specificGravity = _specificGravity;
@@ -39,9 +38,6 @@ namespace GSYGeo
 
         // 属性，取样深度
         public double sampleDepth { get; set; }
-
-        // 属性，取样所属分层
-        public string sampleLayer { get; set; }
          
         // 属性，含水量
         public double waterLevel { get; set; }

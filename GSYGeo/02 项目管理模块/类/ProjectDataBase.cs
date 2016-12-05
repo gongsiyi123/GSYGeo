@@ -65,9 +65,10 @@ namespace GSYGeo
                 new SQLiteCommand(sql, conn).ExecuteNonQuery();
             }
 
-            // 创建钻孔数据表
+            // 创建必要数据表
             BoreholeDataBase.Initial(_projectName);
             CPTDataBase.Initial(_projectName);
+            RoutineSoilTestDataBase.Initial(_projectName);
         }
 
         // 向项目信息表中添加 岩土分层

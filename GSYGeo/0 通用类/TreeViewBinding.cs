@@ -38,6 +38,20 @@ namespace GSYGeo
             }
         }
 
+        // 方法，重置导航树为初始结构
+        public void RefreshTreeItem()
+        {
+            // 清除所有节点
+            treeItem.Clear();
+
+            // 初始化导航树，添加一级节点
+            treeItem = new ObservableCollection<TreeViewItem>();
+            treeItem.Add(new TreeViewItem { Header = "基本信息", Margin = new System.Windows.Thickness(0, 5, 0, 0) });
+            treeItem.Add(new TreeViewItem { Header = "钻孔" });
+            treeItem.Add(new TreeViewItem { Header = "原位测试" });
+            treeItem.Add(new TreeViewItem { Header = "室内试验" });
+        }
+
         // 方法，重置钻孔列表
         public void ReSetZkItem(string _projectName)
         {

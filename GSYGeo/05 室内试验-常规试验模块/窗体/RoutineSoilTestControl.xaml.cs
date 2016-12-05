@@ -29,21 +29,7 @@ namespace GSYGeo
         #endregion
 
         #region 构造函数
-
-        // 无参数的构造函数
-        public RoutineSoilTestControl()
-        {
-            InitializeComponent();
-
-            // 初始化DataTable
-            InitialTestDataListDataGrid();
-
-            // 定义各输入框的工具提示
-
-            // 设置绑定
-            this.RoutineSoilTestDataGrid.DataContext = dtRST;
-        }
-
+        
         // 带参数的构造函数
         public RoutineSoilTestControl(List<RoutineSoilTest> _rsts)
         {
@@ -51,11 +37,46 @@ namespace GSYGeo
 
             // 初始化DataTable
             InitialTestDataListDataGrid(_rsts);
-
-            // 定义各输入框的工具提示
-
+            
             // 设置绑定
             this.RoutineSoilTestDataGrid.DataContext = dtRST;
+
+            // 计算取样所属分层并刷新数据库
+            CalcuSampleLayer();
+            Save();
+
+            // 填充筛选ComboBox
+            InitialComboBox();
+
+            // 设置按钮可用性
+            SetButtonEnable(false);
+        }
+
+        #endregion
+
+        #region 公用函数
+
+        // 设置按钮的可用性函数
+        private void SetButtonEnable(bool _isEditing)
+        {
+            if (_isEditing)
+            {
+                SelectByZkComboBox.IsEnabled = false;
+                SelectByLayerComboBox.IsEnabled = false;
+                EditButton.IsEnabled = false;
+                SaveButton.IsEnabled = true;
+                ClearButton.IsEnabled = true;
+                RoutineSoilTestDataGrid.IsReadOnly = false;
+            }
+            else
+            {
+                SelectByZkComboBox.IsEnabled = true;
+                SelectByLayerComboBox.IsEnabled = true;
+                EditButton.IsEnabled = true;
+                SaveButton.IsEnabled = false;
+                ClearButton.IsEnabled = false;
+                RoutineSoilTestDataGrid.IsReadOnly = true;
+            }
         }
 
         #endregion
@@ -63,9 +84,9 @@ namespace GSYGeo
         #region 试验数据
 
         // 定义试验项目
-        private string[] rstName = new string[16]
+        private string[] rstName = new string[17]
         {
-            "zkNumber","sampleDepth","WaterLevel","density","specificGravity","voidRatio",
+            "zkNumber","sampleDepth","sampleLayer","waterLevel","density","specificGravity","voidRatio",
             "saturation","liquidLimit","plasticLimit","plasticIndex","liquidityIndex",
             "compressibility","modulus","frictionAngle","cohesion","permeability"
         };
@@ -95,94 +116,273 @@ namespace GSYGeo
             {
                 dr = dtRST.NewRow();
                 dr["zkNumber"] = _rsts[i].zkNumber;
-                dr["sampleDepth"] = _rsts[i].sampleDepth;
-                dr["WaterLevel"] = _rsts[i].waterLevel;
-                dr["density"] = _rsts[i].density;
-                dr["specificGravity"] = _rsts[i].specificGravity;
-                dr["voidRatio"] = _rsts[i].voidRatio;
-                dr["saturation"] = _rsts[i].saturation;
-                dr["liquidLimit"] = _rsts[i].liquidLimit;
-                dr["plasticLimit"] = _rsts[i].plasticLimit;
-                dr["plasticIndex"] = _rsts[i].plasticIndex;
-                dr["liquidityIndex"] = _rsts[i].liquidityIndex;
-                dr["compressibility"] = _rsts[i].compressibility;
-                dr["modulus"] = _rsts[i].modulus;
-                dr["frictionAngle"] = _rsts[i].frictionAngle;
-                dr["cohesion"] = _rsts[i].cohesion;
-                dr["permeability"] = _rsts[i].permeability;
+                dr["sampleDepth"] = _rsts[i].sampleDepth.ToString("0.00");
+                dr["sampleLayer"] = _rsts[i].sampleLayer;
+                dr["waterLevel"] = _rsts[i].waterLevel.ToString() == "-0.19880205" ? "" : _rsts[i].waterLevel.ToString("0.0");
+                dr["density"] = _rsts[i].density.ToString() == "-0.19880205" ? "" : _rsts[i].density.ToString("0.00");
+                dr["specificGravity"] = _rsts[i].specificGravity.ToString() == "-0.19880205" ? "" : _rsts[i].specificGravity.ToString("0.00");
+                dr["voidRatio"] = _rsts[i].voidRatio.ToString() == "-0.19880205" ? "" : _rsts[i].voidRatio.ToString("0.000");
+                dr["saturation"] = _rsts[i].saturation.ToString() == "-0.19880205" ? "" : _rsts[i].saturation.ToString("0");
+                dr["liquidLimit"] = _rsts[i].liquidLimit.ToString() == "-0.19880205" ? "" : _rsts[i].liquidLimit.ToString("0.0");
+                dr["plasticLimit"] = _rsts[i].plasticLimit.ToString() == "-0.19880205" ? "" : _rsts[i].plasticLimit.ToString("0.0");
+                dr["plasticIndex"] = _rsts[i].plasticIndex.ToString() == "-0.19880205" ? "" : _rsts[i].plasticIndex.ToString("0.0");
+                dr["liquidityIndex"] = _rsts[i].liquidityIndex.ToString() == "-0.19880205" ? "" : _rsts[i].liquidityIndex.ToString("0.0");
+                dr["compressibility"] = _rsts[i].compressibility.ToString() == "-0.19880205" ? "" : _rsts[i].compressibility.ToString("0.00");
+                dr["modulus"] = _rsts[i].modulus.ToString() == "-0.19880205" ? "" : _rsts[i].modulus.ToString("0.0");
+                dr["frictionAngle"] = _rsts[i].frictionAngle.ToString() == "-0.19880205" ? "" : _rsts[i].frictionAngle.ToString("0.0");
+                dr["cohesion"] = _rsts[i].cohesion.ToString() == "-0.19880205" ? "" : _rsts[i].cohesion.ToString("0.0");
+                dr["permeability"] = _rsts[i].permeability.ToString() == "-0.19880205" ? "" : _rsts[i].permeability.ToString("0.0E0");
+                dtRST.Rows.Add(dr);
+            }
+        }
+
+        // 重置刷新TestDataListDataGrid
+        private void RefreshTestDataListDataGrid(List<RoutineSoilTest> _rsts)
+        {
+            // 清空旧数据
+            dtRST.Clear();
+
+            // 赋值新数据
+            DataRow dr;
+            for (int i = 0; i < _rsts.Count; i++)
+            {
+                dr = dtRST.NewRow();
+                dr["zkNumber"] = _rsts[i].zkNumber;
+                dr["sampleDepth"] = _rsts[i].sampleDepth.ToString("0.00");
+                dr["sampleLayer"] = _rsts[i].sampleLayer;
+                dr["waterLevel"] = _rsts[i].waterLevel.ToString() == "-0.19880205" ? "" : _rsts[i].waterLevel.ToString("0.0");
+                dr["density"] = _rsts[i].density.ToString() == "-0.19880205" ? "" : _rsts[i].density.ToString("0.00");
+                dr["specificGravity"] = _rsts[i].specificGravity.ToString() == "-0.19880205" ? "" : _rsts[i].specificGravity.ToString("0.00");
+                dr["voidRatio"] = _rsts[i].voidRatio.ToString() == "-0.19880205" ? "" : _rsts[i].voidRatio.ToString("0.000");
+                dr["saturation"] = _rsts[i].saturation.ToString() == "-0.19880205" ? "" : _rsts[i].saturation.ToString("0");
+                dr["liquidLimit"] = _rsts[i].liquidLimit.ToString() == "-0.19880205" ? "" : _rsts[i].liquidLimit.ToString("0.0");
+                dr["plasticLimit"] = _rsts[i].plasticLimit.ToString() == "-0.19880205" ? "" : _rsts[i].plasticLimit.ToString("0.0");
+                dr["plasticIndex"] = _rsts[i].plasticIndex.ToString() == "-0.19880205" ? "" : _rsts[i].plasticIndex.ToString("0.0");
+                dr["liquidityIndex"] = _rsts[i].liquidityIndex.ToString() == "-0.19880205" ? "" : _rsts[i].liquidityIndex.ToString("0.0");
+                dr["compressibility"] = _rsts[i].compressibility.ToString() == "-0.19880205" ? "" : _rsts[i].compressibility.ToString("0.00");
+                dr["modulus"] = _rsts[i].modulus.ToString() == "-0.19880205" ? "" : _rsts[i].modulus.ToString("0.0");
+                dr["frictionAngle"] = _rsts[i].frictionAngle.ToString() == "-0.19880205" ? "" : _rsts[i].frictionAngle.ToString("0.0");
+                dr["cohesion"] = _rsts[i].cohesion.ToString() == "-0.19880205" ? "" : _rsts[i].cohesion.ToString("0.0");
+                dr["permeability"] = _rsts[i].permeability.ToString() == "-0.19880205" ? "" : _rsts[i].permeability.ToString("0.0E0");
                 dtRST.Rows.Add(dr);
             }
         }
 
         #endregion
 
-        #region 筛选和清空
+        #region 筛选、清空和编辑
 
+        // 填充筛选ComboBox函数
+        private void InitialComboBox()
+        {
+            List<string> zklist = BoreholeDataBase.ReadZkList(Program.currentProject);
+            zklist.Insert(0, "全部钻孔");
+            List<string> layerlist = ProjectDataBase.ReadLayerNumberList(Program.currentProject);
+            layerlist.Insert(0, "全部分层");
+            this.SelectByZkComboBox.ItemsSource = zklist;
+            this.SelectByLayerComboBox.ItemsSource = layerlist;
+            this.SelectByZkComboBox.SelectedIndex = 0;
+            this.SelectByLayerComboBox.SelectedIndex = 0;
+        }
 
+        // 筛选数据函数
+        private void SelectData(string _zk,string _layer)
+        {
+            if (_zk == "全部钻孔")
+            {
+                _zk = "";
+            }
+            if (_layer == "全部分层")
+            {
+                _layer = "";
+            }
+            List<RoutineSoilTest> rsts = RoutineSoilTestDataBase.SelectByZkAndLayer(Program.currentProject, _zk, _layer);
 
+            RefreshTestDataListDataGrid(rsts);
+        }
+
+        // 选择钻孔筛选框时
+        private void SelectByZkComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string zk = this.SelectByZkComboBox.SelectedItem == null ? "" : this.SelectByZkComboBox.SelectedItem.ToString();
+            string layer = this.SelectByLayerComboBox.SelectedItem == null ? "" : this.SelectByLayerComboBox.SelectedItem.ToString();
+            SelectData(zk, layer);
+        }
+
+        // 选择分层筛选框时
+        private void SelectByLayerComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string zk = this.SelectByZkComboBox.SelectedItem == null ? "" : this.SelectByZkComboBox.SelectedItem.ToString();
+            string layer = this.SelectByLayerComboBox.SelectedItem == null ? "" : this.SelectByLayerComboBox.SelectedItem.ToString();
+            SelectData(zk, layer);
+        }
+
+        // 点击"编辑"按钮
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.SelectByZkComboBox.SelectedIndex = 0;
+            this.SelectByLayerComboBox.SelectedIndex = 0;
+            SetButtonEnable(true);
+        }
         #endregion
 
         #region 保存
 
-        // 检查保存合法性函数
+        // 检查保存数据合法性函数
         private bool CanSave()
         {
             for(int i = 0; i < dtRST.Rows.Count; i++)
             {
-                for(int j = 0; j < 16; j++)
+                for(int j = 0; j < dtRST.Columns.Count; j++)
                 {
+                    // 检查取样孔号是否与数据库中匹配
                     if (j == 0)
                     {
                         string zkName = dtRST.Rows[i][j].ToString();
                         if (!BoreholeDataBase.ReadZkList(Program.currentProject).Contains(zkName))
                         {
-                            MessageBox.Show("第" + i + "行的取样孔号 " + zkName + " 无法在钻孔数据库中找到，请核实");
+                            MessageBox.Show("第" + (i + 1) + "行的取样孔号 " + zkName + " 无法在钻孔数据库中找到，请核实");
                             return false;
                         }
                     }
+                    // 检查取样深度是否为有效数字
                     else if (j == 1)
                     {
                         double num;
                         string dep = dtRST.Rows[i][j].ToString();
                         if (string.IsNullOrEmpty(dep) || string.IsNullOrWhiteSpace(dep))
                         {
-                            MessageBox.Show("第" + i + "行的取样深度 " + dep + " 是空值，取样深度不能为空");
+                            MessageBox.Show("第" + (i + 1) + "行的取样深度 " + dep + " 是空值，取样深度不能为空");
                             return false;
                         }
                         else if (!double.TryParse(dep,out num))
                         {
-                            MessageBox.Show("第" + i + "行的取样深度 " + dep + " 不是有效数字");
+                            MessageBox.Show("第" + (i + 1) + "行的取样深度 " + dep + " 不是有效数字");
                             return false;
                         }
                     }
+                    // 跳过取样所属分层的检查
+                    else if (j == 2)
+                    {
+                        continue;
+                    }
+                    // 检查试验数据是否为空
                     else
                     {
                         double num;
                         string data = dtRST.Rows[i][j].ToString();
                         if(!string.IsNullOrEmpty(data) && !string.IsNullOrWhiteSpace(data) && !double.TryParse(data,out num))
                         {
-                            MessageBox.Show("第" + i + "行的 " + this.RoutineSoilTestDataGrid.Columns[j].Header + " " + data + " 不是有效数字");
+                            MessageBox.Show("第" + (i + 1) + "行的 " + this.RoutineSoilTestDataGrid.Columns[j].Header + " " + data + " 不是有效数字");
                             return false;
                         }
                     }
                 }
             }
-            MessageBox.Show("全部数据合法");
+            
             return true;
+        }
+        
+        // 计算取样所属分层函数
+        private void CalcuSampleLayer()
+        {
+            List<string> zkNumbers = BoreholeDataBase.ReadZkList(Program.currentProject);
+
+            foreach (string zkNumber in zkNumbers)
+            {
+                List<ZkLayer> layers = BoreholeDataBase.ReadZkLayer(Program.currentProject, zkNumber);
+                for (int i = 0; i < dtRST.Rows.Count; i++)
+                {
+                    string thisNumber = dtRST.Rows[i]["zkNumber"].ToString();
+                    double thisDepth = Convert.ToDouble(dtRST.Rows[i]["sampleDepth"]);
+                    if (thisNumber == zkNumber)
+                    {
+                        for (int j = 0; j < layers.Count; j++)
+                        {
+                            if (thisDepth <= layers[j].Depth)
+                            {
+                                dtRST.Rows[i]["sampleLayer"] = layers[j].Number;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // 保存试验数据函数
+        private void Save()
+        {
+            // 提取参数
+            List<RoutineSoilTest> rsts = new List<RoutineSoilTest>();
+            for (int i = 0; i < dtRST.Rows.Count; i++)
+            {
+                double num;
+                string zkNumber = dtRST.Rows[i]["zkNumber"].ToString();
+                double sampleDepth = Convert.ToDouble(dtRST.Rows[i]["sampleDepth"]);
+                string sampleLayer = dtRST.Rows[i]["sampleLayer"].ToString();
+                double waterLevel = double.TryParse(dtRST.Rows[i]["waterLevel"].ToString(), out num) ? num : -0.19880205;
+                double density = double.TryParse(dtRST.Rows[i]["density"].ToString(), out num) ? num : -0.19880205;
+                double specificGravity = double.TryParse(dtRST.Rows[i]["specificGravity"].ToString(), out num) ? num : -0.19880205;
+                double voidRatio = double.TryParse(dtRST.Rows[i]["voidRatio"].ToString(), out num) ? num : -0.19880205;
+                double saturation = double.TryParse(dtRST.Rows[i]["saturation"].ToString(), out num) ? num : -0.19880205;
+                double liquidLimit = double.TryParse(dtRST.Rows[i]["liquidLimit"].ToString(), out num) ? num : -0.19880205;
+                double plasticLimit = double.TryParse(dtRST.Rows[i]["plasticLimit"].ToString(), out num) ? num : -0.19880205;
+                double plasticIndex = double.TryParse(dtRST.Rows[i]["plasticIndex"].ToString(), out num) ? num : -0.19880205;
+                double liquidityIndex = double.TryParse(dtRST.Rows[i]["liquidityIndex"].ToString(), out num) ? num : -0.19880205;
+                double compressibility = double.TryParse(dtRST.Rows[i]["compressibility"].ToString(), out num) ? num : -0.19880205;
+                double modulus = double.TryParse(dtRST.Rows[i]["modulus"].ToString(), out num) ? num : -0.19880205;
+                double frictionAngle = double.TryParse(dtRST.Rows[i]["frictionAngle"].ToString(), out num) ? num : -0.19880205;
+                double cohesion = double.TryParse(dtRST.Rows[i]["cohesion"].ToString(), out num) ? num : -0.19880205;
+                double permeability = double.TryParse(dtRST.Rows[i]["permeability"].ToString(), out num) ? num : -0.19880205;
+                RoutineSoilTest rst = new RoutineSoilTest(zkNumber, sampleDepth, sampleLayer, waterLevel, density, specificGravity, voidRatio, saturation, liquidLimit, plasticLimit, plasticIndex, liquidityIndex, compressibility, modulus, frictionAngle, cohesion, permeability);
+                rsts.Add(rst);
+            }
+
+            // 保存试验数据到数据库
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            RoutineSoilTestDataBase.Refresh(Program.currentProject, rsts);
         }
 
         // 点击"保存"
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            // 恢复筛选状态
+            this.SelectByZkComboBox.SelectedIndex = 0;
+            this.SelectByLayerComboBox.SelectedIndex = 0;
+
+            // 清除空数据行
+            dtRST = DtOperation.RemoveEmptyRow(dtRST);
+
+            // 检查数据合法性并保存
             if (CanSave())
             {
-                // 提取参数
-                // 保存试验数据到数据库
+                // 计算取样所属分层
+                CalcuSampleLayer();
+
+                // 保存
+                Save();
+
                 // 更新导航树
-                // 成功提示
+                if (!MainWindow.bind.IsExistSecondTreeItem(3, "土工常规"))
+                {
+                    MainWindow.bind.AddItemToSecondTree(3, "土工常规");
+
+                    // 若是首次输入数据，关闭控件弹出并成功提示
+                    MessageBox.Show("保存成功！");
+                    this.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    SetButtonEnable(false);
+                    MessageBox.Show("保存成功！");
+                }
+                MainWindow.bind.TreeItem[3].IsExpanded = true;
             }
         }
 
         #endregion
+
     }
 }

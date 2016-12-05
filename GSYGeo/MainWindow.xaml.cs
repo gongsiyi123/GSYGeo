@@ -111,6 +111,8 @@ namespace GSYGeo
             bind.TreeItem[1].Items.Clear();
             bind.TreeItem[2].IsExpanded = false;
             bind.TreeItem[2].Items.Clear();
+            bind.TreeItem[3].IsExpanded = false;
+            bind.TreeItem[3].Items.Clear();
             this.ContectGrid.Children.Clear();
         }
 
@@ -129,6 +131,8 @@ namespace GSYGeo
                 TreeViewItem childItem = (TreeViewItem)item2.Items[i];
                 childItem.IsExpanded = true;
             }
+            TreeViewItem item3 = (TreeViewItem)this.ProjectTreeView.Items[3];
+            item.IsExpanded = true;
         }
 
         // TreeView选择节点变化时激活不同的内容控件
@@ -205,9 +209,14 @@ namespace GSYGeo
                 }
 
                 // 选取"室内试验"-"土工常规"子节点
-                if (parentItem.Header.ToString() == "土工常规")
+                if (selectedItem.Header.ToString() == "土工常规")
                 {
+                    // 实例化一个RoutineSoilTest类列表，并读取数据库信息赋值给此实例
+                    List<RoutineSoilTest> rsts = RoutineSoilTestDataBase.ReadAllData(Program.currentProject);
 
+                    // 实例化RoutineSoilTestControl用户控件，并赋值
+                    RoutineSoilTestControl rstc = new RoutineSoilTestControl(rsts);
+                    this.ContectGrid.Children.Add(rstc);
                 }
             }
         }
@@ -221,17 +230,6 @@ namespace GSYGeo
         {
             Setting setting = new Setting();
             setting.ShowDialog();
-        }
-
-        #endregion
-
-        #region 帮助模块
-
-        // 单击菜单"帮助"-"更新日志"
-        private void UpdateLogMenu_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateLog updateLog = new UpdateLog();
-            updateLog.ShowDialog();
         }
 
         #endregion
@@ -337,6 +335,13 @@ namespace GSYGeo
                     bind.AddItemToSecondTree(2, "静力触探");
                 }
                 bind.ReSetJkItem(Program.currentProject);
+
+                // 赋值室内试验-土工常规
+                if (RoutineSoilTestDataBase.ReadAllData(Program.currentProject).Count > 0)
+                {
+                    bind.AddItemToSecondTree(3, "土工常规");
+                    bind.TreeItem[3].IsExpanded = true;
+                }
             }
         }
 
@@ -404,8 +409,32 @@ namespace GSYGeo
         private void ShowAddRoutineSoilTestData()
         {
             this.ContectGrid.Children.Clear();
-            RoutineSoilTestControl newRST = new RoutineSoilTestControl();
-            this.ContectGrid.Children.Add(newRST);
+
+            // 实例化一个RoutineSoilTest类列表，并读取数据库信息赋值给此实例
+            List<RoutineSoilTest> rsts = RoutineSoilTestDataBase.ReadAllData(Program.currentProject);
+
+            // 实例化RoutineSoilTestControl用户控件，并赋值
+            RoutineSoilTestControl rstc = new RoutineSoilTestControl(rsts);
+            this.ContectGrid.Children.Add(rstc);
+        }
+
+
+        #endregion
+
+        #region 帮助模块
+
+        // 单击菜单"帮助"-"更新日志"
+        private void UpdateLogMenu_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateLog updateLog = new UpdateLog();
+            updateLog.ShowDialog();
+        }
+
+        // 单击菜单"帮助"-"用户反馈"
+        private void FeedBackMenu_Click(object sender, RoutedEventArgs e)
+        {
+            FeedBack feedBack = new FeedBack();
+            feedBack.ShowDialog();
         }
 
         #endregion

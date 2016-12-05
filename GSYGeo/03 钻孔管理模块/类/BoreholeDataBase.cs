@@ -159,7 +159,7 @@ namespace GSYGeo
                 conn.Open();
 
                 // 查询
-                sql = "select name from zkBasicInfo";
+                sql = "select name from zkBasicInfo order by name";
                 SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
                 List<string> zkList = new List<string>();
                 while (reader.Read())
@@ -181,7 +181,7 @@ namespace GSYGeo
                 conn.Open();
 
                 // 查询
-                sql = "select name from zkBasicInfo";
+                sql = "select name from zkBasicInfo order by name";
                 SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
                 ObservableCollection<TreeViewItem> zkList = new ObservableCollection<TreeViewItem>();
                 while (reader.Read())

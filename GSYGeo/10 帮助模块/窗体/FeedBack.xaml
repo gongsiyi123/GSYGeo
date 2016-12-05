@@ -1,0 +1,41 @@
+﻿<Window x:Class="GSYGeo.FeedBack"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GSYGeo"
+        mc:Ignorable="d"
+        Title="发送反馈" Height="350" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="LightGray" BorderBrush="Gray">
+            <StackPanel>
+                <TextBlock Text="您的邮箱地址（选填）" Margin="5" Foreground="Black" TextWrapping="WrapWithOverflow"/>
+                <TextBox Name="NameTextBox" Margin="5,0,5,5" PreviewMouseDown="NameTextBox_PreviewMouseDown"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1" Background="LightGray" BorderBrush="Gray">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="您的反馈" Margin="5"/>
+                <TextBox Grid.Row="1" Name="FeedBackTextBox" Margin="5,0,5,5" VerticalScrollBarVisibility="Auto" TextWrapping="WrapWithOverflow" PreviewMouseDown="FeedBackTextBox_PreviewMouseDown" AcceptsReturn="True"/>
+            </Grid>
+        </Border>
+        <Border Grid.Row="2" Background="LightGray" BorderBrush="Gray">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Name="SendButton" Content="发送" Margin="5" Click="SendButton_Click"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

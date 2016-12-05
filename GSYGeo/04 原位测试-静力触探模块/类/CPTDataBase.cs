@@ -130,7 +130,7 @@ namespace GSYGeo
                 conn.Open();
 
                 // 查询
-                sql = "select name from jkBasicInfo";
+                sql = "select name from jkBasicInfo order by name";
                 SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
                 List<string> jkList = new List<string>();
                 while (reader.Read())
@@ -152,7 +152,7 @@ namespace GSYGeo
                 conn.Open();
 
                 // 查询
-                sql = "select name from jkBasicInfo";
+                sql = "select name from jkBasicInfo order by name";
                 SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
                 ObservableCollection<TreeViewItem> jkList = new ObservableCollection<TreeViewItem>();
                 while (reader.Read())

@@ -11,7 +11,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" Name="UpdateLogTextBox" IsReadOnly="True" Margin="5" Background="#FFC9C9C9" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
+        <TextBox Grid.Row="0" Name="UpdateLogTextBox" IsReadOnly="True" Margin="5" Background="LightGray" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
