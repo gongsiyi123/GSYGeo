@@ -69,6 +69,7 @@ namespace GSYGeo
             BoreholeDataBase.Initial(_projectName);
             CPTDataBase.Initial(_projectName);
             RoutineSoilTestDataBase.Initial(_projectName);
+            GrainAnalysisTestDataBase.Initial(_projectName);
         }
 
         // 向项目信息表中添加 岩土分层

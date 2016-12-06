@@ -7,7 +7,9 @@ using System.Data.SQLite;
 
 namespace GSYGeo
 {
-    // 操作常规土工试验数据库类
+    /// <summary>
+    /// 操作常规土工试验数据库类
+    /// </summary>
     public class RoutineSoilTestDataBase
     {
         // 初始化土工常规数据库，若基本表结构不存在则创建基本表结构
@@ -42,7 +44,7 @@ namespace GSYGeo
                 new SQLiteCommand(sql, conn).ExecuteNonQuery();
                 for(int i = 0; i < _rsts.Count; i++)
                 {
-                    sql = "insert into RST(zkNumber,sampleDepth,sampleLayer,waterLevel,density,specificGravity,voidRatio,saturation,liquidLimit,plasticLimit,plasticIndex,liquidityIndex,compressibility,modulus,frictionAngle,cohesion,permeability) values('" + _rsts[i].zkNumber + "'," + _rsts[i].sampleDepth + "," + _rsts[i].sampleLayer + "," + _rsts[i].waterLevel + "," + _rsts[i].density + "," + _rsts[i].specificGravity + "," + _rsts[i].voidRatio + "," + _rsts[i].saturation + "," + _rsts[i].liquidLimit + "," + _rsts[i].plasticLimit + "," + _rsts[i].plasticIndex + "," + _rsts[i].liquidityIndex + "," + _rsts[i].compressibility + "," + _rsts[i].modulus + "," + _rsts[i].frictionAngle + "," + _rsts[i].cohesion + "," + _rsts[i].permeability + ")";
+                    sql = "insert into RST(zkNumber,sampleDepth,sampleLayer,waterLevel,density,specificGravity,voidRatio,saturation,liquidLimit,plasticLimit,plasticIndex,liquidityIndex,compressibility,modulus,frictionAngle,cohesion,permeability) values('" + _rsts[i].zkNumber + "'," + _rsts[i].sampleDepth + ",'" + _rsts[i].sampleLayer + "'," + _rsts[i].waterLevel + "," + _rsts[i].density + "," + _rsts[i].specificGravity + "," + _rsts[i].voidRatio + "," + _rsts[i].saturation + "," + _rsts[i].liquidLimit + "," + _rsts[i].plasticLimit + "," + _rsts[i].plasticIndex + "," + _rsts[i].liquidityIndex + "," + _rsts[i].compressibility + "," + _rsts[i].modulus + "," + _rsts[i].frictionAngle + "," + _rsts[i].cohesion + "," + _rsts[i].permeability + ")";
                     new SQLiteCommand(sql, conn).ExecuteNonQuery();
                 }
             }

@@ -84,7 +84,7 @@ namespace GSYGeo
         #region 试验数据
 
         // 定义试验项目
-        private string[] rstName = new string[17]
+        private string[] rstName = new string[]
         {
             "zkNumber","sampleDepth","sampleLayer","waterLevel","density","specificGravity","voidRatio",
             "saturation","liquidLimit","plasticLimit","plasticIndex","liquidityIndex",
@@ -177,7 +177,13 @@ namespace GSYGeo
         {
             List<string> zklist = BoreholeDataBase.ReadZkList(Program.currentProject);
             zklist.Insert(0, "全部钻孔");
-            List<string> layerlist = ProjectDataBase.ReadLayerNumberList(Program.currentProject);
+            List<string> layerNumberlist = ProjectDataBase.ReadLayerNumberList(Program.currentProject);
+            List<string> layerNamelist = ProjectDataBase.ReadLayerNameList(Program.currentProject);
+            List<string> layerlist = new List<string>();
+            for(int i = 0; i < layerNumberlist.Count; i++)
+            {
+                layerlist.Add(layerNumberlist[i] + "   " + layerNamelist[i]);
+            }
             layerlist.Insert(0, "全部分层");
             this.SelectByZkComboBox.ItemsSource = zklist;
             this.SelectByLayerComboBox.ItemsSource = layerlist;
@@ -195,6 +201,10 @@ namespace GSYGeo
             if (_layer == "全部分层")
             {
                 _layer = "";
+            }
+            if (_layer != "")
+            {
+                _layer = _layer.Substring(0, _layer.IndexOf("   "));
             }
             List<RoutineSoilTest> rsts = RoutineSoilTestDataBase.SelectByZkAndLayer(Program.currentProject, _zk, _layer);
 
@@ -224,6 +234,7 @@ namespace GSYGeo
             this.SelectByLayerComboBox.SelectedIndex = 0;
             SetButtonEnable(true);
         }
+
         #endregion
 
         #region 保存
@@ -383,6 +394,5 @@ namespace GSYGeo
         }
 
         #endregion
-
     }
 }

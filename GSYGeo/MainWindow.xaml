@@ -52,13 +52,16 @@
                 <MenuItem Header="现场直剪试验"/>
             </MenuItem>
             <MenuItem Header="室内试验" Name="IndoorTestMenu">
-                <MenuItem Header="常规土工试验" Name="RoutineSoilTestMenu">
-                    <MenuItem Header="查看/添加常规土工试验数据" Name="ShowAddRoutineSoilTestDataMenu" Click="ShowAddRoutineSoilTestDataMenu_Click"/>
+                <MenuItem Header="土工常规试验" Name="RoutineSoilTestMenu">
+                    <MenuItem Header="查看/添加土工常规试验数据" Name="ShowAddRoutineSoilTestDataMenu" Click="ShowAddRoutineSoilTestDataMenu_Click"/>
                     <MenuItem Header="导入试验数据（Excel格式）" Name="ImportRoutineSoilTestDataMenu"/>
                     <MenuItem Header="导出试验数据（Excel格式）" Name="ExportRoutineSoilTestDataMenu"/>
                 </MenuItem>
-                <MenuItem Header="室内渗透试验" Name="IndoorPermeabilityTestMenu"/>
-                <MenuItem Header="颗粒分析试验" Name="GrainSizeTestMenu"/>
+                <MenuItem Header="颗粒分析试验" Name="GrainSizeTestMenu">
+                    <MenuItem Header="查看/添加颗粒分析试验数据" Name="ShowAddGrainAnalysisTestDataMenu" Click="ShowAddGrainAnalysisTestDataMenu_Click"/>
+                    <MenuItem Header="导入试验数据（Excel格式）" Name="ImportGrainAnalysisestDataMenu"/>
+                    <MenuItem Header="导出试验数据（Excel格式）" Name="ExportGrainAnalysisTestDataMenu"/>
+                </MenuItem>
                 <MenuItem Header="岩石试验" Name="IndoorRockTestMenu"/>
             </MenuItem>
             <MenuItem Header="统计分析" Name="CalculateMenu">

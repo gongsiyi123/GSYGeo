@@ -218,6 +218,17 @@ namespace GSYGeo
                     RoutineSoilTestControl rstc = new RoutineSoilTestControl(rsts);
                     this.ContectGrid.Children.Add(rstc);
                 }
+
+                // 选取"室内试验"-"颗粒分析"子节点
+                if (selectedItem.Header.ToString() == "颗粒分析")
+                {
+                    // 实例化一个RoutineSoilTest类列表，并读取数据库信息赋值给此实例
+                    List<GrainAnalysisTest> gats = GrainAnalysisTestDataBase.ReadAllData(Program.currentProject);
+
+                    // 实例化RoutineSoilTestControl用户控件，并赋值
+                    GrainAnalysisTestControl gatc = new GrainAnalysisTestControl(gats);
+                    this.ContectGrid.Children.Add(gatc);
+                }
             }
         }
 
@@ -342,6 +353,13 @@ namespace GSYGeo
                     bind.AddItemToSecondTree(3, "土工常规");
                     bind.TreeItem[3].IsExpanded = true;
                 }
+
+                // 赋值室内试验-颗粒分析
+                if (GrainAnalysisTestDataBase.ReadAllData(Program.currentProject).Count > 0)
+                {
+                    bind.AddItemToSecondTree(3, "颗粒分析");
+                    bind.TreeItem[3].IsExpanded = true;
+                }
             }
         }
 
@@ -399,7 +417,7 @@ namespace GSYGeo
 
         #region 室内试验-常规土工试验模块
 
-        // 单击菜单"室内试验"-"常规土工试验据"-"查看/添加常规土工试验数据"
+        // 单击菜单"室内试验"-"土工常规试验"-"查看/添加常规土工试验数据"
         private void ShowAddRoutineSoilTestDataMenu_Click(object sender, RoutedEventArgs e)
         {
             ShowAddRoutineSoilTestData();
@@ -421,6 +439,29 @@ namespace GSYGeo
 
         #endregion
 
+        #region 室内试验-颗粒分析试验模块
+
+        // 单击菜单"室内试验"-"颗粒分析试验"-"查看/添加颗粒分析试验数据"
+        private void ShowAddGrainAnalysisTestDataMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ShowAddGrainAnalysisTestData();
+        }
+
+        // 查看/添加颗粒分析试验数据函数
+        private void ShowAddGrainAnalysisTestData()
+        {
+            this.ContectGrid.Children.Clear();
+
+            // 实例化一个GrainAnalysisTest类列表，并读取数据库信息赋值给此实例
+            List<GrainAnalysisTest> gats = GrainAnalysisTestDataBase.ReadAllData(Program.currentProject);
+
+            // 实例化GrainAnalysisTestControl用户控件，并赋值
+            GrainAnalysisTestControl gatc = new GrainAnalysisTestControl(gats);
+            this.ContectGrid.Children.Add(gatc);
+        }
+
+        #endregion
+
         #region 帮助模块
 
         // 单击菜单"帮助"-"更新日志"
@@ -437,8 +478,7 @@ namespace GSYGeo
             feedBack.ShowDialog();
         }
 
+
         #endregion
-
-
     }
 }
