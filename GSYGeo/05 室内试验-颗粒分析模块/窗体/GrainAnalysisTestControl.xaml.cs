@@ -26,6 +26,12 @@ namespace GSYGeo
         // 定义试验数据列表TestDataListDataGrid控件的数据源DataTable
         public DataTable dtGAT = new DataTable("GAT");
 
+        // 定义判断当前是否正在编辑DataGrid的变量
+        bool isEditing = false;
+
+        // 定义备份DataTable
+        private DataTable dtBackUp = new DataTable("BackUp");
+
         #endregion
 
         #region 构造函数
@@ -61,21 +67,27 @@ namespace GSYGeo
         {
             if (_isEditing)
             {
+                isEditing = _isEditing;
                 SelectByZkComboBox.IsEnabled = false;
                 SelectByLayerComboBox.IsEnabled = false;
                 EditButton.IsEnabled = false;
                 SaveButton.IsEnabled = true;
                 ClearButton.IsEnabled = true;
+                RecoverButton.IsEnabled = false;
                 GrainAnalysisTestDataGrid.IsReadOnly = false;
+                GrainAnalysisTestDataGrid.Foreground = Brushes.Black;
             }
             else
             {
+                isEditing = _isEditing;
                 SelectByZkComboBox.IsEnabled = true;
                 SelectByLayerComboBox.IsEnabled = true;
                 EditButton.IsEnabled = true;
                 SaveButton.IsEnabled = false;
                 ClearButton.IsEnabled = false;
+                RecoverButton.IsEnabled = false;
                 GrainAnalysisTestDataGrid.IsReadOnly = true;
+                GrainAnalysisTestDataGrid.Foreground = Brushes.Gray;
             }
         }
 
@@ -86,7 +98,7 @@ namespace GSYGeo
         // 定义试验项目
         private string[] gatName = new string[]
         {
-            "zkNumber","sampleDepth","sampleLayer","Group0To0_075","Group0_075To0_25","Group0_25To0_5","Group0_5To2","Group2To20","Group20ToMax"
+            "zkNumber","sampleDepth","sampleLayer","Group20ToMax","Group2To20","Group0_5To2","Group0_25To0_5","Group0_075To0_25","Group0To0_075"
         };
 
         // 初始化TestDataListDataGrid，不带参数
@@ -138,7 +150,7 @@ namespace GSYGeo
             {
                 dr = dtGAT.NewRow();
                 dr["zkNumber"] = _gats[i].zkNumber;
-                dr["sampleDepth"] = _gats[i].sampleDepth;
+                dr["sampleDepth"] = _gats[i].sampleDepth.ToString("0.00");
                 dr["sampleLayer"] = _gats[i].sampleLayer;
                 dr["Group0To0_075"] = _gats[i].Group0To0_075.ToString() == "-0.19880205" ? "" : _gats[i].Group0To0_075.ToString("0.00");
                 dr["Group0_075To0_25"] = _gats[i].Group0_075To0_25.ToString() == "-0.19880205" ? "" : _gats[i].Group0_075To0_25.ToString("0.00");
@@ -215,6 +227,34 @@ namespace GSYGeo
             this.SelectByZkComboBox.SelectedIndex = 0;
             this.SelectByLayerComboBox.SelectedIndex = 0;
             SetButtonEnable(true);
+        }
+
+        // 点击"清空"按钮
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            dtBackUp = dtGAT.Clone();
+            dtBackUp.Clear();
+            foreach(DataRow dr in dtGAT.Rows)
+            {
+                dtBackUp.ImportRow(dr);
+            }
+            dtGAT.Clear();
+            RecoverButton.IsEnabled = true;
+            ClearButton.IsEnabled = false;
+        }
+
+        // 点击"恢复"按钮
+        private void RecoverButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (dtBackUp != null)
+            {
+                foreach(DataRow dr in dtBackUp.Rows)
+                {
+                    dtGAT.ImportRow(dr);
+                }
+            }
+            RecoverButton.IsEnabled = false;
+            ClearButton.IsEnabled = true;
         }
 
         #endregion
@@ -368,6 +408,55 @@ namespace GSYGeo
             }
         }
 
+
         #endregion
+
+        #region 复制和粘贴
+
+        /// <summary>
+        /// 按下CTRL+V，复制Excel中的数据粘贴到DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GrainAnalysisTestDataGrid_KeyDown(object sender, KeyEventArgs e)
+        {
+            // 如果不处于编辑状态则不相应键盘操作
+            if (!isEditing)
+            {
+                return;
+            }
+
+            // 判断按下的是否为CTRL+V
+            if (ModifierKeys.Control == Keyboard.Modifiers && e.Key == Key.V)
+            {
+                // 获取Excel复制的数据，数据为空时退出函数
+                List<string[]> excelData = OfficeOperation.GetDataFromExcelClipBoard();
+                if (excelData == null)
+                {
+                    return;
+                }
+
+                // 获取当前选中的DataGrid行号和列号
+                int row, column;
+                if (this.GrainAnalysisTestDataGrid.SelectedCells.Count == 0)
+                {
+                    row = 0;
+                    column = 0;
+                }
+                else
+                {
+                    row = this.GrainAnalysisTestDataGrid.Items.IndexOf(this.GrainAnalysisTestDataGrid.SelectedCells[0].Item);
+                    column = this.GrainAnalysisTestDataGrid.SelectedCells[0].Column.DisplayIndex;
+                }
+
+                // 将复制的数据添加到绑定的DataTable
+                dtGAT = DtOperation.PasteFromExcel(dtGAT, row, column, excelData, 2);
+
+            }
+        }
+
+
+        #endregion
+
     }
 }

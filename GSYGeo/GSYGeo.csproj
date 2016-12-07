@@ -37,6 +37,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ExtendedGrid">
+      <HintPath>..\..\..\..\..\..\Downloads\WPF Extended DataGrid\ExtendedGrid.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
@@ -220,6 +223,7 @@
     <Compile Include="03 钻孔管理模块\窗体\ZkNTestDetail.xaml.cs">
       <DependentUpon>ZkNTestDetail.xaml</DependentUpon>
     </Compile>
+    <Compile Include="0 通用类\OfficeOperation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

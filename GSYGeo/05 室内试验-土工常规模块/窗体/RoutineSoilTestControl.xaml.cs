@@ -26,10 +26,16 @@ namespace GSYGeo
         // 定义试验数据列表TestDataListDataGrid控件的数据源DataTable
         public DataTable dtRST = new DataTable("RST");
 
+        // 定义判断当前是否正在编辑DataGrid的变量
+        bool isEditing = false;
+
+        // 定义备份DataTable
+        private DataTable dtBackUp = new DataTable("BackUp");
+
         #endregion
 
         #region 构造函数
-        
+
         // 带参数的构造函数
         public RoutineSoilTestControl(List<RoutineSoilTest> _rsts)
         {
@@ -61,21 +67,25 @@ namespace GSYGeo
         {
             if (_isEditing)
             {
+                isEditing = _isEditing;
                 SelectByZkComboBox.IsEnabled = false;
                 SelectByLayerComboBox.IsEnabled = false;
                 EditButton.IsEnabled = false;
                 SaveButton.IsEnabled = true;
                 ClearButton.IsEnabled = true;
                 RoutineSoilTestDataGrid.IsReadOnly = false;
+                RoutineSoilTestDataGrid.Foreground = Brushes.Black;
             }
             else
             {
+                isEditing = _isEditing;
                 SelectByZkComboBox.IsEnabled = true;
                 SelectByLayerComboBox.IsEnabled = true;
                 EditButton.IsEnabled = true;
                 SaveButton.IsEnabled = false;
                 ClearButton.IsEnabled = false;
                 RoutineSoilTestDataGrid.IsReadOnly = true;
+                RoutineSoilTestDataGrid.Foreground = Brushes.Gray;
             }
         }
 
@@ -233,6 +243,34 @@ namespace GSYGeo
             this.SelectByZkComboBox.SelectedIndex = 0;
             this.SelectByLayerComboBox.SelectedIndex = 0;
             SetButtonEnable(true);
+        }
+
+        // 点击"清空"按钮
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            dtBackUp = dtRST.Clone();
+            dtBackUp.Clear();
+            foreach (DataRow dr in dtRST.Rows)
+            {
+                dtBackUp.ImportRow(dr);
+            }
+            dtRST.Clear();
+            RecoverButton.IsEnabled = true;
+            ClearButton.IsEnabled = false;
+        }
+
+        // 点击"恢复"按钮
+        private void RecoverButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (dtBackUp != null)
+            {
+                foreach (DataRow dr in dtBackUp.Rows)
+                {
+                    dtRST.ImportRow(dr);
+                }
+            }
+            RecoverButton.IsEnabled = false;
+            ClearButton.IsEnabled = true;
         }
 
         #endregion
@@ -394,5 +432,52 @@ namespace GSYGeo
         }
 
         #endregion
+
+        #region 复制和粘贴
+
+        /// <summary>
+        /// 按下CTRL+V，复制Excel中的数据粘贴到DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RoutineSoilTestDataGrid_KeyDown(object sender, KeyEventArgs e)
+        {
+            // 如果不处于编辑状态则不相应键盘操作
+            if (!isEditing)
+            {
+                return;
+            }
+
+            // 判断按下的是否为CTRL+V
+            if(ModifierKeys.Control==Keyboard.Modifiers && e.Key == Key.V)
+            {
+                // 获取Excel复制的数据，数据为空时退出函数
+                List<string[]> excelData = OfficeOperation.GetDataFromExcelClipBoard();
+                if (excelData == null)
+                {
+                    return;
+                }
+
+                // 获取当前选中的DataGrid行号和列号
+                int row, column;
+                if (this.RoutineSoilTestDataGrid.SelectedCells.Count == 0)
+                {
+                    row = 0;
+                    column = 0;
+                }
+                else
+                {
+                    row = this.RoutineSoilTestDataGrid.Items.IndexOf(this.RoutineSoilTestDataGrid.SelectedCells[0].Item);
+                    column = this.RoutineSoilTestDataGrid.SelectedCells[0].Column.DisplayIndex;
+                }
+
+                // 将复制的数据添加到绑定的DataTable
+                dtRST = DtOperation.PasteFromExcel(dtRST, row, column, excelData, 2);
+                
+            }
+        }
+
+        #endregion
+
     }
 }
