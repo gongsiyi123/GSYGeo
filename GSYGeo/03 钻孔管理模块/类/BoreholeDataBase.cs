@@ -347,11 +347,12 @@ namespace GSYGeo
                 conn.Open();
 
                 // 查询
-                sql = "select name,depth,value,type from zkNTest where zkName='" + _name + "'";
+                sql = "select zkName,name,depth,value,type from zkNTest where zkName='" + _name + "'";
                 SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
                 List<ZkNTest> zkNTests = new List<ZkNTest>();
                 while (reader.Read())
                 {
+                    string zkNumber = reader["zkName"].ToString();
                     string name = reader["name"].ToString();
                     double depth = Convert.ToDouble(reader["depth"]);
                     double value = Convert.ToDouble(reader["value"]);
@@ -364,9 +365,118 @@ namespace GSYGeo
                     {
                         type = ZkNTest.ntype.N;
                     }
-                    zkNTests.Add(new ZkNTest(name, depth, value, type));
+                    zkNTests.Add(new ZkNTest(zkNumber, name, depth, value, type));
                 }
                 return zkNTests;
+            }
+        }
+
+        /// <summary>
+        /// 查询某个分层的标贯/动探列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_layerNumber">分层编号</param>
+        /// <returns></returns>
+        public static List<ZkNTest> ReadLayerNTest(string _projectName,string _layerNumber)
+        {
+            // 创建连接到设置信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\" + _projectName + ".gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 定义要返回的列表
+                List<ZkNTest> ntestList = new List<ZkNTest>();
+
+                // 读取项目分层列表
+                List<string> layerList = ProjectDataBase.ReadLayerNumberList(_projectName);
+
+                // 读取钻孔列表，在钻孔列表中循环
+                List<string> zkList = ReadZkList(_projectName);
+                for(int i = 0; i < zkList.Count; i++)
+                {
+                    // 读取该钻孔的标贯/动探列表和分层列表
+                    List<ZkNTest> zkNtestList = ReadZkNTest(_projectName, zkList[i]);
+                    List<ZkLayer> zkLayerList = ReadZkLayer(_projectName, zkList[i]);
+
+                    // 在标贯/动探列表中循环
+                    foreach(ZkNTest ntest in zkNtestList)
+                    {
+                        // 循环查找该标贯/动探所属的分层，并添加到要返回的列表中
+                        int layerIndex = -1;
+                        for (int j = 0; j < zkLayerList.Count; j++)
+                        {
+                            if (ntest.Depth <= zkLayerList[j].Depth)
+                            {
+                                layerIndex = j;
+                                break;
+                            }
+                        }
+                        if( layerIndex!=-1 && zkLayerList[layerIndex].Number == _layerNumber)
+                        {
+                            ntestList.Add(ntest);
+                        }
+                    }
+                }
+
+                // 返回赋值后的列表
+                return ntestList;
+            }
+        }
+
+        /// <summary>
+        /// 查询某个分层的标贯/动探列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_layerNumber">分层编号</param>
+        /// <param name="_type">试验类型</param>
+        /// <returns></returns>
+        public static List<ZkNTest> ReadLayerNTest(string _projectName, string _layerNumber,ZkNTest.ntype _type)
+        {
+            // 创建连接到设置信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\" + _projectName + ".gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 定义要返回的列表
+                List<ZkNTest> ntestList = new List<ZkNTest>();
+
+                // 读取项目分层列表
+                List<string> layerList = ProjectDataBase.ReadLayerNumberList(_projectName);
+
+                // 读取钻孔列表，在钻孔列表中循环
+                List<string> zkList = ReadZkList(_projectName);
+                for (int i = 0; i < zkList.Count; i++)
+                {
+                    // 读取该钻孔的标贯/动探列表和分层列表
+                    List<ZkNTest> zkNtestList = ReadZkNTest(_projectName, zkList[i]);
+                    List<ZkLayer> zkLayerList = ReadZkLayer(_projectName, zkList[i]);
+
+                    // 在标贯/动探列表中循环
+                    foreach (ZkNTest ntest in zkNtestList)
+                    {
+                        // 循环查找该标贯/动探所属的分层，查找试验类型，并将符合的数据添加到要返回的列表中
+                        int layerIndex = -1;
+                        for (int j = 0; j < zkLayerList.Count; j++)
+                        {
+                            if (ntest.Depth <= zkLayerList[j].Depth)
+                            {
+                                layerIndex = j;
+                                break;
+                            }
+                        }
+                        if (layerIndex != -1 && zkLayerList[layerIndex].Number == _layerNumber && ntest.Type == _type)
+                        {
+                            ntestList.Add(ntest);
+                        }
+                    }
+                }
+
+                // 返回赋值后的列表
+                return ntestList;
             }
         }
     }

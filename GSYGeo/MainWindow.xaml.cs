@@ -480,5 +480,11 @@ namespace GSYGeo
 
 
         #endregion
+
+        private void NTestStatisticMenu_Click(object sender, RoutedEventArgs e)
+        {
+            NTestStatistic ntest = new NTestStatistic();
+            ntest.ShowDialog();
+        }
     }
 }

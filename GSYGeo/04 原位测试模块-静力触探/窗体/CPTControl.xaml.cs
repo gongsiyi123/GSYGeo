@@ -566,7 +566,12 @@ namespace GSYGeo
             List<double> psList = new List<double>();
             for (int i = 0; i < dtPs.Rows.Count; i++)
             {
-                double ps = (double)dtPs.Rows[i][0];
+                double num;
+                if(!double.TryParse(dtPs.Rows[i][0].ToString(),out num))
+                {
+                    continue;
+                }
+                double ps = Convert.ToDouble(dtPs.Rows[i][0]);
                 psList.Add(ps);
             }
             if (psList.Count == 0)
@@ -697,6 +702,11 @@ namespace GSYGeo
             List<double> psList = new List<double>();
             for(int i = 0; i < dtPs.Rows.Count; i++)
             {
+                double num;
+                if (!double.TryParse(dtPs.Rows[i][0].ToString(), out num))
+                {
+                    continue;
+                }
                 double ps = (double)dtPs.Rows[i][0];
                 psList.Add(ps);
             }
@@ -714,6 +724,45 @@ namespace GSYGeo
 
             // 绘图
             this.JkCanvas.DrawPLine(XList, YList, 1, Brushes.Green);
+        }
+
+        #endregion
+
+        #region 复制和粘贴
+
+        /// <summary>
+        /// 按下CTRL+V，复制Excel中的数据粘贴到DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PsListDataGrid_KeyDown(object sender, KeyEventArgs e)
+        {
+            // 判断按下的是否为CTRL+V
+            if (ModifierKeys.Control == Keyboard.Modifiers && e.Key == Key.V)
+            {
+                // 获取Excel复制的数据，数据为空时退出函数
+                List<string[]> excelData = OfficeOperation.GetDataFromExcelClipBoard();
+                if (excelData == null)
+                {
+                    return;
+                }
+
+                // 获取当前选中的DataGrid行号和列号
+                int row, column;
+                if (this.PsListDataGrid.SelectedCells.Count == 0)
+                {
+                    row = 0;
+                    column = 0;
+                }
+                else
+                {
+                    row = this.PsListDataGrid.Items.IndexOf(this.PsListDataGrid.SelectedCells[0].Item);
+                    column = this.PsListDataGrid.SelectedCells[0].Column.DisplayIndex;
+                }
+
+                // 将复制的数据添加到绑定的DataTable
+                dtPs = DtOperation.PasteFromExcel(dtPs, row, column, excelData, -1);
+            }
         }
 
         #endregion

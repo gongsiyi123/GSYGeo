@@ -173,7 +173,7 @@ namespace GSYGeo
             Canvas.SetTop(myTextBlock, _Y);
             _canvas.Children.Add(myTextBlock);
         }
-        
+
         // 绘制一个文字，并指定字体大小，颜色，是否加粗，是否斜体，对齐方式
         public static void DrawText(this Canvas _canvas,double _X,double _Y,string _text,double _fontSize,Brush _brush,bool _isBold,bool _isItalic,bool _isLeft)
         {
@@ -193,6 +193,27 @@ namespace GSYGeo
             {
                 Canvas.SetRight(myTextBlock, _X);
             }
+            Canvas.SetTop(myTextBlock, _Y);
+            _canvas.Children.Add(myTextBlock);
+        }
+
+        // 绘制一个竖向文字，字体大小为11，颜色为黑色，不加粗，非斜体，左对齐，设置旋转
+        public static void DrawVerticalText(this Canvas _canvas, double _X, double _Y, string _text)
+        {
+            string s = _text;
+            _text = "";
+            for (int i = 0; i < s.Length; i++)
+            {
+                _text += s.Substring(i, 1) + "\n";
+            }
+            TextBlock myTextBlock = new TextBlock();
+            myTextBlock.Text = _text;
+            myTextBlock.TextAlignment = System.Windows.TextAlignment.Left;
+            myTextBlock.FontSize = 11;
+            myTextBlock.Foreground = Brushes.Black;
+            myTextBlock.TextWrapping = System.Windows.TextWrapping.Wrap;
+
+            Canvas.SetLeft(myTextBlock, _X);
             Canvas.SetTop(myTextBlock, _Y);
             _canvas.Children.Add(myTextBlock);
         }

@@ -1,0 +1,132 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace GSYGeo
+{
+    /// <summary>
+    /// 统计标贯/动探的类
+    /// </summary>
+    public class StatisticNTest
+    {
+        /// <summary>
+        /// 构造函数，输入层号、岩土名称、统计类型
+        /// </summary>
+        /// <param name="_layer">层号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_type">统计类型</param>
+        public StatisticNTest(string _layer,string _name,ZkNTest.ntype _type)
+        {
+            Layer = _layer;
+            Name = _name;
+            Type = _type;
+        }
+
+        /// <summary>
+        /// 构造函数，直接输入统计成果
+        /// </summary>
+        /// <param name="_layer">层号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_type">统计类型</param>
+        /// <param name="_count">统计数</param>
+        /// <param name="_max">最大值</param>
+        /// <param name="_min">最小值</param>
+        /// <param name="_average">平均值</param>
+        /// <param name="_standardDeviation">标准差</param>
+        /// <param name="_variableCoefficient">变异系数</param>
+        /// <param name="_standardValue">标准值</param>
+        public StatisticNTest(string _layer,string _name,ZkNTest.ntype _type,int _count,double _max,double _min,double _average,double _standardDeviation,double _variableCoefficient,double _standardValue)
+        {
+            Layer = _layer;
+            Name = _name;
+            Type = _type;
+            Count = _count;
+            Max = _max;
+            Min = _min;
+            Average = _average;
+            StandardDeviation = _standardDeviation;
+            VariableCoefficient = _variableCoefficient;
+            StandardValue = _standardValue;
+        }
+
+        /// <summary>
+        /// 构造函数，输入原始数据
+        /// </summary>
+        /// <param name="_layer">层号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_type">统计类型</param>
+        /// <param name="_datalist">标贯/动探数据列表</param>
+        /// <param name="_startCount">起始统计样本数</param>
+        public StatisticNTest(string _layer,string _name,ZkNTest.ntype _type,List<double> _datalist,int _startCount)
+        {
+            Layer = _layer;
+            Name = _name;
+            Type = _type;
+            Count = Convert.ToInt32(Statistic.Count(_datalist));
+            Max = Statistic.Max(_datalist);
+            Min = Statistic.Min(_datalist);
+            Average = Statistic.Average(_datalist);
+            StandardDeviation = Statistic.StandardDeviation(_datalist, _startCount);
+            VariableCoefficient = Statistic.VariableCoefficient(_datalist, _startCount);
+            StandardValue = Statistic.StandardValue(_datalist, _startCount, false);
+        }
+
+        /// <summary>
+        /// 标贯/动探数据列表
+        /// </summary>
+        public List<double> DataList { get; set; }
+
+        /// <summary>
+        /// 层号
+        /// </summary>
+        public string Layer { get; set; }
+
+        /// <summary>
+        /// 岩土名称
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 统计类型
+        /// </summary>
+        public ZkNTest.ntype Type { get; set; }
+
+        /// <summary>
+        /// 统计数
+        /// </summary>
+        public int Count { get; set; }
+
+        /// <summary>
+        /// 最大值
+        /// </summary>
+        public double Max { get; set; }
+
+        /// <summary>
+        /// 最小值
+        /// </summary>
+        public double Min { get; set; }
+
+        /// <summary>
+        /// 平均值
+        /// </summary>
+        public double Average { get; set; }
+
+        /// <summary>
+        /// 标准差
+        /// </summary>
+        public double StandardDeviation { get; set; }
+
+        /// <summary>
+        /// 变异系数
+        /// </summary>
+        public double VariableCoefficient { get; set; }
+
+        /// <summary>
+        /// 标准值
+        /// </summary>
+        public double StandardValue { get; set; }
+
+    }
+}

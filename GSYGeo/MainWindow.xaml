@@ -65,7 +65,12 @@
                 <MenuItem Header="岩石试验" Name="IndoorRockTestMenu"/>
             </MenuItem>
             <MenuItem Header="统计分析" Name="CalculateMenu">
-                <MenuItem Header="勘察工作量统计" Name="WorkloadAcountMenu"/>
+                <MenuItem Header="勘察工作量统计" Name="WorkloadStatisticMenu"/>
+                <MenuItem Header="标贯/动探统计" Name="NTestStatisticMenu" Click="NTestStatisticMenu_Click"/>
+                <MenuItem Header="静力触探摩阻力统计" Name="PsStatisticMenu"/>
+                <MenuItem Header="土工常规试验统计" Name="RSTStatisticMenu"/>
+                <MenuItem Header="颗粒分析试验统计" Name="GATStatisticMenu"/>
+                <Separator/>
                 <MenuItem Header="承载力和压缩模量计算" Name="BearAndModulusCalculateMenu"/>
                 <MenuItem Header="抗剪强度计算" Name="ShearStrengthCalculateMenu"/>
                 <MenuItem Header="桩侧、桩端阻力计算" Name="PileResistanceCalculationMenu"/>

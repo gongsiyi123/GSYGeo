@@ -75,18 +75,18 @@ namespace GSYGeo
                     {
                         break;
                     }
-                    
+
                     // 复制数据
-                    if (_selectColumnIndex >= 3)
+                    // 当_skipInt为-1时，表示没有需要跳过的序号
+                    if (_skipInt == -1)
                     {
-                        _dt.Rows[i + _selectRowIndex][j + _selectColumnIndex + 1] = _dataList[i][j];
+                        _dt.Rows[i + _selectRowIndex][j + _selectColumnIndex] = _dataList[i][j];
                     }
                     else
                     {
-                        // 当_skipInt为-1时，表示没有需要跳过的序号
-                        if (_skipInt == -1)
+                        if (_selectColumnIndex >= _skipInt+1)
                         {
-                            _dt.Rows[i + _selectRowIndex][j + _selectColumnIndex] = _dataList[i][j];
+                            _dt.Rows[i + _selectRowIndex][j + _selectColumnIndex + 1] = _dataList[i][j];
                         }
                         else
                         {

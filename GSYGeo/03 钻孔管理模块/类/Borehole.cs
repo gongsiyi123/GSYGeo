@@ -218,13 +218,13 @@ namespace GSYGeo
         }
 
         // 方法，添加一个标贯动探
-        public void AddNTest(string _name,double _depth,double _value,ZkNTest.ntype _type)
+        public void AddNTest(string _zkNumber,string _name,double _depth,double _value,ZkNTest.ntype _type)
         {
-            nTests.Add(new ZkNTest(_name,_depth, _value, _type));
+            nTests.Add(new ZkNTest(_zkNumber, _name, _depth, _value, _type));
         }
 
         // 方法，编辑一个标贯动探
-        public void EditNTest(string _oldName,string _name,double _depth,double _value,ZkNTest.ntype _type)
+        public void EditNTest(string _zkNumber,string _oldName,string _name,double _depth,double _value,ZkNTest.ntype _type)
         {
             if (nTests != null)
             {
@@ -232,7 +232,7 @@ namespace GSYGeo
                 {
                     if (nTests[i].Name == _oldName)
                     {
-                        nTests[i] = new ZkNTest(_name,_depth, _value, _type);
+                        nTests[i] = new ZkNTest(_zkNumber, _name, _depth, _value, _type);
                     }
                 }
             }

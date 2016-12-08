@@ -10,15 +10,30 @@ namespace GSYGeo
     public class ZkNTest
     {
         // 带参数的构造函数
-        public ZkNTest(string _name,double _depth,double _value,ntype _type)
+        public ZkNTest(string _zkNumber,string _name,double _depth,double _value,ntype _type)
         {
+            this.zkNumber = _zkNumber;
             this.name = _name;
             this.depth = _depth;
             this.testValue = _value;
             this.type = _type;
         }
 
-        // 属性，试验名称
+        // 属性，试验所属钻孔
+        private string zkNumber;
+        public string ZkNumber
+        {
+            get
+            {
+                return zkNumber;
+            }
+            set
+            {
+                zkNumber = value;
+            }
+        }
+
+        // 属性，试验编号
         private string name;
         public string Name
         {

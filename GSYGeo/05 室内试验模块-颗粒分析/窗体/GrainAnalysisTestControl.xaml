@@ -6,6 +6,12 @@
              xmlns:local="clr-namespace:GSYGeo"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800"  BorderBrush="Gray" BorderThickness="0,1,1,1">
+    <Control.Resources>
+        <Style x:Key="contentCenterStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Control.Resources>
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -15,14 +21,14 @@
         <TextBlock Grid.Row="0" Text="颗粒分析试验数据汇总" FontSize="20" FontWeight="Bold" Margin="5" HorizontalAlignment="Center"/>
         <DataGrid Grid.Row="1" Name="GrainAnalysisTestDataGrid" ItemsSource="{Binding}" Margin="5" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserSortColumns="False" SelectionUnit="CellOrRowHeader" AutomationProperties.IsRowHeader="True" RowHeaderWidth="25" KeyDown="GrainAnalysisTestDataGrid_KeyDown">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="取样孔号" Width="auto" Binding="{Binding Path=zkNumber}"/>
-                <DataGridTextColumn Header="取样深度" Width="auto" Binding="{Binding Path=sampleDepth}"/>
-                <DataGridTextColumn Header=">20mm" Width="auto" Binding="{Binding Path=Group20ToMax}"/>
-                <DataGridTextColumn Header="20~2mm" Width="auto" Binding="{Binding Path=Group2To20}"/>
-                <DataGridTextColumn Header="2~0.5mm" Width="auto" Binding="{Binding Path=Group0_5To2}"/>
-                <DataGridTextColumn Header="0.5~0.25mm" Width="auto" Binding="{Binding Path=Group0_25To0_5}"/>
-                <DataGridTextColumn Header="0.25~0.075mm" Width="auto" Binding="{Binding Path=Group0_075To0_25}"/>
-                <DataGridTextColumn Header="&lt;0.075mm" Width="auto" Binding="{Binding Path=Group0To0_075}"/>
+                <DataGridTextColumn Header="取样孔号" Width="auto" Binding="{Binding Path=zkNumber}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="取样深度" Width="auto" Binding="{Binding Path=sampleDepth}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header=">20mm" Width="auto" Binding="{Binding Path=Group20ToMax}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="20~2mm" Width="auto" Binding="{Binding Path=Group2To20}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="2~0.5mm" Width="auto" Binding="{Binding Path=Group0_5To2}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="0.5~0.25mm" Width="auto" Binding="{Binding Path=Group0_25To0_5}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="0.25~0.075mm" Width="auto" Binding="{Binding Path=Group0_075To0_25}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="&lt;0.075mm" Width="auto" Binding="{Binding Path=Group0To0_075}" ElementStyle="{StaticResource contentCenterStyle}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Row="2">

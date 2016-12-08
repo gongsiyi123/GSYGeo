@@ -85,12 +85,14 @@
     <Compile Include="03 钻孔管理模块\窗体\ZkSampleDetail.xaml.cs">
       <DependentUpon>ZkSampleDetail.xaml</DependentUpon>
     </Compile>
-    <Compile Include="04 原位测试-静力触探模块\类\PsToDepthConverter.cs" />
-    <Compile Include="05 室内试验-土工常规模块\类\RoutineSoilTest.cs" />
-    <Compile Include="05 室内试验-土工常规模块\窗体\RoutineSoilTestControl.xaml.cs">
+    <Compile Include="04 原位测试模块-静力触探\类\PsToDepthConverter.cs" />
+    <Compile Include="05 室内试验模块-土工常规\类\RoutineSoilTest.cs" />
+    <Compile Include="05 室内试验模块-土工常规\窗体\RoutineSoilTestControl.xaml.cs">
       <DependentUpon>RoutineSoilTestControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="05 室内试验-土工常规模块\类\RoutineSoilTestDataBase.cs" />
+    <Compile Include="05 室内试验模块-土工常规\类\RoutineSoilTestDataBase.cs" />
+    <Compile Include="0 通用类\Statistic.cs" />
+    <Compile Include="06 统计分析模块-标贯动探统计\类\StatisticNTest.cs" />
     <Page Include="01 设置模块\窗体\EditPeople.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -103,7 +105,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="04 原位测试-静力触探模块\窗体\CPTControl.xaml">
+    <Page Include="04 原位测试模块-静力触探\窗体\CPTControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -111,7 +113,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="05 室内试验-颗粒分析模块\窗体\GrainAnalysisTestControl.xaml">
+    <Page Include="05 室内试验模块-颗粒分析\窗体\GrainAnalysisTestControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -133,19 +135,19 @@
     </Compile>
     <Compile Include="03 钻孔管理模块\类\BoreholeDataBase.cs" />
     <Compile Include="0 通用类\CanvasDrawing.cs" />
-    <Compile Include="04 原位测试-静力触探模块\类\CPT.cs" />
-    <Compile Include="04 原位测试-静力触探模块\窗体\CPTControl.xaml.cs">
+    <Compile Include="04 原位测试模块-静力触探\类\CPT.cs" />
+    <Compile Include="04 原位测试模块-静力触探\窗体\CPTControl.xaml.cs">
       <DependentUpon>CPTControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="04 原位测试-静力触探模块\类\CPTDataBase.cs" />
+    <Compile Include="04 原位测试模块-静力触探\类\CPTDataBase.cs" />
     <Compile Include="10 帮助模块\窗体\FeedBack.xaml.cs">
       <DependentUpon>FeedBack.xaml</DependentUpon>
     </Compile>
-    <Compile Include="05 室内试验-颗粒分析模块\类\GrainAnalysisTest.cs" />
-    <Compile Include="05 室内试验-颗粒分析模块\窗体\GrainAnalysisTestControl.xaml.cs">
+    <Compile Include="05 室内试验模块-颗粒分析\类\GrainAnalysisTest.cs" />
+    <Compile Include="05 室内试验模块-颗粒分析\窗体\GrainAnalysisTestControl.xaml.cs">
       <DependentUpon>GrainAnalysisTestControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="05 室内试验-颗粒分析模块\类\GrainAnalysisTestDataBase.cs" />
+    <Compile Include="05 室内试验模块-颗粒分析\类\GrainAnalysisTestDataBase.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -194,7 +196,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="05 室内试验-土工常规模块\窗体\RoutineSoilTestControl.xaml">
+    <Page Include="05 室内试验模块-土工常规\窗体\RoutineSoilTestControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="06 统计分析模块-标贯动探统计\窗体\NTestStatistic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -224,6 +230,9 @@
       <DependentUpon>ZkNTestDetail.xaml</DependentUpon>
     </Compile>
     <Compile Include="0 通用类\OfficeOperation.cs" />
+    <Compile Include="06 统计分析模块-标贯动探统计\窗体\NTestStatistic.xaml.cs">
+      <DependentUpon>NTestStatistic.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
