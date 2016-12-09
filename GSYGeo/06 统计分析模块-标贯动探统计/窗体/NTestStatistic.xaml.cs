@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data;
+using System.Threading;
 
 namespace GSYGeo
 {
@@ -56,43 +57,14 @@ namespace GSYGeo
         // 定义统计项目
         private string[] staName = new string[]
         {
-            "zkNumber","zkName","type","count","max","min","average","standardDeviation","variableCoefficient","standardValue"
+            "zkNumber","zkName","type","count","max","min","average","standardDeviation","variableCoefficient","correctionCoefficient","standardValue"
         };
         
         // 初始化NTestStatisticDataGrid，不带参数
         private void InitialNTestStatisticDataGrid()
         {
             // 定义统计数据列表
-            List<StatisticNTest> statisticList = new List<StatisticNTest>();
-
-            // 定义分层分层编号列表、分层岩土名称列表、试验类型列表
-            List<string> layerNumberList = ProjectDataBase.ReadLayerNumberList(Program.currentProject);
-            List<string> layerNameList = ProjectDataBase.ReadLayerNameList(Program.currentProject);
-            ZkNTest.ntype[] typeList = new ZkNTest.ntype[] { ZkNTest.ntype.N, ZkNTest.ntype.N10, ZkNTest.ntype.N635, ZkNTest.ntype.N120 };
-
-            // 在分层编号列表中循环，赋值统计数据列表
-            for (int i = 0; i < layerNumberList.Count; i++)
-            {
-                // 在试验类型列表中循环
-                for(int j = 0; j < typeList.Length; j++)
-                {
-                    // 检查当前的分层编号和试验类型的组合下在数据库中是否有内容
-                    List<ZkNTest> nTestList = BoreholeDataBase.ReadLayerNTest(Program.currentProject, layerNumberList[i], typeList[j]);
-                    if (nTestList.Count > 0)
-                    {
-                        // 提取符合条件的标贯/动探列表中的试验数据值
-                        List<double> dataList = new List<double>();
-                        foreach(ZkNTest nTest in nTestList)
-                        {
-                            dataList.Add(nTest.Value);
-                        }
-
-                        // 添加一组符合筛选条件的统计数据
-                        StatisticNTest stateNTest = new StatisticNTest(layerNumberList[i], layerNameList[i], typeList[j], dataList, 6);
-                        statisticList.Add(stateNTest);
-                    }
-                }
-            }
+            List<StatisticNTest> statisticList = SelectStatisticData();
 
             // 定义NTestStatisticDataGrid数据列
             foreach (string sta in staName)
@@ -114,9 +86,49 @@ namespace GSYGeo
                 dr["average"] = statisticList[i].Average.ToString("0.0");
                 dr["standardDeviation"] = statisticList[i].StandardDeviation.ToString() == "-0.19880205" ? "/" : statisticList[i].StandardDeviation.ToString("0.0");
                 dr["variableCoefficient"] = statisticList[i].VariableCoefficient.ToString() == "-0.19880205" ? "/" : statisticList[i].VariableCoefficient.ToString("0.00");
+                dr["correctionCoefficient"] = statisticList[i].CorrectionCoefficient.ToString() == "-0.19880205" ? "/" : statisticList[i].CorrectionCoefficient.ToString("0.0");
                 dr["standardValue"] = statisticList[i].StandardValue.ToString() == "-0.19880205" ? "/" : statisticList[i].StandardValue.ToString("0.0");
                 dtNS.Rows.Add(dr);
             }
+        }
+
+        // 筛选统计数据
+        public static List<StatisticNTest> SelectStatisticData()
+        {
+            // 定义统计数据列表
+            List<StatisticNTest> statisticList = new List<StatisticNTest>();
+
+            // 定义分层分层编号列表、分层岩土名称列表、试验类型列表
+            List<string> layerNumberList = ProjectDataBase.ReadLayerNumberList(Program.currentProject);
+            List<string> layerNameList = ProjectDataBase.ReadLayerNameList(Program.currentProject);
+            ZkNTest.ntype[] typeList = new ZkNTest.ntype[] { ZkNTest.ntype.N, ZkNTest.ntype.N10, ZkNTest.ntype.N635, ZkNTest.ntype.N120 };
+
+            // 在分层编号列表中循环，赋值统计数据列表
+            for (int i = 0; i < layerNumberList.Count; i++)
+            {
+                // 在试验类型列表中循环
+                for (int j = 0; j < typeList.Length; j++)
+                {
+                    // 检查当前的分层编号和试验类型的组合下在数据库中是否有内容
+                    List<ZkNTest> nTestList = BoreholeDataBase.ReadLayerNTest(Program.currentProject, layerNumberList[i], typeList[j]);
+                    if (nTestList.Count > 0)
+                    {
+                        // 提取符合条件的标贯/动探列表中的试验数据值
+                        List<double> dataList = new List<double>();
+                        foreach (ZkNTest nTest in nTestList)
+                        {
+                            dataList.Add(nTest.Value);
+                        }
+
+                        // 添加一组符合筛选条件的统计数据
+                        StatisticNTest stateNTest = new StatisticNTest(layerNumberList[i], layerNameList[i], typeList[j], dataList, 6);
+                        statisticList.Add(stateNTest);
+                    }
+                }
+            }
+
+            // 返回
+            return statisticList;
         }
 
         #endregion
@@ -180,9 +192,71 @@ namespace GSYGeo
 
         #region 输出Word文件
 
+        /// <summary>
+        /// 点击"输出为Word文档"按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OutputToWordButton_Click(object sender, RoutedEventArgs e)
+        {
+            // 选择输出目录
+            string folderPath;
+            System.Windows.Forms.FolderBrowserDialog programPathBrowser = new System.Windows.Forms.FolderBrowserDialog();
+            if (programPathBrowser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                folderPath = programPathBrowser.SelectedPath;
+            }
+            else
+            {
+                return;
+            }
+            object path = folderPath + @"\" + Program.currentProject + @"-标贯动探统计.doc";
 
+            // 启动输出窗体
+            ShowProgressBar(path);
+        }
+
+        /// <summary>
+        /// 输出Word文档函数
+        /// </summary>
+        /// <param name="obj">输出路径</param>
+        public static void OutputToWord(object obj)
+        {
+            // 参数转换
+            object path = obj.ToString();
+
+            // 定义统计数据列表
+            List<StatisticNTest> statisticList = SelectStatisticData();
+
+            // 输出Word
+            Word ntestStatisticWord = new Word();
+            ntestStatisticWord.AddNTestStatisticTable(statisticList);
+            ntestStatisticWord.SaveAndQuit(path);
+        }
+
+        /// <summary>
+        /// 实例化输出进度窗体
+        /// </summary>
+        /// <param name="obj">输出路径</param>
+        private void ShowProgressBar(object obj)
+        {
+            // 参数转换
+            string path = obj.ToString();
+
+            // 实例化窗体
+            OutputProgress prog = new OutputProgress(OutputProgress.OutputType.NTest, path, "输出统计结果", "正在输出标贯/动探锤击数统计成果Word文档……");
+            prog.ShowDialog();
+        }
 
         #endregion
 
+        #region 其他
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        #endregion
     }
 }

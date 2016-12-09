@@ -56,11 +56,41 @@ namespace GSYGeo
         // 定义统计项目
         private string[] staName = new string[]
         {
-            "jkNumber","jkName","count","max","min","average","standardDeviation","variableCoefficient","standardValue"
+            "jkNumber","jkName","count","max","min","average","standardDeviation","variableCoefficient","correctionCoefficient","standardValue"
         };
 
         // 初始化CPTStatisticDataGrid，不带参数
         private void InitialCPTStatisticDataGrid()
+        {
+            // 定义统计数据列表
+            List<StatisticCPT> statisticList = SelectStatisticData();
+            
+            // 定义CPTStatisticDataGrid数据列
+            foreach (string sta in staName)
+            {
+                dtCS.Columns.Add(new DataColumn(sta, typeof(string)));
+            }
+
+            // 将统计数据列表赋值给DataTable
+            DataRow dr;
+            for (int i = 0; i < statisticList.Count; i++)
+            {
+                dr = dtCS.NewRow();
+                dr["jkNumber"] = statisticList[i].Layer;
+                dr["jkName"] = statisticList[i].Name;
+                dr["count"] = statisticList[i].Count.ToString("0");
+                dr["max"] = statisticList[i].Max.ToString("0.00");
+                dr["min"] = statisticList[i].Min.ToString("0.00");
+                dr["average"] = statisticList[i].Average.ToString("0.00");
+                dr["standardDeviation"] = statisticList[i].StandardDeviation.ToString() == "-0.19880205" ? "/" : statisticList[i].StandardDeviation.ToString("0.00");
+                dr["variableCoefficient"] = statisticList[i].VariableCoefficient.ToString() == "-0.19880205" ? "/" : statisticList[i].VariableCoefficient.ToString("0.00");
+                dr["correctionCoefficient"] = statisticList[i].CorrectionCoefficient.ToString() == "-0.19880205" ? "/" : statisticList[i].CorrectionCoefficient.ToString("0.0");
+                dr["standardValue"] = statisticList[i].StandardValue.ToString() == "-0.19880205" ? "/" : statisticList[i].StandardValue.ToString("0.00");
+                dtCS.Rows.Add(dr);
+            }
+        }
+
+        public static List<StatisticCPT> SelectStatisticData()
         {
             // 定义统计数据列表
             List<StatisticCPT> statisticList = new List<StatisticCPT>();
@@ -82,28 +112,8 @@ namespace GSYGeo
                 }
             }
 
-            // 定义CPTStatisticDataGrid数据列
-            foreach (string sta in staName)
-            {
-                dtCS.Columns.Add(new DataColumn(sta, typeof(string)));
-            }
-
-            // 将统计数据列表赋值给DataTable
-            DataRow dr;
-            for (int i = 0; i < statisticList.Count; i++)
-            {
-                dr = dtCS.NewRow();
-                dr["jkNumber"] = statisticList[i].Layer;
-                dr["jkName"] = statisticList[i].Name;
-                dr["count"] = statisticList[i].Count.ToString("0");
-                dr["max"] = statisticList[i].Max.ToString("0.00");
-                dr["min"] = statisticList[i].Min.ToString("0.00");
-                dr["average"] = statisticList[i].Average.ToString("0.00");
-                dr["standardDeviation"] = statisticList[i].StandardDeviation.ToString() == "-0.19880205" ? "/" : statisticList[i].StandardDeviation.ToString("0.00");
-                dr["variableCoefficient"] = statisticList[i].VariableCoefficient.ToString() == "-0.19880205" ? "/" : statisticList[i].VariableCoefficient.ToString("0.00");
-                dr["standardValue"] = statisticList[i].StandardValue.ToString() == "-0.19880205" ? "/" : statisticList[i].StandardValue.ToString("0.00");
-                dtCS.Rows.Add(dr);
-            }
+            // 返回
+            return statisticList;
         }
 
         #endregion
@@ -166,7 +176,70 @@ namespace GSYGeo
 
         #region 输出Word文件
 
+        /// <summary>
+        /// 点击"输出为Word文档"按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OutputToWordButton_Click(object sender, RoutedEventArgs e)
+        {
+            // 选择输出目录
+            string folderPath;
+            System.Windows.Forms.FolderBrowserDialog programPathBrowser = new System.Windows.Forms.FolderBrowserDialog();
+            if (programPathBrowser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                folderPath = programPathBrowser.SelectedPath;
+            }
+            else
+            {
+                return;
+            }
+            object path = folderPath + @"\" + Program.currentProject + @"-静力触探摩阻力统计.doc";
 
+            // 启动输出窗体
+            ShowProgressBar(path);
+        }
+
+        /// <summary>
+        /// 输出Word文档函数
+        /// </summary>
+        /// <param name="obj">输出路径</param>
+        public static void OutputToWord(object obj)
+        {
+            // 参数转换
+            object path = obj.ToString();
+
+            // 定义统计数据列表
+            List<StatisticCPT> statisticList = SelectStatisticData();
+
+            // 输出Word
+            Word cptStatisticWord = new Word();
+            cptStatisticWord.AddPsStatisticTable(statisticList);
+            cptStatisticWord.SaveAndQuit(path);
+        }
+
+        /// <summary>
+        /// 实例化输出进度窗体
+        /// </summary>
+        /// <param name="obj">输出路径</param>
+        private void ShowProgressBar(object obj)
+        {
+            // 参数转换
+            string path = obj.ToString();
+
+            // 实例化窗体
+            OutputProgress prog = new OutputProgress(OutputProgress.OutputType.Ps, path, "输出统计结果", "正在输出静力触探摩阻力统计成果Word文档……");
+            prog.ShowDialog();
+        }
+
+        #endregion
+
+        #region 其他
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
         #endregion
     }

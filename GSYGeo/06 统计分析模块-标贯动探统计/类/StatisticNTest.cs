@@ -36,8 +36,9 @@ namespace GSYGeo
         /// <param name="_average">平均值</param>
         /// <param name="_standardDeviation">标准差</param>
         /// <param name="_variableCoefficient">变异系数</param>
+        /// <param name="_correctionCoefficient">统计修正系数</param>
         /// <param name="_standardValue">标准值</param>
-        public StatisticNTest(string _layer,string _name,ZkNTest.ntype _type,int _count,double _max,double _min,double _average,double _standardDeviation,double _variableCoefficient,double _standardValue)
+        public StatisticNTest(string _layer,string _name,ZkNTest.ntype _type,int _count,double _max,double _min,double _average,double _standardDeviation,double _variableCoefficient,double _correctionCoefficient,double _standardValue)
         {
             Layer = _layer;
             Name = _name;
@@ -48,6 +49,7 @@ namespace GSYGeo
             Average = _average;
             StandardDeviation = _standardDeviation;
             VariableCoefficient = _variableCoefficient;
+            CorrectionCoefficient = _correctionCoefficient;
             StandardValue = _standardValue;
         }
 
@@ -70,7 +72,8 @@ namespace GSYGeo
             Average = Statistic.Average(_datalist);
             StandardDeviation = Statistic.StandardDeviation(_datalist, _startCount);
             VariableCoefficient = Statistic.VariableCoefficient(_datalist, _startCount);
-            StandardValue = Statistic.StandardValue(_datalist, _startCount, false);
+            CorrectionCoefficient = Statistic.CorrectionCoefficient(_datalist, 6, false);
+            StandardValue = Statistic.StandardValue(Average, CorrectionCoefficient);
         }
 
         /// <summary>
@@ -122,6 +125,11 @@ namespace GSYGeo
         /// 变异系数
         /// </summary>
         public double VariableCoefficient { get; set; }
+
+        /// <summary>
+        /// 统计修正系数
+        /// </summary>
+        public double CorrectionCoefficient { get; set; }
 
         /// <summary>
         /// 标准值

@@ -474,7 +474,9 @@ namespace GSYGeo
             NTestStatistic();
         }
 
-        // 统计标贯/动探函数
+        /// <summary>
+        /// 统计标贯/动探函数
+        /// </summary>
         private void NTestStatistic()
         {
             // 实例化一个NTestStatistic窗口
@@ -496,12 +498,38 @@ namespace GSYGeo
             PsStatistic();
         }
 
-        // 统计摩阻力函数
+        /// <summary>
+        /// 统计摩阻力函数
+        /// </summary>
         private void PsStatistic()
         {
             // 实例化一个CPTStatistic窗口
             CPTStatistic psStatistic = new CPTStatistic();
             psStatistic.ShowDialog();
+        }
+
+        #endregion
+
+        #region 统计分析模块-土工常规统计
+
+        /// <summary>
+        /// 单击菜单"统计分析"-"土工常规统计"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RSTStatisticMenu_Click(object sender, RoutedEventArgs e)
+        {
+            RSTStatistic();
+        }
+
+        /// <summary>
+        /// 统计土工常规函数
+        /// </summary>
+        private void RSTStatistic()
+        {
+            // 实例化一个RSTStatistic窗口
+            RSTStatistic rstStatistic = new RSTStatistic();
+            rstStatistic.ShowDialog();
         }
 
         #endregion
@@ -524,6 +552,7 @@ namespace GSYGeo
 
 
         #endregion
+
         
     }
 }

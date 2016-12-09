@@ -7,19 +7,42 @@ using System.Threading.Tasks;
 namespace GSYGeo
 {
     /// <summary>
-    /// 统计静力触探摩阻力的类
+    /// 统计土工常规试验的类
     /// </summary>
-    public class StatisticCPT
+    public class StatisticRST
     {
         /// <summary>
-        /// 构造函数，输入层号、岩土名称
+        /// 试验类型枚举
+        /// </summary>
+        public enum RSTType
+        {
+            waterLevel,
+            density,
+            specificGravity,
+            voidRatio,
+            saturation,
+            liquidLimit,
+            plasticLimit,
+            plasticIndex,
+            liquidityIndex,
+            compressibility,
+            modulus,
+            frictionAngle,
+            cohesion,
+            permeability
+        }
+
+        /// <summary>
+        /// 构造函数，输入层号、岩土名称、试验类型
         /// </summary>
         /// <param name="_layer">层号</param>
         /// <param name="_name">岩土名称</param>
-        public StatisticCPT(string _layer, string _name)
+        /// <param name="_type">试验类型</param>
+        public StatisticRST(string _layer,string _name,RSTType _type)
         {
             Layer = _layer;
             Name = _name;
+            Type = _type;
         }
 
         /// <summary>
@@ -27,6 +50,7 @@ namespace GSYGeo
         /// </summary>
         /// <param name="_layer">层号</param>
         /// <param name="_name">岩土名称</param>
+        /// <param name="_type">试验类型</param>
         /// <param name="_count">统计数</param>
         /// <param name="_max">最大值</param>
         /// <param name="_min">最小值</param>
@@ -35,10 +59,11 @@ namespace GSYGeo
         /// <param name="_variableCoefficient">变异系数</param>
         /// <param name="_correctionCoefficient">统计修正系数</param>
         /// <param name="_standardValue">标准值</param>
-        public StatisticCPT(string _layer, string _name, int _count, double _max, double _min, double _average, double _standardDeviation, double _variableCoefficient, double _correctionCoefficient, double _standardValue)
+        public StatisticRST(string _layer, string _name, RSTType _type, int _count, double _max, double _min, double _average, double _standardDeviation, double _variableCoefficient, double _correctionCoefficient, double _standardValue)
         {
             Layer = _layer;
             Name = _name;
+            Type = _type;
             Count = _count;
             Max = _max;
             Min = _min;
@@ -54,12 +79,14 @@ namespace GSYGeo
         /// </summary>
         /// <param name="_layer">层号</param>
         /// <param name="_name">岩土名称</param>
-        /// <param name="_datalist">标贯/动探数据列表</param>
+        /// <param name="_type">统计类型</param>
+        /// <param name="_datalist">试验数据列表</param>
         /// <param name="_startCount">起始统计样本数</param>
-        public StatisticCPT(string _layer, string _name, List<double> _datalist, int _startCount)
+        public StatisticRST(string _layer, string _name, RSTType _type, List<double> _datalist, int _startCount)
         {
             Layer = _layer;
             Name = _name;
+            Type = _type;
             Count = Convert.ToInt32(Statistic.Count(_datalist));
             Max = Statistic.Max(_datalist);
             Min = Statistic.Min(_datalist);
@@ -71,7 +98,7 @@ namespace GSYGeo
         }
 
         /// <summary>
-        /// 摩阻力数据列表
+        /// 试验数据列表
         /// </summary>
         public List<double> DataList { get; set; }
 
@@ -84,7 +111,12 @@ namespace GSYGeo
         /// 岩土名称
         /// </summary>
         public string Name { get; set; }
-        
+
+        /// <summary>
+        /// 统计类型
+        /// </summary>
+        public RSTType Type { get; set; }
+
         /// <summary>
         /// 统计数
         /// </summary>

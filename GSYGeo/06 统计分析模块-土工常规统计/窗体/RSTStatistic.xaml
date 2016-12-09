@@ -1,0 +1,63 @@
+﻿<Window x:Class="GSYGeo.RSTStatistic"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GSYGeo"
+        mc:Ignorable="d"
+        Title="土工常规试验成果统计" Height="330" Width="850" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="contentCenterStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="选择分层：" VerticalAlignment="Center" Margin="10,5,5,5"/>
+            <ComboBox Grid.Column="1" Name="LayerNumberComboBox" VerticalAlignment="Center" Margin="5" MinWidth="150" SelectionChanged="LayerNumberComboBox_SelectionChanged"/>
+        </Grid>
+        <DataGrid Grid.Row="1" Name="RSTStatisticDataGrid" ItemsSource="{Binding}" Margin="5" MinHeight="100" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="统计项目" Binding="{Binding Path=statisticType}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="含水量" Binding="{Binding Path=waterLevel}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="天然密度" Binding="{Binding Path=density}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="比重" Binding="{Binding Path=specificGravity}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="孔隙比" Binding="{Binding Path=voidRatio}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="饱和度" Binding="{Binding Path=saturation}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="液限" Binding="{Binding Path=liquidLimit}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="塑限" Binding="{Binding Path=plasticLimit}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="塑性指数" Binding="{Binding Path=plastticIndex}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="液性指数" Binding="{Binding Path=liquidityIndex}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="压缩系数" Binding="{Binding Path=compressibility}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="压缩模量" Binding="{Binding Path=modulus}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="内摩擦角" Binding="{Binding Path=frictionAngle}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="粘聚力" Binding="{Binding Path=cohesion}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="渗透系数" Binding="{Binding Path=permeability}" ElementStyle="{StaticResource contentCenterStyle}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Border Grid.Row="2" Background="LightGray" BorderBrush="Gray" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Name="OutputToWordButton" Content="输出为Word表格" Margin="5"/>
+                <Button Grid.Column="2" Name="CloseButton" Content="关闭" Margin="5"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

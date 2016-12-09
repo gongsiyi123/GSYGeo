@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GSYGeo"
         mc:Ignorable="d"
-        Title="标准贯入试验/动力触探试验成果统计" Height="450" Width="750" WindowStartupLocation="CenterScreen">
+        Title="标准贯入试验/动力触探试验成果统计" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="contentCenterStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -39,6 +39,7 @@
                         <DataGridTextColumn Header="平均值" Binding="{Binding Path=average}" ElementStyle="{StaticResource contentCenterStyle}"/>
                         <DataGridTextColumn Header="标准差" Binding="{Binding Path=standardDeviation}" ElementStyle="{StaticResource contentCenterStyle}"/>
                         <DataGridTextColumn Header="变异系数" Binding="{Binding Path=variableCoefficient}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                        <DataGridTextColumn Header="统计修正系数" Binding="{Binding Path=correctionCoefficient}" ElementStyle="{StaticResource contentCenterStyle}"/>
                         <DataGridTextColumn Header="标准值" Binding="{Binding Path=standardValue}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     </DataGrid.Columns>
                 </DataGrid>
@@ -75,8 +76,8 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Name="OutputToWordButton" Content="输出为Word表格" Margin="5"/>
-                <Button Grid.Column="2" Name="CloseButton" Content="关闭" Margin="5"/>
+                <Button Grid.Column="1" Name="OutputToWordButton" Content="输出为Word表格" Margin="5" Click="OutputToWordButton_Click"/>
+                <Button Grid.Column="2" Name="CloseButton" Content="关闭" Margin="5" Click="CloseButton_Click"/>
             </Grid>
         </Border>
     </Grid>

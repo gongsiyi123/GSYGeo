@@ -38,6 +38,7 @@
                         <DataGridTextColumn Header="平均值" Binding="{Binding Path=average}" ElementStyle="{StaticResource contentCenterStyle}"/>
                         <DataGridTextColumn Header="标准差" Binding="{Binding Path=standardDeviation}" ElementStyle="{StaticResource contentCenterStyle}"/>
                         <DataGridTextColumn Header="变异系数" Binding="{Binding Path=variableCoefficient}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                        <DataGridTextColumn Header="统计修正系数" Binding="{Binding Path=correctionCoefficient}" ElementStyle="{StaticResource contentCenterStyle}"/>
                         <DataGridTextColumn Header="标准值" Binding="{Binding Path=standardValue}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     </DataGrid.Columns>
                 </DataGrid>
@@ -73,8 +74,8 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Name="OutputToWordButton" Content="输出为Word表格" Margin="5"/>
-                <Button Grid.Column="2" Name="CloseButton" Content="关闭" Margin="5"/>
+                <Button Grid.Column="1" Name="OutputToWordButton" Content="输出为Word表格" Margin="5" Click="OutputToWordButton_Click"/>
+                <Button Grid.Column="2" Name="CloseButton" Content="关闭" Margin="5" Click="CloseButton_Click"/>
             </Grid>
         </Border>
     </Grid>

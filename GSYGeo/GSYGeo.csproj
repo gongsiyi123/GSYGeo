@@ -37,9 +37,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ExtendedGrid">
-      <HintPath>..\..\..\..\..\..\Downloads\WPF Extended DataGrid\ExtendedGrid.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
@@ -95,6 +92,14 @@
     <Compile Include="06 统计分析模块-标贯动探统计\类\StatisticNTest.cs" />
     <Compile Include="06 统计分析模块-静力触探摩阻力统计\类\StatisticCPT.cs" />
     <Compile Include="06 统计分析模块-静力触探摩阻力统计\类\StatisticPs.cs" />
+    <Compile Include="0 通用控件\OutputProgress.xaml.cs">
+      <DependentUpon>OutputProgress.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="0 通用类\Word.cs" />
+    <Compile Include="06 统计分析模块-土工常规统计\窗体\RSTStatistic.xaml.cs">
+      <DependentUpon>RSTStatistic.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="06 统计分析模块-土工常规统计\类\StatisticRST.cs" />
     <Page Include="01 设置模块\窗体\EditPeople.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -213,6 +218,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="0 通用控件\OutputProgress.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="06 统计分析模块-土工常规统计\窗体\RSTStatistic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="02 项目管理模块\窗体\NewProject.xaml.cs">
@@ -267,8 +280,36 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="0 通用控件\" />
     <Folder Include="10 帮助模块\类\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Word">
+      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

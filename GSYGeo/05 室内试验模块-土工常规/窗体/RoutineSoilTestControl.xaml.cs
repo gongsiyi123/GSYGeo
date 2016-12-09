@@ -324,7 +324,7 @@ namespace GSYGeo
                         string data = dtRST.Rows[i][j].ToString();
                         if(!string.IsNullOrEmpty(data) && !string.IsNullOrWhiteSpace(data) && !double.TryParse(data,out num))
                         {
-                            MessageBox.Show("第" + (i + 1) + "行的 " + this.RoutineSoilTestDataGrid.Columns[j].Header + " " + data + " 不是有效数字");
+                            MessageBox.Show("第" + (i + 1) + "行的 " + this.RoutineSoilTestDataGrid.Columns[j-1].Header + " " + data + " 不是有效数字");
                             return false;
                         }
                     }
