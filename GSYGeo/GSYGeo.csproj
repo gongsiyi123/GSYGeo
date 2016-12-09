@@ -93,6 +93,8 @@
     <Compile Include="05 室内试验模块-土工常规\类\RoutineSoilTestDataBase.cs" />
     <Compile Include="0 通用类\Statistic.cs" />
     <Compile Include="06 统计分析模块-标贯动探统计\类\StatisticNTest.cs" />
+    <Compile Include="06 统计分析模块-静力触探摩阻力统计\类\StatisticCPT.cs" />
+    <Compile Include="06 统计分析模块-静力触探摩阻力统计\类\StatisticPs.cs" />
     <Page Include="01 设置模块\窗体\EditPeople.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -114,6 +116,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="05 室内试验模块-颗粒分析\窗体\GrainAnalysisTestControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="06 统计分析模块-静力触探摩阻力统计\窗体\CPTStatistic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -148,6 +154,9 @@
       <DependentUpon>GrainAnalysisTestControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="05 室内试验模块-颗粒分析\类\GrainAnalysisTestDataBase.cs" />
+    <Compile Include="06 统计分析模块-静力触探摩阻力统计\窗体\CPTStatistic.xaml.cs">
+      <DependentUpon>CPTStatistic.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

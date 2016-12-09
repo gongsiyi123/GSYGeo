@@ -1,11 +1,11 @@
-﻿<Window x:Class="GSYGeo.NTestStatistic"
+﻿<Window x:Class="GSYGeo.CPTStatistic"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GSYGeo"
         mc:Ignorable="d"
-        Title="标准贯入试验/动力触探试验成果统计" Height="450" Width="750" WindowStartupLocation="CenterScreen">
+        Title="CPTStatistic" Height="450" Width="750" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="contentCenterStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -27,12 +27,11 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="标贯/动探锤击数统计" HorizontalAlignment="Center" Margin="5"/>
-                <DataGrid Grid.Row="1" Name="NTestStatisticDataGrid" ItemsSource="{Binding}" Margin="5" MinHeight="200" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto">
+                <TextBlock Grid.Row="0" Text="静力触探摩阻力统计" HorizontalAlignment="Center" Margin="5"/>
+                <DataGrid Grid.Row="1" Name="CPTStatisticDataGrid" ItemsSource="{Binding}" Margin="5" MinHeight="200" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="层号" Binding="{Binding Path=zkNumber}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                        <DataGridTextColumn Header="岩土名称" Binding="{Binding Path=zkName}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                        <DataGridTextColumn Header="类型" Binding="{Binding Path=type}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                        <DataGridTextColumn Header="层号" Binding="{Binding Path=jkNumber}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                        <DataGridTextColumn Header="岩土名称" Binding="{Binding Path=jkName}" ElementStyle="{StaticResource contentCenterStyle}"/>
                         <DataGridTextColumn Header="统计数" Binding="{Binding Path=count}" ElementStyle="{StaticResource contentCenterStyle}"/>
                         <DataGridTextColumn Header="最大值" Binding="{Binding Path=max}" ElementStyle="{StaticResource contentCenterStyle}"/>
                         <DataGridTextColumn Header="最小值" Binding="{Binding Path=min}" ElementStyle="{StaticResource contentCenterStyle}"/>
@@ -49,7 +48,7 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="标贯/动探明细" Margin="5"/>
+                <TextBlock Grid.Row="0" Text="摩阻力明细" Margin="5"/>
                 <Grid Grid.Row="1" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>
@@ -58,12 +57,11 @@
                     <TextBlock Grid.Column="0" Text="层号：" Margin="5"/>
                     <ComboBox Grid.Column="1" Name="LayerListComboBox" Margin="5,0,5,5" SelectionChanged="LayerListComboBox_SelectionChanged"/>
                 </Grid>
-                <DataGrid Grid.Row="2" Name="NTestDetailDataGrid" ItemsSource="{Binding}" Margin="5" MinWidth="200" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True" AutoGenerateColumns="False">
+                <DataGrid Grid.Row="2" Name="CPTDetailDataGrid" ItemsSource="{Binding}" Margin="5" MinWidth="150" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="钻孔编号" Binding="{Binding Path=zkNumber}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                        <DataGridTextColumn Header="深度" Binding="{Binding Path=nTestDepth}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                        <DataGridTextColumn Header="击数" Binding="{Binding Path=nTestValue}" ElementStyle="{StaticResource contentCenterStyle}"/>
-                        <DataGridTextColumn Header="类型" Binding="{Binding Path=nTestType}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                        <DataGridTextColumn Header="钻孔编号" Binding="{Binding Path=jkNumber}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                        <DataGridTextColumn Header="深度" Binding="{Binding Path=psDepth}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                        <DataGridTextColumn Header="Ps值" Binding="{Binding Path=psValue}" ElementStyle="{StaticResource contentCenterStyle}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

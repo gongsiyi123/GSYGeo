@@ -439,7 +439,7 @@ namespace GSYGeo
 
         #endregion
 
-        #region 室内试验-颗粒分析试验模块
+        #region 室内试验模块-颗粒分析试验
 
         // 单击菜单"室内试验"-"颗粒分析试验"-"查看/添加颗粒分析试验数据"
         private void ShowAddGrainAnalysisTestDataMenu_Click(object sender, RoutedEventArgs e)
@@ -462,6 +462,50 @@ namespace GSYGeo
 
         #endregion
 
+        #region 统计分析模块-标贯/动探统计
+
+        /// <summary>
+        /// 单击菜单"统计分析"-"标贯/动探统计"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NTestStatisticMenu_Click(object sender, RoutedEventArgs e)
+        {
+            NTestStatistic();
+        }
+
+        // 统计标贯/动探函数
+        private void NTestStatistic()
+        {
+            // 实例化一个NTestStatistic窗口
+            NTestStatistic nTestStatistic = new NTestStatistic();
+            nTestStatistic.ShowDialog();
+        }
+
+        #endregion
+
+        #region 统计分析模块-静力触探统计
+
+        /// <summary>
+        /// 单击菜单"统计分析"-"静力触探摩阻力统计"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PsStatisticMenu_Click(object sender, RoutedEventArgs e)
+        {
+            PsStatistic();
+        }
+
+        // 统计摩阻力函数
+        private void PsStatistic()
+        {
+            // 实例化一个CPTStatistic窗口
+            CPTStatistic psStatistic = new CPTStatistic();
+            psStatistic.ShowDialog();
+        }
+
+        #endregion
+
         #region 帮助模块
 
         // 单击菜单"帮助"-"更新日志"
@@ -480,11 +524,6 @@ namespace GSYGeo
 
 
         #endregion
-
-        private void NTestStatisticMenu_Click(object sender, RoutedEventArgs e)
-        {
-            NTestStatistic ntest = new NTestStatistic();
-            ntest.ShowDialog();
-        }
+        
     }
 }

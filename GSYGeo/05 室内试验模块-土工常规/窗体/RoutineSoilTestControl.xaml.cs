@@ -73,6 +73,7 @@ namespace GSYGeo
                 EditButton.IsEnabled = false;
                 SaveButton.IsEnabled = true;
                 ClearButton.IsEnabled = true;
+                RecoverButton.IsEnabled = false;
                 RoutineSoilTestDataGrid.IsReadOnly = false;
                 RoutineSoilTestDataGrid.Foreground = Brushes.Black;
             }
@@ -84,6 +85,7 @@ namespace GSYGeo
                 EditButton.IsEnabled = true;
                 SaveButton.IsEnabled = false;
                 ClearButton.IsEnabled = false;
+                RecoverButton.IsEnabled = false;
                 RoutineSoilTestDataGrid.IsReadOnly = true;
                 RoutineSoilTestDataGrid.Foreground = Brushes.Gray;
             }

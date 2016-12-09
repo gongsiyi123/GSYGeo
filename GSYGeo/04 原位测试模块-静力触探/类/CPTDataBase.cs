@@ -268,5 +268,144 @@ namespace GSYGeo
                 return jkPsList;
             }
         }
+
+        /// <summary>
+        /// 查询某个分层的摩阻力列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_layerNumber">分层编号</param>
+        /// <returns></returns>
+        public static List<double> ReadLayerPs(string _projectName,string _layerNumber)
+        {
+            // 创建连接到项目信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\" + _projectName + ".gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 定义要返回的列表
+                List<double> psList = new List<double>();
+
+                // 读取项目分层列表
+                List<string> layerList = ProjectDataBase.ReadLayerNumberList(_projectName);
+
+                // 读取触探孔列表，在触探孔列表中循环
+                List<string> jkList = ReadJkList(_projectName);
+                for (int i = 0; i < jkList.Count; i++)
+                {
+                    // 读取该钻孔的摩阻力列表和分层列表
+                    List<double> jkPsList = ReadJkPs(_projectName, jkList[i]);
+                    List<ZkLayer> jkLayerList = ReadJkLayer(_projectName, jkList[i]);
+
+                    // 计算输入的分层的深度范围
+                    double oldLayerDepth, layerDepth;
+                    int layerIndex = -1;
+                    for(int j = 0; j < jkLayerList.Count; j++)
+                    {
+                        if (jkLayerList[j].Number == _layerNumber)
+                        {
+                            layerIndex = j;
+                        }
+                    }
+
+                    if (layerIndex != -1)
+                    {
+                        if (layerIndex == 0)
+                        {
+                            oldLayerDepth = 0;
+                            layerDepth = jkLayerList[layerIndex].Depth;
+                        }
+                        else
+                        {
+                            oldLayerDepth = jkLayerList[layerIndex - 1].Depth;
+                            layerDepth = jkLayerList[layerIndex].Depth;
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    
+                    // 将当前触探孔中符合条件的摩阻力赋值要返回的列表
+                    for(int j = (int)(oldLayerDepth * 10); j < (int)(layerDepth * 10); j++)
+                    {
+                        psList.Add(jkPsList[j]);
+                    }
+                }
+
+                // 返回赋值后的列表
+                return psList;
+            }
+        }
+
+        /// <summary>
+        /// 查询某个分层的摩阻力列表，输出为StatisticPs列表形式
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_layerNumber">分层编号</param>
+        /// <returns></returns>
+        public static List<StatisticPs> ReadLayerPsAsStatePs(string _projectName,string _layerNumber)
+        {
+            // 创建连接到项目信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\" + _projectName + ".gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 定义要返回的列表
+                List<StatisticPs> psList = new List<StatisticPs>();
+
+                // 读取项目分层列表
+                List<string> layerList = ProjectDataBase.ReadLayerNumberList(_projectName);
+
+                // 读取触探孔列表，在触探孔列表中循环
+                List<string> jkList = ReadJkList(_projectName);
+                for (int i = 0; i < jkList.Count; i++)
+                {
+                    // 读取该钻孔的摩阻力列表和分层列表
+                    List<double> jkPsList = ReadJkPs(_projectName, jkList[i]);
+                    List<ZkLayer> jkLayerList = ReadJkLayer(_projectName, jkList[i]);
+
+                    // 计算输入的分层的深度范围
+                    double oldLayerDepth, layerDepth;
+                    int layerIndex = -1;
+                    for (int j = 0; j < jkLayerList.Count; j++)
+                    {
+                        if (jkLayerList[j].Number == _layerNumber)
+                        {
+                            layerIndex = j;
+                        }
+                    }
+                    if (layerIndex != -1)
+                    {
+                        if (layerIndex == 0)
+                        {
+                            oldLayerDepth = 0;
+                            layerDepth = jkLayerList[layerIndex].Depth;
+                        }
+                        else
+                        {
+                            oldLayerDepth = jkLayerList[layerIndex - 1].Depth;
+                            layerDepth = jkLayerList[layerIndex].Depth;
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                    // 将当前触探孔中符合条件的摩阻力赋值要返回的列表
+                    for (int j = (int)(oldLayerDepth * 10) + 1; j <= (int)(layerDepth * 10); j++)
+                    {
+                        psList.Add(new StatisticPs(jkList[i], (double)j / 10, jkPsList[j - 1]));
+                    }
+                }
+
+                // 返回赋值后的列表
+                return psList;
+            }
+        }
     }
 }
