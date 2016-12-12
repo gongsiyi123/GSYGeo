@@ -89,7 +89,17 @@ namespace GSYGeo
         /// <param name="_path">输出文件的路径</param>
         public delegate void OutputNTestStatisticEventHandler(object _path);
 
+        /// <summary>
+        /// 声明输出静力触探摩阻力统计结果的后台委托
+        /// </summary>
+        /// <param name="_path">输出文件的路径</param>
         public delegate void OutputPsStatisticEventHandler(object _path);
+
+        /// <summary>
+        /// 声明输出土工常规试验统计结果的后台委托
+        /// </summary>
+        /// <param name="_path">输出文件的路径</param>
+        public delegate void OutputRSTStatisticEventHandler(object _path);
 
         /// <summary>
         /// 启动后台进程
@@ -159,6 +169,11 @@ namespace GSYGeo
             {
                 OutputPsStatisticEventHandler outputPsStatistic = new OutputPsStatisticEventHandler(CPTStatistic.OutputToWord);
                 outputPsStatistic(Path);
+            }
+            else if (BWType == OutputType.RST)
+            {
+                OutputRSTStatisticEventHandler outputRSTStatistic = new OutputRSTStatisticEventHandler(RSTStatistic.OutputToWord);
+                outputRSTStatistic(Path);
             }
         }
 

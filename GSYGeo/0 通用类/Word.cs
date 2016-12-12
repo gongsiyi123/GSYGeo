@@ -154,7 +154,12 @@ namespace GSYGeo
             //返回
             return table;
         }
-        
+
+        /// <summary>
+        /// 添加静力触探摩阻力统计表格
+        /// </summary>
+        /// <param name="_cptStatistic">静力触探摩阻力统计数据</param>
+        /// <returns></returns>
         public MSWord.Table AddPsStatisticTable(List<StatisticCPT> _cptStatistic)
         {
             // 填写表格标题
@@ -216,6 +221,171 @@ namespace GSYGeo
             }
 
             //返回
+            return table;
+        }
+
+        /// <summary>
+        /// 添加土工常规试验统计表格
+        /// </summary>
+        /// <param name="_rstStatistic">土工常规试验统计数据</param>
+        /// <returns></returns>
+        public MSWord.Table AddRSTStatisticTable(List<StatisticRST> _rstStatistic)
+        {
+            // 去除统计数为0的分层的统计数据
+            for(int i = 0; i < _rstStatistic.Count / 14; i++)
+            {
+                bool isZero = true;
+
+                for(int j = 0; j < 14; j++)
+                {
+                    if (_rstStatistic[j + i * 14].Count > 0)
+                    {
+                        isZero = false;
+                    }
+                }
+
+                if (isZero)
+                {
+                    for (int j = 13; j > -1; j--)
+                    {
+                        _rstStatistic.RemoveAt(j + i * 14);
+                    }
+                }
+            }
+
+            // 填写表格标题
+            Doc.Paragraphs.Last.Range.Text = "表1 土工常规试验成果统计表";
+            Doc.Paragraphs.Last.Range.Font.Bold = 1;
+            Doc.Paragraphs.Last.Range.Font.Size = 12;
+            App.Selection.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+            object unite = MSWord.WdUnits.wdStory;
+            App.Selection.EndKey(ref unite, ref Nothing);
+
+            // 定义表格对象
+            MSWord.Table table = Tables.Add(App.Selection.Range, _rstStatistic.Count / 14 * 8 + 1, 16, ref Nothing, ref Nothing);
+
+            // 填充行标题
+            string[] rowheader = new string[]
+            {
+                "层号及名称",
+                "统\n计\n名\n称",
+                "含\n水\n量",
+                "天\n然\n密\n度",
+                "比\n重",
+                "孔\n隙\n比",
+                "饱\n和\n度",
+                "液\n限",
+                "塑\n限",
+                "塑\n性\n指\n数",
+                "液\n性\n指\n数",
+                "压\n缩\n系\n数",
+                "压\n缩\n模\n量",
+                "内\n摩\n擦\n角",
+                "粘\n聚\n力",
+                "渗\n透\n系\n数"
+            };
+            for (int i = 1; i <= table.Columns.Count; i++)
+            {
+                table.Cell(1, i).Range.Text = rowheader[i - 1];
+            }
+
+            // 设置文档格式
+            Doc.PageSetup.LeftMargin = 50F;
+            Doc.PageSetup.RightMargin = 50F;
+            
+            // 设置表格格式
+            table.Select();
+            App.Selection.Tables[1].Rows.Alignment = WdRowAlignment.wdAlignRowCenter;
+
+            foreach(Row row in table.Rows)
+            {
+                row.Range.Bold = 0;
+            }
+            table.Rows[1].Range.Bold = 1;
+            for (int i = 0; i < _rstStatistic.Count / 14; i++)
+            {
+                table.Rows[5 + i * 8].Range.Bold = 1;
+                table.Rows[9 + i * 8].Range.Bold = 1;
+            }
+
+            table.Rows[1].Range.ParagraphFormat.LineSpacingRule = WdLineSpacing.wdLineSpaceExactly;
+            for(int i = 1; i <= table.Rows.Count; i++)
+            {
+                table.Cell(i, 1).Range.ParagraphFormat.LineSpacingRule = WdLineSpacing.wdLineSpaceExactly;
+            }
+
+            table.Range.Font.Size = 9.0F;
+
+            table.Range.ParagraphFormat.Alignment = MSWord.WdParagraphAlignment.wdAlignParagraphCenter;
+            table.Range.Cells.VerticalAlignment = MSWord.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+
+            table.Borders.OutsideLineStyle = MSWord.WdLineStyle.wdLineStyleDouble;
+            table.Borders.InsideLineStyle = MSWord.WdLineStyle.wdLineStyleSingle;
+
+            float[] columnWidth = new float[] { 20, 50, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 40 };
+            for (int i = 1; i <= table.Columns.Count; i++)
+            {
+                table.Columns[i].Width = columnWidth[i - 1];
+            }
+
+            // 填充试验数据
+            for(int i = 0; i < _rstStatistic.Count / 14; i++)
+            {
+                int startRow = 2 + i * 8;
+
+                table.Cell(startRow, 1).Range.Text = _rstStatistic[i * 14].Layer + " " + _rstStatistic[i * 14].Name;
+
+                string[] type = new string[] { "统计数", "最大值", "最小值", "平均值", "标准差", "变异系数", "修正系数", "标准值" };
+                for(int j = 0; j < 8; j++)
+                {
+                    table.Cell(startRow + j, 2).Range.Text = type[j];
+                }
+
+                for(int j = 0; j < 14; j++)
+                {
+                    if(j == 0 || j == 4 || j == 5 || j == 6 || j == 7 || j == 10 || j == 11 || j == 12)
+                    {
+                        table.Cell(startRow, 3 + j).Range.Text = _rstStatistic[j + i * 14].Count.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].Count.ToString("0");
+                        table.Cell(startRow + 1, 3 + j).Range.Text = _rstStatistic[j + i * 14].Max.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].Max.ToString("0.0");
+                        table.Cell(startRow + 2, 3 + j).Range.Text = _rstStatistic[j + i * 14].Min.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].Min.ToString("0.0");
+                        table.Cell(startRow + 3, 3 + j).Range.Text = _rstStatistic[j + i * 14].Average.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].Average.ToString("0.0");
+                        table.Cell(startRow + 4, 3 + j).Range.Text = _rstStatistic[j + i * 14].StandardDeviation.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].StandardDeviation.ToString("0.0");
+                        table.Cell(startRow + 5, 3 + j).Range.Text = _rstStatistic[j + i * 14].VariableCoefficient.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].VariableCoefficient.ToString("0.00");
+                        table.Cell(startRow + 6, 3 + j).Range.Text = _rstStatistic[j + i * 14].CorrectionCoefficient.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].CorrectionCoefficient.ToString("0.00");
+                        table.Cell(startRow + 7, 3 + j).Range.Text = _rstStatistic[j + i * 14].StandardValue.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].StandardValue.ToString("0.0");
+                    }
+                    else if(j == 1 || j == 2 || j == 3 || j == 8 || j == 9)
+                    {
+                        table.Cell(startRow, 3 + j).Range.Text = _rstStatistic[j + i * 14].Count.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].Count.ToString("0");
+                        table.Cell(startRow + 1, 3 + j).Range.Text = _rstStatistic[j + i * 14].Max.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].Max.ToString("0.00");
+                        table.Cell(startRow + 2, 3 + j).Range.Text = _rstStatistic[j + i * 14].Min.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].Min.ToString("0.00");
+                        table.Cell(startRow + 3, 3 + j).Range.Text = _rstStatistic[j + i * 14].Average.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].Average.ToString("0.00");
+                        table.Cell(startRow + 4, 3 + j).Range.Text = _rstStatistic[j + i * 14].StandardDeviation.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].StandardDeviation.ToString("0.00");
+                        table.Cell(startRow + 5, 3 + j).Range.Text = _rstStatistic[j + i * 14].VariableCoefficient.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].VariableCoefficient.ToString("0.00");
+                        table.Cell(startRow + 6, 3 + j).Range.Text = _rstStatistic[j + i * 14].CorrectionCoefficient.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].CorrectionCoefficient.ToString("0.00");
+                        table.Cell(startRow + 7, 3 + j).Range.Text = _rstStatistic[j + i * 14].StandardValue.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].StandardValue.ToString("0.00");
+                    }
+                    else
+                    {
+                        table.Cell(startRow, 3 + j).Range.Text = _rstStatistic[j + i * 14].Count.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].Count.ToString("0");
+                        table.Cell(startRow + 1, 3 + j).Range.Text = _rstStatistic[j + i * 14].Max.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].Max.ToString("0.0E0");
+                        table.Cell(startRow + 2, 3 + j).Range.Text = _rstStatistic[j + i * 14].Min.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].Min.ToString("0.0E0");
+                        table.Cell(startRow + 3, 3 + j).Range.Text = _rstStatistic[j + i * 14].Average.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].Average.ToString("0.0E0");
+                        table.Cell(startRow + 4, 3 + j).Range.Text = _rstStatistic[j + i * 14].StandardDeviation.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].StandardDeviation.ToString("0.0E0");
+                        table.Cell(startRow + 5, 3 + j).Range.Text = _rstStatistic[j + i * 14].VariableCoefficient.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].VariableCoefficient.ToString("0.00");
+                        table.Cell(startRow + 6, 3 + j).Range.Text = _rstStatistic[j + i * 14].CorrectionCoefficient.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].CorrectionCoefficient.ToString("0.00");
+                        table.Cell(startRow + 7, 3 + j).Range.Text = _rstStatistic[j + i * 14].StandardValue.ToString() == "-0.19880205" ? "/" : _rstStatistic[j + i * 14].StandardValue.ToString("0.0E0");
+                    }
+                }
+            }
+
+            // 合并层号及名称单元格
+            for (int i = 0; i < _rstStatistic.Count / 14; i++)
+            {
+                table.Cell(2 + i * 8, 1).Merge(table.Cell(9 + i * 8, 1));
+            }
+
+            // 返回
             return table;
         }
     }
