@@ -534,6 +534,27 @@ namespace GSYGeo
 
         #endregion
 
+        #region 统计分析模块-颗粒分析统计
+
+        /// <summary>
+        /// 单击菜单"统计分析"-"颗粒分析统计"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GATStatisticMenu_Click(object sender, RoutedEventArgs e)
+        {
+            GATStatistic();
+        }
+
+        private void GATStatistic()
+        {
+            // 实例化一个GATStatistic窗口
+            GATStatistic gatStatistic = new GATStatistic();
+            gatStatistic.ShowDialog();
+        }
+
+        #endregion
+
         #region 帮助模块
 
         // 单击菜单"帮助"-"更新日志"
@@ -549,6 +570,7 @@ namespace GSYGeo
             FeedBack feedBack = new FeedBack();
             feedBack.ShowDialog();
         }
+
 
 
         #endregion

@@ -100,6 +100,7 @@
       <DependentUpon>RSTStatistic.xaml</DependentUpon>
     </Compile>
     <Compile Include="06 统计分析模块-土工常规统计\类\StatisticRST.cs" />
+    <Compile Include="06 统计分析模块-颗粒分析统计\类\StatisticGAT.cs" />
     <Page Include="01 设置模块\窗体\EditPeople.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,6 +126,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="06 统计分析模块-静力触探摩阻力统计\窗体\CPTStatistic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="06 统计分析模块-颗粒分析统计\窗体\GATStatistic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,6 +166,9 @@
     <Compile Include="05 室内试验模块-颗粒分析\类\GrainAnalysisTestDataBase.cs" />
     <Compile Include="06 统计分析模块-静力触探摩阻力统计\窗体\CPTStatistic.xaml.cs">
       <DependentUpon>CPTStatistic.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="06 统计分析模块-颗粒分析统计\窗体\GATStatistic.xaml.cs">
+      <DependentUpon>GATStatistic.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
