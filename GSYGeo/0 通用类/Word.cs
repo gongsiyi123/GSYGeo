@@ -264,7 +264,7 @@ namespace GSYGeo
             // 定义表格对象
             MSWord.Table table = Tables.Add(App.Selection.Range, _rstStatistic.Count / 14 * 8 + 1, 16, ref Nothing, ref Nothing);
 
-            // 填充行标题
+            // 填充列标题
             string[] rowheader = new string[]
             {
                 "层号及名称",
@@ -384,6 +384,85 @@ namespace GSYGeo
             {
                 table.Cell(2 + i * 8, 1).Merge(table.Cell(9 + i * 8, 1));
             }
+
+            // 返回
+            return table;
+        }
+
+        public MSWord.Table AddGATStatisticTable(List<StatisticGAT> _gatStatistic)
+        {
+            // 填写表格标题
+            Doc.Paragraphs.Last.Range.Text = "表4 颗粒分析试验成果统计表";
+            Doc.Paragraphs.Last.Range.Font.Bold = 1;
+            Doc.Paragraphs.Last.Range.Font.Size = 12;
+            App.Selection.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+            object unite = MSWord.WdUnits.wdStory;
+            App.Selection.EndKey(ref unite, ref Nothing);
+
+            // 定义表格对象
+            MSWord.Table table = Tables.Add(App.Selection.Range, _gatStatistic.Count+2, 7, ref Nothing, ref Nothing);
+
+            // 填充列标题
+            table.Cell(1, 1).Range.Text = "分层编号及名称";
+            table.Cell(1, 2).Range.Text = "粒组分布百分含量（%）";
+            string[] rowheader = new string[]
+            {
+                ">20mm",
+                "20~2mm",
+                "2~0.5mm",
+                "0.5~0.25mm",
+                "0.25~0.075mm",
+                "<0.075mm"
+            };
+            for (int i = 1; i < table.Columns.Count; i++)
+            {
+                table.Cell(2, i + 1).Range.Text = rowheader[i - 1];
+            }
+
+            // 设置文档格式
+            Doc.PageSetup.LeftMargin = 50F;
+            Doc.PageSetup.RightMargin = 50F;
+
+            // 设置表格格式
+            table.Select();
+            App.Selection.Tables[1].Rows.Alignment = WdRowAlignment.wdAlignRowCenter;
+
+            foreach (Row row in table.Rows)
+            {
+                row.Range.Bold = 0;
+            }
+            table.Rows[1].Range.Bold = 1;
+            table.Rows[2].Range.Bold = 1;
+            
+            table.Range.Font.Size = 10.0F;
+
+            table.Range.ParagraphFormat.Alignment = MSWord.WdParagraphAlignment.wdAlignParagraphCenter;
+            table.Range.Cells.VerticalAlignment = MSWord.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+
+            table.Borders.OutsideLineStyle = MSWord.WdLineStyle.wdLineStyleDouble;
+            table.Borders.InsideLineStyle = MSWord.WdLineStyle.wdLineStyleSingle;
+
+            float[] columnWidth = new float[] { 100, 50, 60, 60, 80, 80, 70 };
+            for (int i = 1; i <= table.Columns.Count; i++)
+            {
+                table.Columns[i].Width = columnWidth[i - 1];
+            }
+
+            // 填充试验数据
+            for (int i = 0; i < _gatStatistic.Count; i++)
+            {
+                table.Cell(i + 3, 1).Range.Text = _gatStatistic[i].Layer + _gatStatistic[i].Name;
+                table.Cell(i + 3, 2).Range.Text = _gatStatistic[i].Group100To20.ToString() == "-0.19880205" ? "/" : _gatStatistic[i].Group100To20.ToString("0.0");
+                table.Cell(i + 3, 3).Range.Text = _gatStatistic[i].Group20To2.ToString() == "-0.19880205" ? "/" : _gatStatistic[i].Group20To2.ToString("0.0");
+                table.Cell(i + 3, 4).Range.Text = _gatStatistic[i].Group2To0_5.ToString() == "-0.19880205" ? "/" : _gatStatistic[i].Group2To0_5.ToString("0.0");
+                table.Cell(i + 3, 5).Range.Text = _gatStatistic[i].Group0_5To0_25.ToString() == "-0.19880205" ? "/" : _gatStatistic[i].Group0_5To0_25.ToString("0.0");
+                table.Cell(i + 3, 6).Range.Text = _gatStatistic[i].Group0_25To0_075.ToString() == "-0.19880205" ? "/" : _gatStatistic[i].Group0_25To0_075.ToString("0.0");
+                table.Cell(i + 3, 7).Range.Text = _gatStatistic[i].Group0_075To0.ToString() == "-0.19880205" ? "/" : _gatStatistic[i].Group0_075To0.ToString("0.0");
+            }
+
+            // 合并层号及名称单元格
+            table.Cell(1, 1).Merge(table.Cell(2, 1));
+            table.Cell(1, 2).Merge(table.Cell(1, 7));
 
             // 返回
             return table;

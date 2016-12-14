@@ -26,7 +26,7 @@ namespace GSYGeo
 
             _canvas.Children.Add(myPath);
         }
-
+        
         // 绘制一条直线，并指定粗细和颜色
         public static void DrawLine(this Canvas _canvas,double _startX, double _startY, double _endX,double _endY,double _thickness,Brush _brush)
         {

@@ -41,6 +41,17 @@ namespace GSYGeo
             GroupLessThan0_25 = sumLessThan0_25 / _gats.Count;
             GroupLessThan0_075 = sumLessThan0_075 / _gats.Count;
 
+            // 赋值各粒组含量百分比
+            for(int i = 0; i < _gats.Count; i++)
+            {
+                Group100To20 = _gats[i].Group20ToMax;
+                Group20To2 = _gats[i].Group2To20;
+                Group2To0_5 = _gats[i].Group0_5To2;
+                Group0_5To0_25 = _gats[i].Group0_25To0_5;
+                Group0_25To0_075 = _gats[i].Group0_075To0_25;
+                Group0_075To0 = _gats[i].Group0To0_075;
+            }
+
             // 计算定名
             if (100 - GroupLessThan20 > 50)
                 SoilType = "卵石、碎石";
@@ -101,8 +112,38 @@ namespace GSYGeo
         public double GroupLessThan0_25 { get; set; }
 
         /// <summary>
-        /// 属性，累积含量小于0.075的颗粒含量百分比
+        /// 属性，累积含量小于0.075mm的颗粒含量百分比
         /// </summary>
         public double GroupLessThan0_075 { get; set; }
+
+        /// <summary>
+        /// 属性，大于20mm的颗粒含量百分比
+        /// </summary>
+        public double Group100To20 { get; set; }
+
+        /// <summary>
+        /// 属性，20~2mm的颗粒含量百分比
+        /// </summary>
+        public double Group20To2 { get; set; }
+
+        /// <summary>
+        /// 属性，2~0.5mm的颗粒含量百分比
+        /// </summary>
+        public double Group2To0_5 { get; set; }
+
+        /// <summary>
+        /// 属性，0.5~0.25mm的颗粒含量百分比
+        /// </summary>
+        public double Group0_5To0_25 { get; set; }
+
+        /// <summary>
+        /// 属性，0.25~0.075mm的颗粒含量百分比
+        /// </summary>
+        public double Group0_25To0_075 { get; set; }
+
+        /// <summary>
+        /// 属性，小于0.075mm的颗粒含量百分比
+        /// </summary>
+        public double Group0_075To0 { get; set; }
     }
 }

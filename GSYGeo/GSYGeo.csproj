@@ -288,6 +288,8 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="07 绘图模块-钻孔柱状图\窗体\" />
+    <Folder Include="07 绘图模块-钻孔柱状图\类\" />
     <Folder Include="10 帮助模块\类\" />
   </ItemGroup>
   <ItemGroup>

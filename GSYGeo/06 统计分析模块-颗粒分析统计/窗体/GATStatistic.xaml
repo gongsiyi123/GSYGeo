@@ -5,15 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GSYGeo"
         mc:Ignorable="d"
-        Title="颗粒分析试验成果统计" Height="450" Width="650">
+        Title="颗粒分析试验成果统计" Height="500" Width="650" WindowStartupLocation="CenterScreen" Name="haha">
     <Window.Resources>
         <Style x:Key="contentCenterStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid Name="TotalGrid">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -30,7 +31,17 @@
             <TextBlock Grid.Column="0" Text="选择分层：" VerticalAlignment="Center" Margin="10,5,5,5"/>
             <ComboBox Grid.Column="1" Name="LayerNumberComboBox" VerticalAlignment="Center" Margin="5" MinWidth="150" SelectionChanged="LayerNumberComboBox_SelectionChanged"/>
         </Grid>
-        <DataGrid Grid.Row="1" Name="GATStatisticDataGrid" ItemsSource="{Binding}" Margin="5" MinHeight="50" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto">
+        <DataGrid Grid.Row="1" Name="GATPreviewStatisticDataGrid" ItemsSource="{Binding}" Margin="5" MinHeight="50" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header=">20mm" Binding="{Binding Path=group100to200}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="20~2mm" Binding="{Binding Path=group20to2}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="2~5mm" Binding="{Binding Path=group2to0_5}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="0.5~0.25mm" Binding="{Binding Path=group0_5to0_25}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="0.25~0.075mm" Binding="{Binding Path=group0_25to0_075}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="&lt;0.075mm" Binding="{Binding Path=group0_075to0}" ElementStyle="{StaticResource contentCenterStyle}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Grid.Row="2" Name="GATStatisticDataGrid" ItemsSource="{Binding}" Margin="5" MinHeight="50" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="&lt;100mm" Binding="{Binding Path=lessThan100}" ElementStyle="{StaticResource contentCenterStyle}"/>
                 <DataGridTextColumn Header="&lt;20mm" Binding="{Binding Path=lessThan20}" ElementStyle="{StaticResource contentCenterStyle}"/>
@@ -41,18 +52,18 @@
                 <DataGridTextColumn Header="定名" Binding="{Binding Path=soilType}" ElementStyle="{StaticResource contentCenterStyle}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Border Grid.Row="2" BorderBrush="Gray" BorderThickness="1" Margin="5">
-            
+        <Border Grid.Row="3" BorderBrush="Gray" BorderThickness="1" Margin="5">
+            <Canvas Name="DrawCurveCanvas" Width="600" Height="250"/>
         </Border>
-        <Border Grid.Row="3" Background="LightGray" BorderBrush="Gray" BorderThickness="1">
-            <Grid>
+        <Border Grid.Row="4" Background="LightGray" BorderBrush="Gray" BorderThickness="1">
+            <Grid Name="testGrid" Width="auto" Height="auto">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Name="OutputToWordButton" Content="输出为Word表格" Margin="5"/>
-                <Button Grid.Column="2" Name="CloseButton" Content="关闭" Margin="5"/>
+                <Button Grid.Column="1" Name="OutputToWordButton" Content="输出为Word表格" Margin="5" Click="OutputToWordButton_Click"/>
+                <Button Grid.Column="2" Name="CloseButton" Content="关闭" Margin="5" Click="CloseButton_Click"/>
             </Grid>
         </Border>
     </Grid>

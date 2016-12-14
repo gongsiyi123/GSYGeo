@@ -102,6 +102,12 @@ namespace GSYGeo
         public delegate void OutputRSTStatisticEventHandler(object _path);
 
         /// <summary>
+        /// 声明输出颗粒分析试验统计结果的后台委托
+        /// </summary>
+        /// <param name="_path">输出文件的路径</param>
+        public delegate void OutputGATStatisticEventHandler(object _path);
+
+        /// <summary>
         /// 启动后台进程
         /// </summary>
         /// <param name="sender"></param>
@@ -174,6 +180,11 @@ namespace GSYGeo
             {
                 OutputRSTStatisticEventHandler outputRSTStatistic = new OutputRSTStatisticEventHandler(RSTStatistic.OutputToWord);
                 outputRSTStatistic(Path);
+            }
+            else if (BWType == OutputType.GAT)
+            {
+                OutputGATStatisticEventHandler outputGATStatistic = new OutputGATStatisticEventHandler(GATStatistic.OutputToWord);
+                outputGATStatistic(Path);
             }
         }
 
