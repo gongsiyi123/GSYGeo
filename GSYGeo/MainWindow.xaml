@@ -76,7 +76,7 @@
                 <MenuItem Header="桩侧、桩端阻力计算" Name="PileResistanceCalculationMenu"/>
             </MenuItem>
             <MenuItem Header="绘图" Name="DrawMenu">
-                <MenuItem Header="绘制钻孔柱状图" Name="DrawZkMenu"/>
+                <MenuItem Header="绘制钻孔柱状图" Name="DrawZkMenu" Click="DrawZkMenu_Click"/>
                 <MenuItem Header="绘制静力触探曲线图" Name="DrawCptMenu"/>
                 <Separator/>
                 <MenuItem Header="启动CAD" Name="StartCadMenu"/>

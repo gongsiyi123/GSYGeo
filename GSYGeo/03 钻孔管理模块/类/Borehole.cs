@@ -104,63 +104,30 @@ namespace GSYGeo
         }
 
         // 属性，分层列表
-        private List<ZkLayer> layers;
-        public List<ZkLayer> Layers
-        {
-            get
-            {
-                return layers;
-            }
-            set
-            {
-                layers = value;
-            }
-        }
+        public List<ZkLayer> Layers { get; set; }
         
         // 属性，取样列表
-        private List<ZkSample> samples;
-        public List<ZkSample> Samples
-        {
-            get
-            {
-                return samples;
-            }
-            set
-            {
-                samples = value;
-            }
-        }
+        public List<ZkSample> Samples { get; set; }
         
         // 属性，标贯动探列表
-        private List<ZkNTest> nTests;
-        public List<ZkNTest> NTests
-        {
-            get
-            {
-                return nTests;
-            }
-            set
-            {
-                nTests = value;
-            }
-        }
-
+        public List<ZkNTest> NTests { get; set; }
+        
         // 方法，添加一个分层
         public void AddLayer(string _number,string _name,string _geo,string _description,double _depth)
         {
-            layers.Add(new ZkLayer(_number, _name, _geo, _description,_depth));
+            Layers.Add(new ZkLayer(_number, _name, _geo, _description,_depth));
         }
 
         // 方法，编辑一个分层
         public void EditLayer(string _oldNumber,string _number, string _name, string _geo, string _description,double _depth)
         {
-            if (layers != null)
+            if (Layers != null)
             {
-                for (int i = 0; i < layers.Count; i++)
+                for (int i = 0; i < Layers.Count; i++)
                 {
-                    if (layers[i].Number == _oldNumber)
+                    if (Layers[i].Number == _oldNumber)
                     {
-                        layers[i] = new ZkLayer(_number, _name, _geo, _description,_depth);
+                        Layers[i] = new ZkLayer(_number, _name, _geo, _description,_depth);
                     }
                 }
             }
@@ -169,13 +136,13 @@ namespace GSYGeo
         // 方法，删除一个分层
         public void DeleteLayer(string _number)
         {
-            if (layers != null)
+            if (Layers != null)
             {
-                for(int i = 0; i < layers.Count; i++)
+                for(int i = 0; i < Layers.Count; i++)
                 {
-                    if (layers[i].Number == _number)
+                    if (Layers[i].Number == _number)
                     {
-                        layers.RemoveAt(i);
+                        Layers.RemoveAt(i);
                     }
                 }
             }
@@ -184,19 +151,19 @@ namespace GSYGeo
         // 方法，添加一个取样
         public void AddSample(string _name,double _depth,bool _isDisturbed)
         {
-            samples.Add(new ZkSample(_name,_depth, _isDisturbed));
+            Samples.Add(new ZkSample(_name,_depth, _isDisturbed));
         }
 
         // 方法，编辑一个取样
         public void EditSample(string _oldName,string _name,double _depth,bool _isdisturbed)
         {
-            if (samples != null)
+            if (Samples != null)
             {
-                for(int i = 0; i < samples.Count; i++)
+                for(int i = 0; i < Samples.Count; i++)
                 {
-                    if (samples[i].Name == _oldName)
+                    if (Samples[i].Name == _oldName)
                     {
-                        samples[i] = new ZkSample(_name,_depth, _isdisturbed);
+                        Samples[i] = new ZkSample(_name,_depth, _isdisturbed);
                     }
                 }
             }
@@ -205,13 +172,13 @@ namespace GSYGeo
         // 方法，删除一个取样
         public void DeleteSample(string _name)
         {
-            if (samples != null)
+            if (Samples != null)
             {
-                for (int i = 0; i < samples.Count; i++)
+                for (int i = 0; i < Samples.Count; i++)
                 {
-                    if (samples[i].Name == _name)
+                    if (Samples[i].Name == _name)
                     {
-                        samples.RemoveAt(i);
+                        Samples.RemoveAt(i);
                     }
                 }
             }
@@ -220,19 +187,19 @@ namespace GSYGeo
         // 方法，添加一个标贯动探
         public void AddNTest(string _zkNumber,string _name,double _depth,double _value,ZkNTest.ntype _type)
         {
-            nTests.Add(new ZkNTest(_zkNumber, _name, _depth, _value, _type));
+            NTests.Add(new ZkNTest(_zkNumber, _name, _depth, _value, _type));
         }
 
         // 方法，编辑一个标贯动探
         public void EditNTest(string _zkNumber,string _oldName,string _name,double _depth,double _value,ZkNTest.ntype _type)
         {
-            if (nTests != null)
+            if (NTests != null)
             {
-                for(int i = 0; i < nTests.Count; i++)
+                for(int i = 0; i < NTests.Count; i++)
                 {
-                    if (nTests[i].Name == _oldName)
+                    if (NTests[i].Name == _oldName)
                     {
-                        nTests[i] = new ZkNTest(_zkNumber, _name, _depth, _value, _type);
+                        NTests[i] = new ZkNTest(_zkNumber, _name, _depth, _value, _type);
                     }
                 }
             }
@@ -241,13 +208,13 @@ namespace GSYGeo
         // 方法，删除一个标贯动探
         public void DeleteNTest(string _name)
         {
-            if (nTests != null)
+            if (NTests != null)
             {
-                for (int i = 0; i < nTests.Count; i++)
+                for (int i = 0; i < NTests.Count; i++)
                 {
-                    if (nTests[i].Name == _name)
+                    if (NTests[i].Name == _name)
                     {
-                        nTests.RemoveAt(i);
+                        NTests.RemoveAt(i);
                     }
                 }
             }

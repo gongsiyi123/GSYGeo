@@ -24,7 +24,14 @@ namespace GSYGeo
         /// <summary>
         /// 输出类型的枚举：标贯/动探统计，静力触探摩阻力统计，土工常规统计，颗分统计
         /// </summary>
-        public enum OutputType { NTest,Ps,RST,GAT};
+        public enum OutputType
+        {
+            NTest,
+            Ps,
+            RST,
+            GAT,
+            ZkCad
+        };
 
         /// <summary>
         /// 属性，进度条上方的文字内容
@@ -47,12 +54,22 @@ namespace GSYGeo
         private OutputType BWType { get; set; }
 
         /// <summary>
+        /// 属性，输出的钻孔列表
+        /// </summary>
+        private List<Borehole> OutputZkList { get; set; }
+
+        /// <summary>
+        /// 属性，输出图形的的比例尺列表
+        /// </summary>
+        private List<double> OutputScaleList { get; set; }
+
+        /// <summary>
         /// 后台进程
         /// </summary>
         BackgroundWorker bgWorker = new BackgroundWorker();
 
         /// <summary>
-        /// 构造函数
+        /// 构造函数，用于输出数据统计Word文档
         /// </summary>
         /// <param name="_type">输出类型</param>
         /// <param name="_path">输出路径</param>
@@ -67,6 +84,28 @@ namespace GSYGeo
             Path = _path;
             Folder = _path.Substring(0, _path.LastIndexOf(@"\"));
             ProgressInfo = _progressInfo;
+        }
+
+        /// <summary>
+        /// 构造函数，用于输出钻孔柱状图
+        /// </summary>
+        /// <param name="_type"></param>
+        /// <param name="_path"></param>
+        /// <param name="_title"></param>
+        /// <param name="_progressInfo"></param>
+        /// <param name="_checkedZkList"></param>
+        /// <param name="_checkedScaleList"></param>
+        public OutputProgress(OutputType _type, string _path, string _title, string _progressInfo, List<Borehole> _checkedZkList, List<double> _checkedScaleList)
+        {
+            InitializeComponent();
+
+            this.Title = _title;
+            BWType = _type;
+            Path = _path;
+            Folder = _path.Substring(0, _path.LastIndexOf(@"\"));
+            ProgressInfo = _progressInfo;
+            OutputZkList = _checkedZkList;
+            OutputScaleList = _checkedScaleList;
         }
 
         /// <summary>
@@ -106,6 +145,12 @@ namespace GSYGeo
         /// </summary>
         /// <param name="_path">输出文件的路径</param>
         public delegate void OutputGATStatisticEventHandler(object _path);
+
+        /// <summary>
+        /// 声明输出钻孔柱状图的后台委托
+        /// </summary>
+        /// <param name="_path">输出文件的路径</param>
+        public delegate void OutputZkToCadEventHandler(string _path, List<Borehole> _checkedZkList, List<double> _checkedScaleList);
 
         /// <summary>
         /// 启动后台进程
@@ -186,6 +231,11 @@ namespace GSYGeo
                 OutputGATStatisticEventHandler outputGATStatistic = new OutputGATStatisticEventHandler(GATStatistic.OutputToWord);
                 outputGATStatistic(Path);
             }
+            else if (BWType == OutputType.ZkCad)
+            {
+                OutputZkToCadEventHandler outputZkCad = new OutputZkToCadEventHandler(OutputZkToCad.OutputToCad);
+                outputZkCad(Path, OutputZkList, OutputScaleList);
+            }
         }
 
         /// <summary>
@@ -194,7 +244,7 @@ namespace GSYGeo
         /// <param name="_obj"></param>
         private void ReadProgress(object _obj)
         {
-            for (int i = 0; i <= 99; i++)
+            for (int i = 0; i <= 95; i++)
             {
                 bgWorker.ReportProgress(i);
                 Thread.Sleep(100);

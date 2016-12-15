@@ -546,11 +546,38 @@ namespace GSYGeo
             GATStatistic();
         }
 
+        /// <summary>
+        /// 统计颗粒分析函数
+        /// </summary>
         private void GATStatistic()
         {
             // 实例化一个GATStatistic窗口
             GATStatistic gatStatistic = new GATStatistic();
             gatStatistic.ShowDialog();
+        }
+
+        #endregion
+
+        #region 绘图模块-绘制钻孔柱状图
+
+        /// <summary>
+        /// 单击菜单"绘图"-"绘制钻孔柱状图"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DrawZkMenu_Click(object sender, RoutedEventArgs e)
+        {
+            DrawZk();
+        }
+
+        /// <summary>
+        /// 绘制柱状图函数
+        /// </summary>
+        private void DrawZk()
+        {
+            // 实例化一个OutputZkToCad窗口
+            OutputZkToCad outputZk = new OutputZkToCad();
+            outputZk.ShowDialog();
         }
 
         #endregion
@@ -573,8 +600,8 @@ namespace GSYGeo
 
 
 
+
         #endregion
 
-        
     }
 }

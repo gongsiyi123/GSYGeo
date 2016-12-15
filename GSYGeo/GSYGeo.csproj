@@ -51,6 +51,18 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WW">
+      <HintPath>..\..\..\..\..\..\Downloads\WW.dll</HintPath>
+    </Reference>
+    <Reference Include="WW.Cad">
+      <HintPath>..\..\..\..\..\..\Downloads\WW.Cad.dll</HintPath>
+    </Reference>
+    <Reference Include="WW.GL">
+      <HintPath>..\..\..\..\..\..\Downloads\WW.GL.dll</HintPath>
+    </Reference>
+    <Reference Include="WW.Pdf">
+      <HintPath>..\..\..\..\..\..\Downloads\WW.Pdf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -170,6 +182,7 @@
     <Compile Include="06 统计分析模块-颗粒分析统计\窗体\GATStatistic.xaml.cs">
       <DependentUpon>GATStatistic.xaml</DependentUpon>
     </Compile>
+    <Compile Include="0 通用类\CAD.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -234,6 +247,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="07 绘图模块-钻孔柱状图\窗体\OutputZkToCad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="02 项目管理模块\窗体\NewProject.xaml.cs">
@@ -263,6 +280,9 @@
     <Compile Include="06 统计分析模块-标贯动探统计\窗体\NTestStatistic.xaml.cs">
       <DependentUpon>NTestStatistic.xaml</DependentUpon>
     </Compile>
+    <Compile Include="07 绘图模块-钻孔柱状图\窗体\OutputZkToCad.xaml.cs">
+      <DependentUpon>OutputZkToCad.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -288,7 +308,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="07 绘图模块-钻孔柱状图\窗体\" />
     <Folder Include="07 绘图模块-钻孔柱状图\类\" />
     <Folder Include="10 帮助模块\类\" />
   </ItemGroup>

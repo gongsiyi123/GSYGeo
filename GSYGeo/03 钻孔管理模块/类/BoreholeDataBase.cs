@@ -194,6 +194,41 @@ namespace GSYGeo
             }
         }
 
+        // 查询钻孔列表，输出为Borehole类形式
+        public static List<Borehole> ReadZkListAsClass(string _projectName)
+        {
+            // 创建连接到设置信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\" + _projectName + ".gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 新建要返回的类列表
+                List<Borehole> zklist = new List<Borehole>();
+
+                // 循环读取钻孔数据
+                sql = "select * from zkBasicInfo order by name";
+                SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
+                while (reader.Read())
+                {
+                    Borehole zk = new Borehole(reader["name"].ToString(), Convert.ToDouble(reader["altitude"]));
+                    zk.X = Convert.ToDouble(reader["xAxis"]);
+                    zk.Y = Convert.ToDouble(reader["yAxis"]);
+                    zk.InitialWaterLevel = Convert.ToDouble(reader["initialWaterLevel"]);
+                    zk.StableWaterLevel = Convert.ToDouble(reader["stableWaterLevel"]);
+                    zk.Layers = BoreholeDataBase.ReadZkLayer(Program.currentProject, reader["name"].ToString());
+                    zk.Samples = BoreholeDataBase.ReadZkSample(Program.currentProject, reader["name"].ToString());
+                    zk.NTests = BoreholeDataBase.ReadZkNTest(Program.currentProject, reader["name"].ToString());
+
+                    zklist.Add(zk);
+                }
+                
+                // 返回
+                return zklist;
+            }
+        }
+
         // 查询某个钻孔的孔口高程
         public static double ReadAltitude(string _projectName,string _name)
         {

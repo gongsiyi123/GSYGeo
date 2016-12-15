@@ -36,6 +36,10 @@ namespace GSYGeo
                 // 新建公司人员信息表
                 sql = "create table companyPeople(name varchar(255))";
                 new SQLiteCommand(sql, conn).ExecuteNonQuery();
+
+                // 新建比例尺表
+                sql = "create table outputScale(scale double)";
+                new SQLiteCommand(sql, conn).ExecuteNonQuery();
             }
         }
         
@@ -211,6 +215,62 @@ namespace GSYGeo
                 {
                     return false;
                 }
+            }
+        }
+
+        // 向比例尺表添加比例尺
+        public static void AddScale(double _scale)
+        {
+            // 创建连接到设置信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\设置信息.gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 添加比例尺
+                sql = "insert into outputScale values(" + _scale + ")";
+                new SQLiteCommand(sql, conn).ExecuteNonQuery();
+            }
+        }
+
+        // 向比例尺表删除比例尺
+        public static void DeleteScale(double _scale)
+        {
+            // 创建连接到设置信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\设置信息.gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 删除比例尺
+                sql = "delete from outputScale where scale='" + _scale + "'";
+                new SQLiteCommand(sql, conn).ExecuteNonQuery();
+            }
+        }
+
+        // 查询比例尺列表
+        public static List<double> ReadOutputScale()
+        {
+            // 创建连接到设置信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\设置信息.gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 返回比例尺列表
+                List<double> scaleList = new List<double>();
+
+                sql = "select scale from outputScale";
+                SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
+                while (reader.Read())
+                {
+                    scaleList.Add(Convert.ToDouble(reader["scale"]));
+                }
+
+                return scaleList;
             }
         }
     }
