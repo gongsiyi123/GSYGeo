@@ -1,0 +1,40 @@
+﻿<Window x:Class="GSYGeo.WorkLoadStatistic"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GSYGeo"
+        mc:Ignorable="d"
+        Title="勘察工作量统计" Height="325" Width="300" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="contentCenterStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" Name="WorkLoadDataGrid" ItemsSource="{Binding}" Margin="5" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" IsReadOnly="True" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="工作项目" Binding="{Binding Path=type}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="单位" Binding="{Binding Path=unite}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="工作量" Binding="{Binding Path=amount}" ElementStyle="{StaticResource contentCenterStyle}"/>
+                <DataGridTextColumn Header="备注" Binding="{Binding Path=remark}" ElementStyle="{StaticResource contentCenterStyle}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Name="OutputToWordButton" Content="输出为Word表格" Margin="5" Click="OutputToWordButton_Click"/>
+                <Button Grid.Column="2" Name="CloseButton" Content="关闭" Margin="5" Click="CloseButton_Click"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

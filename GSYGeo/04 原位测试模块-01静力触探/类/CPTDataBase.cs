@@ -165,6 +165,38 @@ namespace GSYGeo
             }
         }
 
+        // 查询触探孔列表，输出为CPT类形式
+        public static List<CPT> ReadJkListAsClass(string _projectName)
+        {
+            // 创建连接到设置信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\" + _projectName + ".gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 新建要返回的类列表
+                List<CPT> jklist = new List<CPT>();
+
+                // 循环读取钻孔数据
+                sql = "select * from jkBasicInfo order by name";
+                SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
+                while (reader.Read())
+                {
+                    CPT jk = new CPT(reader["name"].ToString(), Convert.ToDouble(reader["altitude"]));
+                    jk.X = Convert.ToDouble(reader["xAxis"]);
+                    jk.Y = Convert.ToDouble(reader["yAxis"]);
+                    jk.Layers = CPTDataBase.ReadJkLayer(_projectName, reader["name"].ToString());
+                    jk.PsList = CPTDataBase.ReadJkPs(_projectName, reader["name"].ToString());
+
+                    jklist.Add(jk);
+                }
+
+                // 返回
+                return jklist;
+            }
+        }
+
         // 查询某个触探孔的孔口高程
         public static double ReadAltitude(string _projectName,string _name)
         {

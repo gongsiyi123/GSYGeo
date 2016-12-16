@@ -24,56 +24,50 @@ namespace GSYGeo
         System.Windows.Controls.ToolTip tt2 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt3 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt4 = new System.Windows.Controls.ToolTip();
-        System.Windows.Controls.ToolTip tt5 = new System.Windows.Controls.ToolTip();
-        System.Windows.Controls.ToolTip tt6 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt7 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt8 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt9 = new System.Windows.Controls.ToolTip();
 
         // 判断确定按钮的可用性参数
         bool setCanDepth = false;
-        bool setCanNumber = false;
         bool setCanValue = false;
 
-        // 定义历史试验编号、深度列表
-        List<string> LastNumberList;
+        // 定义深度列表
         List<double> LastDepthList;
 
         // 带2个参数的构造函数，用于新增试验
-        public ZkNTestDetail(List<string> _lastNumberList,List<double> _lastDepthList)
+        public ZkNTestDetail(List<double> _lastDepthList, string _testNumber)
         {
             InitializeComponent();
 
-            // 赋值历史试验编号、深度列表
-            if (_lastNumberList != null)
-            {
-                LastNumberList = _lastNumberList;
-            }
+            // 赋值深度列表
             if (_lastDepthList != null)
             {
                 LastDepthList = _lastDepthList;
             }
+
+            // 赋值编号输入框
+            this.NTestNumberTextBox.Text = _testNumber;
 
             // 定义试验编号、深度输入框的工具提示
             DefineToolTip();
 
             // 默认选中"N"
             this.typeN.IsChecked = true;
+
+            // 默认聚焦深度输入框
+            this.NTestDepthTextBox.Focus();
         }
 
         // 带5个参数的构造函数，用于编辑试验
-        public ZkNTestDetail(List<string> _lastNumberList,List<double> _lastDepthList,string _number,double _depth,double _value,ZkNTest.ntype _type)
+        public ZkNTestDetail(List<double> _lastDepthList, string _testNumber, double _depth,double _value,ZkNTest.ntype _type)
         {
             InitializeComponent();
 
             // 赋值新窗体标题
             this.Title = "编辑标贯/动探试验";
 
-            // 赋值历史试验编号、深度列表
-            if (_lastNumberList != null)
-            {
-                LastNumberList = _lastNumberList;
-            }
+            // 赋值深度列表
             if (_lastDepthList != null)
             {
                 LastDepthList = _lastDepthList;
@@ -83,7 +77,7 @@ namespace GSYGeo
             DefineToolTip();
 
             // 赋值
-            this.NTestNumberTextBox.Text = _number;
+            this.NTestNumberTextBox.Text = _testNumber;
             this.NTestDepthTextBox.Text = _depth.ToString();
             this.NTestValueTextBox.Text = _value.ToString();
             if (_type == ZkNTest.ntype.N)
@@ -102,6 +96,9 @@ namespace GSYGeo
             {
                 this.typeN120.IsChecked = true;
             }
+
+            // 默认聚焦深度输入框
+            this.NTestDepthTextBox.Focus();
         }
 
         // 定义试验编号、深度的工具提示的函数
@@ -130,19 +127,7 @@ namespace GSYGeo
             tt4.PlacementTarget = this.NTestDepthTextBox;
             tt4.Foreground = Brushes.Red;
             tt4.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
-
-            tt5.Content = "试验编号不能为空";
-            this.NTestNumberTextBox.ToolTip = tt5;
-            tt5.PlacementTarget = this.NTestNumberTextBox;
-            tt5.Foreground = Brushes.Red;
-            tt5.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
-
-            tt6.Content = "试验编号重复";
-            this.NTestNumberTextBox.ToolTip = tt6;
-            tt6.PlacementTarget = this.NTestNumberTextBox;
-            tt6.Foreground = Brushes.Red;
-            tt6.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
-
+            
             tt7.Content = "试验击数不能为空";
             this.NTestNumberTextBox.ToolTip = tt7;
             tt7.PlacementTarget = this.NTestValueTextBox;
@@ -162,31 +147,6 @@ namespace GSYGeo
             tt9.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
         }
         
-        // 当 试验编号 输入框内容变化时，验证是否为空值，并验证是否与历史试验编号重复
-        private void NTestNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            tt5.IsOpen = false;
-            tt6.IsOpen = false;
-            string str = this.NTestNumberTextBox.Text;
-            if(string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str))
-            {
-                this.NTestNumberTextBox.BorderBrush = Brushes.Red;
-                tt5.IsOpen = true;
-                setCanNumber = false;
-            }
-            else if (LastNumberList.Contains(str))
-            {
-                this.NTestNumberTextBox.BorderBrush = Brushes.Red;
-                tt6.IsOpen = true;
-                setCanNumber = false;
-            }
-            else
-            {
-                this.NTestNumberTextBox.BorderBrush = Brushes.Gray;
-                setCanNumber = true;
-            }
-        }
-
         // 当 试验深度 输入框内容变化时，验证是否为数字，并验证是否与历史试验深度冲突
         private void NTestDepthTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -271,7 +231,7 @@ namespace GSYGeo
         private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             // 绑定"确定"按钮的可用状态
-            if (setCanDepth && setCanNumber && setCanValue)
+            if (setCanDepth && setCanValue)
             {
                 e.CanExecute = true;
             }

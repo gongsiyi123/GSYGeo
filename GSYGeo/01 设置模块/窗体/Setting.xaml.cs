@@ -33,6 +33,10 @@ namespace GSYGeo
         // 定义设置变化判断变量
         private bool isDirty = false;
 
+        // 定义标准表里
+        private string industrialStandard = null;
+        private string localStandard = null;
+
         // 默认构造函数
         public Setting()
         {
@@ -90,7 +94,7 @@ namespace GSYGeo
             folderDlg.Description = "选择数据存储文件夹";
             if (folderDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                if (folderDlg.SelectedPath + "\\巩氏岩土" != Program.ReadProgramPath())
+                if (folderDlg.SelectedPath + "\\小熠岩土勘察" != Program.ReadProgramPath())
                 {
                     MessageBoxResult result = System.Windows.MessageBox.Show("  您确定要更改数据存储位置吗？\n  所有的项目文件和设置文件将迁移至新位置，点击确定按钮执行操作。", "更改数据存储位置", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                     if (result == MessageBoxResult.Yes)
@@ -99,7 +103,7 @@ namespace GSYGeo
                         try
                         {
                             // 保存新路径
-                            string newPath = folderDlg.SelectedPath + "\\巩氏岩土";
+                            string newPath = folderDlg.SelectedPath + "\\小熠岩土勘察";
 
                             // 检查是否已有文件夹
                             if (Directory.Exists(newPath))
@@ -180,6 +184,12 @@ namespace GSYGeo
             company.Name = CompanyNameTextBox.Text;
             company.Code = CompanyCodeTextBox.Text;
             isDirty = false;
+
+            // 保存"标准"设置
+            SettingDataBase.EditIndustrialStandard(industrialStandard);
+            SettingDataBase.EditLocalStandard(localStandard);
+
+            // 关闭窗口
             if (e.Parameter.ToString() == "Commit")
             {
                 this.Close();
@@ -219,6 +229,18 @@ namespace GSYGeo
         private void CancelSetting_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        // 选择行业标准-水利水电
+        private void WaterConservancy_Checked(object sender, RoutedEventArgs e)
+        {
+            industrialStandard = "WaterConservancy";
+        }
+
+        // 选择地方标准-湖北省
+        private void Hubei_Checked(object sender, RoutedEventArgs e)
+        {
+            localStandard = "Hubei";
         }
     }
 }

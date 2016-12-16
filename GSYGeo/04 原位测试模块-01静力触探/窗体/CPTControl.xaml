@@ -137,7 +137,7 @@
         <Border Grid.Column="2" BorderBrush="Gray" BorderThickness="1,0,0,0">
             <StackPanel Name="JkDrawerStackPanel" Width="auto" HorizontalAlignment="Center">
                 <TextBlock Text="简易摩阻力曲线图" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="5"/>
-                <Canvas Name="JkCanvas" Width="400" MinWidth="400" Height="550" MinHeight="550" HorizontalAlignment="Center"/>
+                <Canvas Name="JkCanvas" Width="500" MinWidth="400" Height="650" MinHeight="550" HorizontalAlignment="Center"/>
             </StackPanel>
         </Border>
     </Grid>

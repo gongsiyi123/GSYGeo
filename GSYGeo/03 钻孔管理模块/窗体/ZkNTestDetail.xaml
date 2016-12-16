@@ -25,15 +25,15 @@
         <TextBlock Grid.Row="1" Grid.Column="0" Text="试验深度(m)：" Margin="5" HorizontalAlignment="Right"/>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="试验击数：" Margin="5" HorizontalAlignment="Right"/>
         <TextBlock Grid.Row="3" Grid.Column="0" Text="试验类型：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Name="NTestNumberTextBox" Margin="5" TextChanged="NTestNumberTextBox_TextChanged"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Name="NTestDepthTextBox" Margin="5" TextChanged="NTestDepthTextBox_TextChanged"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Name="NTestValueTextBox" Margin="5" TextChanged="NTestValueTextBox_TextChanged"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Name="NTestNumberTextBox" Margin="5" IsReadOnly="True" IsEnabled="False" TabIndex="0"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="NTestDepthTextBox" Margin="5" TextChanged="NTestDepthTextBox_TextChanged" TabIndex="0"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="NTestValueTextBox" Margin="5" TextChanged="NTestValueTextBox_TextChanged" TabIndex="1"/>
         <Border Grid.Row="3" Grid.Column="1" Margin="5" BorderThickness="1" BorderBrush="#FFABADB3">
             <StackPanel>
-                <RadioButton Name="typeN" GroupName="NType" Content="N" Margin="1"/>
-                <RadioButton Name="typeN10" GroupName="NType" Content="N10" Margin="1"/>
-                <RadioButton Name="typeN635" GroupName="NType" Content="N63.5" Margin="1"/>
-                <RadioButton Name="typeN120" GroupName="NType" Content="N120" Margin="1"/>
+                <RadioButton Name="typeN" GroupName="NType" Content="N" Margin="1" TabIndex="2"/>
+                <RadioButton Name="typeN10" GroupName="NType" Content="N10" Margin="1" TabIndex="3"/>
+                <RadioButton Name="typeN635" GroupName="NType" Content="N63.5" Margin="1" TabIndex="4"/>
+                <RadioButton Name="typeN120" GroupName="NType" Content="N120" Margin="1" TabIndex="5"/>
             </StackPanel>
         </Border>
         <Grid Grid.Row="4" Grid.Column="1">
@@ -42,8 +42,8 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Name="CommitButton" Content="确定" Margin="5" Command="Save"/>
-            <Button Grid.Column="2" Name="CancelButton" Content="取消" Margin="5" Click="CancelButton_Click"/>
+            <Button Grid.Column="1" Name="CommitButton" Content="确定" Margin="5" Command="Save" TabIndex="6" IsDefault="True"/>
+            <Button Grid.Column="2" Name="CancelButton" Content="取消" Margin="5" Click="CancelButton_Click" TabIndex="7" IsCancel="True"/>
         </Grid>
     </Grid>
 </Window>

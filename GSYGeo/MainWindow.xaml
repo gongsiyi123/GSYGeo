@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GSYGeo"
         mc:Ignorable="d"
-        Title="巩氏岩土" Height="600" Width="1024" WindowStartupLocation="CenterScreen" WindowState="Maximized" FontSize="14" Background="White">
+        Title="小熠岩土勘察" Height="600" Width="1024" WindowStartupLocation="CenterScreen" WindowState="Maximized" FontSize="14" Background="White">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="b2v"/>
     </Window.Resources>
@@ -24,71 +24,63 @@
                 <Separator/>
                 <MenuItem Header="项目管理器" Name="ProjectManagerMenu" Click="ProjectManagerMenu_Click"/>
                 <Separator/>
-                <MenuItem Header="导入项目数据" Name="ImportProjectManu"/>
-                <MenuItem Header="导出当前项目数据" Name="ExportProjectManu"/>
-                <Separator/>
-                <MenuItem Header="退出"/>
+                <MenuItem Header="退出" Name="ExitProgramMenu" Click="ExitProgramMenu_Click"/>
             </MenuItem>
             <MenuItem Header="钻孔" Name="ZkMenu">
-                <MenuItem Header="钻孔管理器" Name="ZkManagerMenu"/>
-                <Separator/>
                 <MenuItem Header="添加新钻孔" Name="AddNewZkMenu" Click="AddNewZkMenu_Click"/>
-                <MenuItem Header="导入钻孔数据" Name="ImportZkMenu"/>
-                <MenuItem Header="导出钻孔数据" Name="ExportZkMenu"/>
+                <Separator/>
+                <MenuItem Header="钻孔管理器(待开发)" Name="ZkManagerMenu" IsEnabled="False"/>
             </MenuItem>
             <MenuItem Header="原位测试" Name="InsituTestMenu">
                 <MenuItem Header="静力触探试验">
-                    <MenuItem Header="静力触探管理器" Name="CptManagerMenu"/>
-                    <Separator/>
                     <MenuItem Header="添加新静力触探孔" Name="AddCptMenu" Click="AddCptMenu_Click"/>
-                    <MenuItem Header="导入静力触探孔数据" Name="ImportCptMenu"/>
-                    <MenuItem Header="导出静力触探孔数据" Name="ExportCptMenu"/>
+                    <Separator/>
+                    <MenuItem Header="静力触探管理器(待开发)" Name="CptManagerMenu" IsEnabled="False"/>
+                    <MenuItem Header="导出Ps值数据到txt文件(待开发)" Name="ExportCptMenu" IsEnabled="False"/>
                 </MenuItem>
-                <MenuItem Header="十字板剪切试验"/>
-                <MenuItem Header="旁压试验"/>
-                <MenuItem Header="静载试验"/>
-                <MenuItem Header="扁铲侧胀试验"/>
-                <MenuItem Header="波速测试"/>
-                <MenuItem Header="现场直剪试验"/>
+                <MenuItem Header="十字板剪切试验(待开发)" IsEnabled="False"/>
+                <MenuItem Header="旁压试验(待开发)" IsEnabled="False"/>
+                <MenuItem Header="静载试验(待开发)" IsEnabled="False"/>
+                <MenuItem Header="扁铲侧胀试验(待开发)" IsEnabled="False"/>
+                <MenuItem Header="波速测试(待开发)" IsEnabled="False"/>
+                <MenuItem Header="现场直剪试验(待开发)" IsEnabled="False"/>
             </MenuItem>
             <MenuItem Header="室内试验" Name="IndoorTestMenu">
                 <MenuItem Header="土工常规试验" Name="RoutineSoilTestMenu">
                     <MenuItem Header="查看/添加土工常规试验数据" Name="ShowAddRoutineSoilTestDataMenu" Click="ShowAddRoutineSoilTestDataMenu_Click"/>
-                    <MenuItem Header="导入试验数据（Excel格式）" Name="ImportRoutineSoilTestDataMenu"/>
-                    <MenuItem Header="导出试验数据（Excel格式）" Name="ExportRoutineSoilTestDataMenu"/>
+                    <MenuItem Header="导入试验数据（Excel格式）(待开发)" Name="ImportRoutineSoilTestDataMenu" IsEnabled="False"/>
                 </MenuItem>
                 <MenuItem Header="颗粒分析试验" Name="GrainSizeTestMenu">
                     <MenuItem Header="查看/添加颗粒分析试验数据" Name="ShowAddGrainAnalysisTestDataMenu" Click="ShowAddGrainAnalysisTestDataMenu_Click"/>
-                    <MenuItem Header="导入试验数据（Excel格式）" Name="ImportGrainAnalysisestDataMenu"/>
-                    <MenuItem Header="导出试验数据（Excel格式）" Name="ExportGrainAnalysisTestDataMenu"/>
+                    <MenuItem Header="导入试验数据（Excel格式）(待开发)" Name="ImportGrainAnalysisestDataMenu" IsEnabled="False"/>
                 </MenuItem>
-                <MenuItem Header="岩石试验" Name="IndoorRockTestMenu"/>
+                <MenuItem Header="岩石试验(待开发)" Name="IndoorRockTestMenu" IsEnabled="False"/>
             </MenuItem>
             <MenuItem Header="统计分析" Name="CalculateMenu">
-                <MenuItem Header="勘察工作量统计" Name="WorkloadStatisticMenu"/>
+                <MenuItem Header="勘察工作量统计" Name="WorkloadStatisticMenu" Click="WorkloadStatisticMenu_Click"/>
                 <MenuItem Header="标贯/动探统计" Name="NTestStatisticMenu" Click="NTestStatisticMenu_Click"/>
                 <MenuItem Header="静力触探摩阻力统计" Name="PsStatisticMenu" Click="PsStatisticMenu_Click"/>
                 <MenuItem Header="土工常规试验统计" Name="RSTStatisticMenu" Click="RSTStatisticMenu_Click"/>
                 <MenuItem Header="颗粒分析试验统计" Name="GATStatisticMenu" Click="GATStatisticMenu_Click"/>
                 <Separator/>
-                <MenuItem Header="承载力和压缩模量计算" Name="BearAndModulusCalculateMenu"/>
-                <MenuItem Header="抗剪强度计算" Name="ShearStrengthCalculateMenu"/>
-                <MenuItem Header="桩侧、桩端阻力计算" Name="PileResistanceCalculationMenu"/>
+                <MenuItem Header="承载力和压缩模量计算(待开发)" Name="BearAndModulusCalculateMenu" Click="BearAndModulusCalculateMenu_Click"/>
+                <MenuItem Header="抗剪强度计算(待开发)" Name="ShearStrengthCalculateMenu" IsEnabled="False"/>
+                <MenuItem Header="桩侧、桩端阻力计算(待开发)" Name="PileResistanceCalculationMenu" IsEnabled="False"/>
             </MenuItem>
             <MenuItem Header="绘图" Name="DrawMenu">
                 <MenuItem Header="绘制钻孔柱状图" Name="DrawZkMenu" Click="DrawZkMenu_Click"/>
-                <MenuItem Header="绘制静力触探曲线图" Name="DrawCptMenu"/>
+                <MenuItem Header="绘制静力触探曲线图" Name="DrawCptMenu" Click="DrawCptMenu_Click"/>
                 <Separator/>
-                <MenuItem Header="启动CAD" Name="StartCadMenu"/>
+                <MenuItem Header="启动CAD绘制剖面图(待开发)" Name="StartCadMenu" IsEnabled="False"/>
             </MenuItem>
             <MenuItem Header="报告" Name="ReportMenu">
-                <MenuItem Header="生成参数统计表格" Name="ParameterStatisticMenu"/>
+                <MenuItem Header="生成参数统计表格(待开发)" Name="ParameterStatisticMenu" IsEnabled="False"/>
                 <Separator/>
-                <MenuItem Header="生成勘察报告" Name="GeotechnicalReportProductMenu"/>
-                <MenuItem Header="勘察报告设置" Name="GeotechnicalReportSettingMenu"/>
+                <MenuItem Header="生成勘察报告(待开发)" Name="GeotechnicalReportProductMenu" IsEnabled="False"/>
+                <MenuItem Header="勘察报告设置(待开发)" Name="GeotechnicalReportSettingMenu" IsEnabled="False"/>
             </MenuItem>
             <MenuItem Header="工具" Name="ToolMenu">
-                <MenuItem Header="岩土计算器" Name="GeotechnicalCalculatorMenu"/>
+                <MenuItem Header="岩土计算器(待开发)" Name="GeotechnicalCalculatorMenu" IsEnabled="False"/>
                 <Separator/>
                 <MenuItem Header="设置" Name="ProgramSettingMenu" Click="MenuItem_Setting_Click"/>
             </MenuItem>
@@ -96,10 +88,10 @@
                 <MenuItem Header="显示项目导航窗口" Name="ShowProjectNavigationMenu" IsCheckable="True" IsChecked="False"/>
             </MenuItem>
             <MenuItem Header="帮助" Name="HelpMenu">
-                <MenuItem Header="使用帮助" Name="UsingHelpMenu"/>
+                <MenuItem Header="使用帮助(待开发)" Name="UsingHelpMenu" IsEnabled="False"/>
                 <MenuItem Header="更新日志" Name="UpdateLogMenu" Click="UpdateLogMenu_Click"/>
                 <MenuItem Header="用户反馈" Name="FeedBackMenu" Click="FeedBackMenu_Click"/>
-                <MenuItem Header="关于" Name="AboutMenu"/>
+                <MenuItem Header="关于(待开发)" Name="AboutMenu" IsEnabled="False"/>
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1" Background="LightGray">

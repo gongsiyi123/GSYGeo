@@ -14,8 +14,8 @@ namespace GSYGeo
         // 静态字段，存储当前正在操作的项目名称
         public static string currentProject = null;
 
-        // 静态字段，设置默认数据存储路径为"我的文档\巩氏岩土"
-        public static string defaultPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\巩氏岩土";
+        // 静态字段，设置默认数据存储路径为"我的文档\小熠岩土勘察"
+        public static string defaultPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\小熠岩土勘察";
 
         // 判断数据存储路径的注册表项是否存在
         // 返回一个布尔值，true表示注册表项存在，false表示不存在

@@ -347,13 +347,16 @@ namespace GSYGeo
         }
 
         /// <summary>
-        /// 方法，绘制单个钻孔柱状图
+        /// 方法，绘制单个钻孔柱状图图
         /// </summary>
         /// <param name="_drawIndex">柱状图编号，从0开始，用于绘制多个柱状图时计算其摆放位置</param>
         /// <param name="_projectName">工程名称</param>
+        /// <param name="_companyName">公司名称</param>
+        /// <param name="_zk">钻孔数据</param>
+        /// <param name="_scaleList">比例尺列表</param>
         /// <param name="_style1">钻孔柱状图的文字样式</param>
         /// <param name="_style2">剖面图钻孔的文字样式</param>
-        public void DrawZk(int _drawIndex, string _projectName, string _companyName, Borehole _zk, List<double> _scaleList, DxfTextStyle _style1, DxfTextStyle _style2)
+        public void DrawZk(int _drawIndex, string _projectName, string[] _company, Borehole _zk, List<double> _scaleList, DxfTextStyle _style1, DxfTextStyle _style2)
         {
             // 当钻孔内没有分层时退出
             if (_zk.Layers.Count == 0)
@@ -403,7 +406,7 @@ namespace GSYGeo
             AddMText(_projectName, 60 + xDis, 257.5, 60, 2.5, _style1);
             AddMText(_zk.Name, 43.5 + xDis, 250.5, 27, 2.5, _style1);
             AddMText(_zk.Altitude.ToString("0.00") + "      m", 43.5 + xDis, 243.5, 27, 2.5, _style1);
-            AddMText(_companyName, 147.5 + xDis, 257.5, 75, 2.5, _style1);
+            AddMText(_company[0], 147.5 + xDis, 257.5, 75, 2.5, _style1);
             AddMText(_zk.Layers[_zk.Layers.Count - 1].Depth.ToString("0.00") + "   m", 123.5 + xDis, 250.5, 27, 2.5, _style1);
 
             // 计算比例尺
@@ -480,6 +483,12 @@ namespace GSYGeo
                 AddMText(_zk.Samples[i].Depth.ToString("0.00"), 161.5 + xDis, drawY - 2, 20, 2.5, _style1);
             }
 
+            // 绘制人员信息
+            AddMText(_company[2], 44 + xDis, 13, 10, 2.5, _style1);
+            AddMText(_company[4], 82 + xDis, 13, 10, 2.5, _style1);
+            AddMText(_company[5], 118 + xDis, 13, 10, 2.5, _style1);
+            AddMText(_company[6], 156 + xDis, 13, 10, 2.5, _style1);
+
             // 绘制剖面图钻孔
             double distanceY = 280;
             for(int i = 0; i < _scaleList.Count; i++)
@@ -542,6 +551,203 @@ namespace GSYGeo
 
                 // 绘制比例尺标记
                 double scY = distanceY - _zk.Layers[_zk.Layers.Count - 1].Depth * 1000 / _scaleList[i] / 2;
+
+                DxfMText t = AddMText("1:" + _scaleList[i], 20 + xDis, scY, 80, 20, _style2);
+                t.AttachmentPoint = AttachmentPoint.MiddleLeft;
+            }
+        }
+
+        /// <summary>
+        /// 方法，绘制单个静力触探曲线图
+        /// </summary>
+        /// <param name="_drawIndex">曲线图编号，从0开始，用于绘制多个曲线图时计算其摆放位置</param>
+        /// <param name="_projectName">工程名称</param>
+        /// <param name="_companyName">公司名称</param>
+        /// <param name="_jk">触探孔数据</param>
+        /// <param name="_scaleList">比例尺列表</param>
+        /// <param name="_style1">曲线图的文字样式</param>
+        /// <param name="_style2">剖面图触探孔的文字样式</param>
+        public void DrawJk(int _drawIndex,string _projectName,string[] _company,CPT _jk,List<double> _scaleList,DxfTextStyle _style1,DxfTextStyle _style2)
+        {
+            // 当触探孔内没有分层时退出
+            if (_jk.Layers.Count == 0)
+                return;
+
+            // 计算图形横向偏移量，用于绘制多个柱状图时的空间摆放距离
+            double xDis = _drawIndex * 195;
+
+            // 绘制钻孔柱状图框架
+            AddRectangle(0 + xDis, 0, 195 + xDis, 280);
+            AddRectangle(10 + xDis, 20, 185 + xDis, 261);
+            Model.Entities[Model.Entities.Count - 1].LineWeight = 30;
+
+            double[,] pointKJ = new double[28, 4]
+            {
+                {10,254,185,254 }, {10,247,57,247 }, {63,247,185,247 }, { 10,240,185,240}, {10,220,185,220 },
+                {30,261,30,240 }, {57,254,57,240 }, {63,254,63,240 }, {90,261,90,240 }, {110,261,110,240 },
+                {137,254,137,240 }, {157,254,157,240 }, {22,240,22,20 }, {30,240,30,20 }, {42,240,42,20 },
+                {52,240,52,20 }, {62,240,62,20 }, {77,240,77,20 },
+                {87,220,87,222 }, {97,220,97,222 },{107,220,107,222 },{117,220,117,222 },{127,220,127,222 },
+                {137,220,137,222 },{147,220,147,222 },{157,220,157,222 },{167,220,167,222 },{177,220,177,222 }
+            };
+            for (int i = 0; i < 28; i++)
+                AddLine(pointKJ[i, 0] + xDis, pointKJ[i, 1], pointKJ[i, 2] + xDis, pointKJ[i, 3]);
+
+            string[] textKJ = new string[32]
+            {
+                "工程名称","钻孔编号","孔口高程","勘察单位","钻孔深度","钻孔日期","初见水位","稳定水位","地\n质\n年\n代","及\n成\n因","层\n \n序",
+                "层\n底\n标\n高\n(m)","层\n底\n深\n度\n(m)","分\n层\n厚\n度\n(m)","比 贯 入 阻 力 (MPa)","1","2","3","4","5",
+                "6","7","8","9","10","静 力 触 探 曲 线 图","制图:","校核:","审查:","核定:","X:","Y:"
+            };
+            double[,] ptextKJ = new double[32, 3]
+            {
+                {20,257.5,20 }, {20,250.5,20 }, {20,243.5,20 }, {100,257.5,20 }, {100,250.5,20 }, {100,243.5,20 }, {147,250.5,20 }, {147,243.5,20 },
+                {13,230,6 }, {19,230,6 }, {26,230,8 }, {36,230,12 }, {47,230,10 }, {57,230,10 }, {131,234.5,108 }, {87,227,2 },
+                {97,227,2 }, {107,227,2 }, {117,227,2 }, {127,227,2 }, {137,227,2 }, {147,227,2 },{157,227,2 },
+                {167,227,2 },{177,227,2 }, {97.5,270,175 }, {32,13,10 }, {70,13,10 }, {106,13,10 }, {144,13,10 }, {65.5,252,5 }, {65.5,245,5 }
+            };
+            for (int i = 0; i < textKJ.Length; i++)
+            {
+                DxfMText t = AddMText(textKJ[i], ptextKJ[i, 0] + xDis, ptextKJ[i, 1], ptextKJ[i, 2], 2.5, _style1);
+                if (i == 11 || i == 12 || i == 13)
+                    t.LineSpacingFactor = 0.8;
+            }
+
+            // 绘制表头信息
+            AddMText(_projectName, 60 + xDis, 257.5, 60, 2.5, _style1);
+            AddMText(_jk.Name, 43.5 + xDis, 250.5, 27, 2.5, _style1);
+            AddMText(_jk.Altitude.ToString("0.00") + "      m", 43.5 + xDis, 243.5, 27, 2.5, _style1);
+            AddMText(_company[0], 147.5 + xDis, 257.5, 75, 2.5, _style1);
+            AddMText(_jk.Layers[_jk.Layers.Count - 1].Depth.ToString("0.00") + "   m", 123.5 + xDis, 250.5, 27, 2.5, _style1);
+
+            // 计算比例尺
+            double scale;
+            if (_jk.Layers[_jk.Layers.Count - 1].Depth <= 20)
+                scale = 100;
+            else if (_jk.Layers[_jk.Layers.Count - 1].Depth <= 40)
+                scale = 200;
+            else if (_jk.Layers[_jk.Layers.Count - 1].Depth <= 100)
+                scale = 500;
+            else
+                scale = 1000;
+            AddMText("柱\n状\n图\n1:" + scale, 69.5 + xDis, 230, 12, 2.5, _style1);
+
+            // 绘制分层
+            for (int i = 0; i < _jk.Layers.Count; i++)
+            {
+                // 分层线及深度标签
+                double drawY = 220 - _jk.Layers[i].Depth / scale * 1000;
+
+                AddLine(10 + xDis, drawY, 77 + xDis, drawY);
+                AddMText(_jk.Layers[i].Number, 26 + xDis, drawY + 3, 8, 2.5, _style1);
+                AddMText((_jk.Altitude - _jk.Layers[i].Depth).ToString("0.00"), 36 + xDis, drawY + 3, 8, 2.5, _style1);
+                AddMText(_jk.Layers[i].Depth.ToString("0.00"), 47 + xDis, drawY + 3, 8, 2.5, _style1);
+                if (i > 0)
+                    AddMText((_jk.Layers[i].Depth - _jk.Layers[i - 1].Depth).ToString("0.00"), 57 + xDis, drawY + 3, 8, 2.5, _style1);
+                else
+                    AddMText(_jk.Layers[i].Depth.ToString("0.00"), 57 + xDis, drawY + 3, 8, 2.5, _style1);
+
+                // 地质填充
+                double hatchY1 = drawY;
+                double hatchY2;
+                if (i > 0)
+                    hatchY2 = 220 - _jk.Layers[i - 1].Depth / scale * 1000;
+                else
+                    hatchY2 = 220;
+
+                try
+                {
+                    string s = _jk.Layers[i].Name;
+                    if (s.Contains("黏"))
+                        s = s.Replace("黏", "粘");
+                    AddRecHatch(HatchTrans(s), 62 + xDis, hatchY1, 77 + xDis, hatchY2);
+                }
+                catch
+                {
+                    AddRecHatch("SOLID", 62 + xDis, hatchY1, 77 + xDis, hatchY2);
+                }
+            }
+
+            // 绘制Ps曲线
+            int n1 = _jk.PsList.Count;
+            DxfVertex2D[] pointList = new DxfVertex2D[n1];
+            for(int i = 0; i < n1; i++)
+            {
+                double drawY = 220 - Convert.ToDouble(i) / scale * 100;
+                double drawX = 77 + _jk.PsList[i] * 10 + xDis;
+                pointList[i] = new DxfVertex2D(drawX, drawY);
+            }
+            AddPline(pointList);
+
+            // 绘制人员信息
+            AddMText(_company[2], 44 + xDis, 13, 10, 2.5, _style1);
+            AddMText(_company[4], 82 + xDis, 13, 10, 2.5, _style1);
+            AddMText(_company[5], 118 + xDis, 13, 10, 2.5, _style1);
+            AddMText(_company[6], 156 + xDis, 13, 10, 2.5, _style1);
+
+            // 绘制剖面静力触探曲线图
+            double distanceY = 280;
+            for (int i = 0; i < _scaleList.Count; i++)
+            {
+                // 计算绘图起始位置
+                distanceY = distanceY + 40 + _jk.Layers[_jk.Layers.Count - 1].Depth * 1000 / _scaleList[i];
+
+                // 绘制钻孔编号、孔口高程、钻孔轴线
+                AddLine(124 + xDis, distanceY + 10, 136 + xDis, distanceY + 10);
+                AddMText(_jk.Name, 130 + xDis, distanceY + 13.5, 12, 4, _style2);
+                AddMText(_jk.Altitude.ToString("0.00"), 130 + xDis, distanceY + 7, 12, 4, _style2);
+                DxfPolyline2D l = AddLine(130 + xDis, distanceY, 130 + xDis, distanceY - _jk.Layers[_jk.Layers.Count - 1].Depth * 1000 / _scaleList[i]);
+                l.LineWeight = 50;
+
+                // 绘制分层
+                for (int j = 0; j < _jk.Layers.Count; j++)
+                {
+                    double layerY = distanceY - _jk.Layers[j].Depth * 1000 / _scaleList[i];
+                    double layerYold = distanceY;
+                    if (j > 0)
+                        layerYold = distanceY - _jk.Layers[j - 1].Depth * 1000 / _scaleList[i];
+
+                    if (j < _jk.Layers.Count - 1)
+                        AddLine(123 + xDis, layerY, 130 + xDis, layerY);
+                    DxfMText text = AddMText(_jk.Layers[j].Depth.ToString("0.00") + "(" + (_jk.Altitude - _jk.Layers[j].Depth).ToString("0.00"), 121 + xDis, layerY + 1.5, 33, 3, _style2);
+                    text.AttachmentPoint = AttachmentPoint.MiddleLeft;
+
+                    try
+                    {
+                        string s = _jk.Layers[j].Name;
+                        if (s.Contains("黏"))
+                            s = s.Replace("黏", "粘");
+                        AddRecHatch(HatchTrans(s), 123 + xDis, layerY, 130 + xDis, layerYold);
+                    }
+                    catch
+                    {
+                        AddRecHatch("SOLID", 123 + xDis, layerY, 130 + xDis, layerYold);
+                    }
+                }
+
+                // 绘制Ps值曲线
+                int n2 = _jk.PsList.Count;
+                DxfVertex2D[] pointList2 = new DxfVertex2D[n2];
+                for(int j = 0; j < n2; j++)
+                {
+                    double drawY = distanceY - Convert.ToDouble(j) / _scaleList[i] * 100;
+                    double drawX = 130 + _jk.PsList[j] * 10 + xDis;
+                    pointList2[j] = new DxfVertex2D(drawX, drawY);
+                }
+                AddPline(pointList2);
+
+                // 绘制Ps刻度
+                double kdY = distanceY - _jk.Layers[_jk.Layers.Count - 1].Depth * 1000 / _scaleList[i] - 15;
+                AddLine(130 + xDis, kdY, 180 + xDis, kdY);
+                AddLine(130 + xDis, kdY, 130 + xDis, kdY + 8);
+                for(int j = 1; j <= 5; j++)
+                {
+                    AddLine(130 + 10 * j + xDis, kdY, 130 + 10 * j + xDis, kdY + 2);
+                    AddMText(j.ToString(), 130 + 10 * j + xDis, kdY + 7, 2, 3, _style2);
+                }
+
+                // 绘制比例尺标记
+                double scY = distanceY - _jk.Layers[_jk.Layers.Count - 1].Depth * 1000 / _scaleList[i] / 2;
 
                 DxfMText t = AddMText("1:" + _scaleList[i], 20 + xDis, scY, 80, 20, _style2);
                 t.AttachmentPoint = AttachmentPoint.MiddleLeft;

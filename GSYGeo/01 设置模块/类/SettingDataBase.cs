@@ -28,17 +28,23 @@ namespace GSYGeo
                 conn.Open();
 
                 // 新建公司信息表，设置初始 公司名称 和 公司资质代码 为空字符串
-                sql = "create table company(name varchar(255),code varchar(255))";
+                sql = "create table if not exists company(name varchar(255),code varchar(255))";
                 new SQLiteCommand(sql, conn).ExecuteNonQuery();
                 sql = "insert into company(name,code) values('','')";
                 new SQLiteCommand(sql, conn).ExecuteNonQuery();
 
                 // 新建公司人员信息表
-                sql = "create table companyPeople(name varchar(255))";
+                sql = "create table if not exists companyPeople(name varchar(255))";
                 new SQLiteCommand(sql, conn).ExecuteNonQuery();
 
                 // 新建比例尺表
-                sql = "create table outputScale(scale double)";
+                sql = "create table if not exists outputScale(scale double)";
+                new SQLiteCommand(sql, conn).ExecuteNonQuery();
+
+                // 新建标准表，设置初始行业标准为水利水电，地方标准为湖北省
+                sql = "create table if not exists standard(industrial varchar(255),local varchar(255))";
+                new SQLiteCommand(sql, conn).ExecuteNonQuery();
+                sql = "insert into standard(industrial,local) values('WaterConservancy','Hubei')";
                 new SQLiteCommand(sql, conn).ExecuteNonQuery();
             }
         }
@@ -88,6 +94,84 @@ namespace GSYGeo
                 // 编辑公司资质代码
                 sql = "update company set code='" + _code + "'";
                 new SQLiteCommand(sql, conn).ExecuteNonQuery();
+            }
+        }
+
+        // 编辑行业标准
+        public static void EditIndustrialStandard(string _standard)
+        {
+            // 创建连接到设置信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\设置信息.gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 编辑行业标准
+                sql = "update standard set industrial='" + _standard + "'";
+                new SQLiteCommand(sql, conn).ExecuteNonQuery();
+            }
+        }
+
+        // 编辑地方标准
+        public static void EditLocalStandard(string _standard)
+        {
+            // 创建连接到设置信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\设置信息.gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 编辑地方标准
+                sql = "update standard set local='" + _standard + "'";
+                new SQLiteCommand(sql, conn).ExecuteNonQuery();
+            }
+        }
+
+        // 查询行业标准
+        public static string ReadIndustrialStandard()
+        {
+            // 创建连接到设置信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\设置信息.gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 查询
+                sql = "select industrial from standard";
+                new SQLiteCommand(sql, conn).ExecuteNonQuery();
+                SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
+                string standard = null;
+                while (reader.Read())
+                {
+                    standard = reader["industrial"].ToString();
+                }
+                return standard;
+            }
+        }
+
+        // 查询地方标准
+        public static string ReadLocalStandard()
+        {
+            // 创建连接到设置信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\设置信息.gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 查询
+                sql = "select local from standard";
+                new SQLiteCommand(sql, conn).ExecuteNonQuery();
+                SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
+                string standard = null;
+                while (reader.Read())
+                {
+                    standard = reader["local"].ToString();
+                }
+                return standard;
             }
         }
 

@@ -515,6 +515,7 @@ namespace GSYGeo
         #endregion
 
         #region 钻孔取样
+
         // 初始化SampleListDataTable，不带参数
         private void InitialSampleListDataTable()
         {
@@ -569,6 +570,15 @@ namespace GSYGeo
         private void DeleteRowSampleListDataTable(int _rowIndex)
         {
             dtSample.Rows.RemoveAt(_rowIndex);
+
+            // 刷新编号列表
+            for(int i = 0; i < dtSample.Rows.Count; i++)
+            {
+                DataRow dr = dtSample.Rows[i];
+                dr.BeginEdit();
+                dr["numberList"] = (i + 1).ToString();
+                dr.EndEdit();
+            }
         }
 
         // 点击"添加取样"
@@ -587,8 +597,11 @@ namespace GSYGeo
                 }
             }
 
+            // 传递取样编号
+            string sampleNumber = (dtSample.Rows.Count + 1).ToString();
+
             // 实例化窗口
-            ZkSampleDetail newSample = new ZkSampleDetail(lastNumberList, lastDepthList);
+            ZkSampleDetail newSample = new ZkSampleDetail(lastDepthList, sampleNumber);
             newSample.ShowDialog();
             if (newSample.DialogResult == true)
             {
@@ -638,7 +651,7 @@ namespace GSYGeo
             bool isDisturbed = (bool)drv[2];
             
             // 实例化窗口
-            ZkSampleDetail editSample = new ZkSampleDetail(lastNumberList, lastDepthList, number, depth, isDisturbed);
+            ZkSampleDetail editSample = new ZkSampleDetail(lastDepthList, number, depth, isDisturbed);
             editSample.ShowDialog();
             if (editSample.DialogResult == true)
             {
@@ -737,26 +750,36 @@ namespace GSYGeo
         private void DeleteRowNTestListDataTable(int _rowIndex)
         {
             dtNTest.Rows.RemoveAt(_rowIndex);
+
+            // 刷新试验编号列表
+            for(int i = 0; i < dtNTest.Rows.Count; i++)
+            {
+                DataRow dr = dtNTest.Rows[i];
+                dr.BeginEdit();
+                dr["numberList"] = (i + 1).ToString();
+                dr.EndEdit();
+            }
         }
 
         // 点击"添加标贯/动探"
         private void AddNTestButton_Click(object sender, RoutedEventArgs e)
         {
-            // 传递历史取样深度列表和历史取样编号列表
-            List<string> lastNumberList = new List<string>();
+            // 传递历史取样编号列表
             List<double> lastDepthList = new List<double>();
             if (this.NTestListDataGrid.Items.Count > 0)
             {
                 for (int i = 0; i < this.NTestListDataGrid.Items.Count; i++)
                 {
                     DataRowView drv = (DataRowView)this.NTestListDataGrid.Items[i];
-                    lastNumberList.Add(drv[0].ToString());
                     lastDepthList.Add((double)drv[1]);
                 }
             }
 
+            // 传递试验编号
+            string testNumber = (dtNTest.Rows.Count + 1).ToString();
+
             // 实例化窗口
-            ZkNTestDetail newNTest = new ZkNTestDetail(lastNumberList, lastDepthList);
+            ZkNTestDetail newNTest = new ZkNTestDetail(lastDepthList, testNumber);
             newNTest.ShowDialog();
             if (newNTest.DialogResult == true)
             {
@@ -816,7 +839,7 @@ namespace GSYGeo
             ZkNTest.ntype type = (ZkNTest.ntype)drv[3];
 
             // 实例化窗口
-            ZkNTestDetail editNTest = new ZkNTestDetail(lastNumberList, lastDepthList, number, depth, value, type);
+            ZkNTestDetail editNTest = new ZkNTestDetail(lastDepthList, number, depth, value, type);
             editNTest.ShowDialog();
             if (editNTest.DialogResult == true)
             {
@@ -840,7 +863,7 @@ namespace GSYGeo
                     type = ZkNTest.ntype.N120;
                 }
                 EditRowNTestListDataTable(selectIndex, number, depth, value, type);
-
+                
                 // 绘图
                 DrawZk();
             }
@@ -856,7 +879,7 @@ namespace GSYGeo
             if (result == MessageBoxResult.OK)
             {
                 DeleteRowNTestListDataTable(selectedIndex);
-
+                
                 // 绘图
                 DrawZk();
             }

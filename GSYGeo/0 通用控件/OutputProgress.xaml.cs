@@ -26,11 +26,13 @@ namespace GSYGeo
         /// </summary>
         public enum OutputType
         {
+            WordLoad,
             NTest,
             Ps,
             RST,
             GAT,
-            ZkCad
+            ZkCad,
+            JkCad
         };
 
         /// <summary>
@@ -57,6 +59,11 @@ namespace GSYGeo
         /// 属性，输出的钻孔列表
         /// </summary>
         private List<Borehole> OutputZkList { get; set; }
+
+        /// <summary>
+        /// 属性，输出的静力触探孔列表
+        /// </summary>
+        private List<CPT> OutputJkList { get; set; }
 
         /// <summary>
         /// 属性，输出图形的的比例尺列表
@@ -89,12 +96,12 @@ namespace GSYGeo
         /// <summary>
         /// 构造函数，用于输出钻孔柱状图
         /// </summary>
-        /// <param name="_type"></param>
-        /// <param name="_path"></param>
-        /// <param name="_title"></param>
-        /// <param name="_progressInfo"></param>
-        /// <param name="_checkedZkList"></param>
-        /// <param name="_checkedScaleList"></param>
+        /// <param name="_type">输出类型枚举</param>
+        /// <param name="_path">输出文件路径</param>
+        /// <param name="_title">输出窗口的标题</param>
+        /// <param name="_progressInfo">输出提示信息</param>
+        /// <param name="_checkedZkList">输出的触探孔列表</param>
+        /// <param name="_checkedScaleList">输出的比例尺列表</param>
         public OutputProgress(OutputType _type, string _path, string _title, string _progressInfo, List<Borehole> _checkedZkList, List<double> _checkedScaleList)
         {
             InitializeComponent();
@@ -105,6 +112,28 @@ namespace GSYGeo
             Folder = _path.Substring(0, _path.LastIndexOf(@"\"));
             ProgressInfo = _progressInfo;
             OutputZkList = _checkedZkList;
+            OutputScaleList = _checkedScaleList;
+        }
+
+        /// <summary>
+        /// 构造函数，用于输出静力触探曲线图
+        /// </summary>
+        /// <param name="_type">输出类型枚举</param>
+        /// <param name="_path">输出文件路径</param>
+        /// <param name="_title">输出窗口的标题</param>
+        /// <param name="_progressInfo">输出提示信息</param>
+        /// <param name="_checkedJkList">输出的触探孔列表</param>
+        /// <param name="_checkedScaleList">输出的比例尺列表</param>
+        public OutputProgress(OutputType _type, string _path, string _title, string _progressInfo, List<CPT> _checkedJkList, List<double> _checkedScaleList)
+        {
+            InitializeComponent();
+
+            this.Title = _title;
+            BWType = _type;
+            Path = _path;
+            Folder = _path.Substring(0, _path.LastIndexOf(@"\"));
+            ProgressInfo = _progressInfo;
+            OutputJkList = _checkedJkList;
             OutputScaleList = _checkedScaleList;
         }
 
@@ -121,37 +150,7 @@ namespace GSYGeo
             bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgWorker_RunWorkerCompleted);
             bgWorker.RunWorkerAsync();
         }
-
-        /// <summary>
-        /// 声明输出标贯/动探统计结果的后台委托
-        /// </summary>
-        /// <param name="_path">输出文件的路径</param>
-        public delegate void OutputNTestStatisticEventHandler(object _path);
-
-        /// <summary>
-        /// 声明输出静力触探摩阻力统计结果的后台委托
-        /// </summary>
-        /// <param name="_path">输出文件的路径</param>
-        public delegate void OutputPsStatisticEventHandler(object _path);
-
-        /// <summary>
-        /// 声明输出土工常规试验统计结果的后台委托
-        /// </summary>
-        /// <param name="_path">输出文件的路径</param>
-        public delegate void OutputRSTStatisticEventHandler(object _path);
-
-        /// <summary>
-        /// 声明输出颗粒分析试验统计结果的后台委托
-        /// </summary>
-        /// <param name="_path">输出文件的路径</param>
-        public delegate void OutputGATStatisticEventHandler(object _path);
-
-        /// <summary>
-        /// 声明输出钻孔柱状图的后台委托
-        /// </summary>
-        /// <param name="_path">输出文件的路径</param>
-        public delegate void OutputZkToCadEventHandler(string _path, List<Borehole> _checkedZkList, List<double> _checkedScaleList);
-
+        
         /// <summary>
         /// 启动后台进程
         /// </summary>
@@ -211,31 +210,20 @@ namespace GSYGeo
         /// <param name="_path">输出路径</param>
         private void DoBackGroundWork(object _path)
         {
-            if (BWType == OutputType.NTest)
-            {
-                OutputNTestStatisticEventHandler outputNtestStatistic = new OutputNTestStatisticEventHandler(NTestStatistic.OutputToWord);
-                outputNtestStatistic(Path);
-            }
+            if (BWType == OutputType.WordLoad)
+                WorkLoadStatistic.OutputToWord(Path);
+            else if (BWType == OutputType.NTest)
+                NTestStatistic.OutputToWord(Path);
             else if (BWType == OutputType.Ps)
-            {
-                OutputPsStatisticEventHandler outputPsStatistic = new OutputPsStatisticEventHandler(CPTStatistic.OutputToWord);
-                outputPsStatistic(Path);
-            }
+                CPTStatistic.OutputToWord(Path);
             else if (BWType == OutputType.RST)
-            {
-                OutputRSTStatisticEventHandler outputRSTStatistic = new OutputRSTStatisticEventHandler(RSTStatistic.OutputToWord);
-                outputRSTStatistic(Path);
-            }
+                RSTStatistic.OutputToWord(Path);
             else if (BWType == OutputType.GAT)
-            {
-                OutputGATStatisticEventHandler outputGATStatistic = new OutputGATStatisticEventHandler(GATStatistic.OutputToWord);
-                outputGATStatistic(Path);
-            }
+                GATStatistic.OutputToWord(Path);
             else if (BWType == OutputType.ZkCad)
-            {
-                OutputZkToCadEventHandler outputZkCad = new OutputZkToCadEventHandler(OutputZkToCad.OutputToCad);
-                outputZkCad(Path, OutputZkList, OutputScaleList);
-            }
+                OutputZkToCad.OutputToCad(Path, OutputZkList, OutputScaleList);
+            else if (BWType == OutputType.JkCad)
+                OutputJkToCad.OutputToCad(Path, OutputJkList, OutputScaleList);
         }
 
         /// <summary>
@@ -247,7 +235,7 @@ namespace GSYGeo
             for (int i = 0; i <= 95; i++)
             {
                 bgWorker.ReportProgress(i);
-                Thread.Sleep(100);
+                Thread.Sleep(50);
             }
         }
 

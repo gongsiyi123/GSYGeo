@@ -21,16 +21,16 @@ using WW.Math;
 namespace GSYGeo
 {
     /// <summary>
-    /// OutputZkToCad.xaml 的交互逻辑
+    /// OutputJkToCad.xaml 的交互逻辑
     /// </summary>
-    public partial class OutputZkToCad : Window
+    public partial class OutputJkToCad : Window
     {
         #region 参数定义
 
         /// <summary>
-        /// 钻孔列表
+        /// 触探孔列表
         /// </summary>
-        public static List<Borehole> ZkList;
+        public static List<CPT> JkList;
 
         /// <summary>
         /// 比例尺列表
@@ -86,12 +86,12 @@ namespace GSYGeo
         /// <summary>
         /// 构造函数
         /// </summary>
-        public OutputZkToCad()
+        public OutputJkToCad()
         {
             InitializeComponent();
 
             // 读取数据并赋值ComboBox
-            ReadZkList();
+            ReadJkList();
             ReadScaleList();
 
             // 定义工具提示
@@ -103,19 +103,19 @@ namespace GSYGeo
         #region 读取数据
 
         /// <summary>
-        /// 读取钻孔数据函数
+        /// 读取触探孔数据函数
         /// </summary>
-        private void ReadZkList()
+        private void ReadJkList()
         {
             // 读取钻孔数据
-            ZkList = BoreholeDataBase.ReadZkListAsClass(Program.currentProject);
+            JkList = CPTDataBase.ReadJkListAsClass(Program.currentProject);
 
             // 赋值ComboBox
-            for(int i = 0; i < ZkList.Count; i++)
+            for (int i = 0; i < JkList.Count; i++)
             {
                 CheckBox checkBox = new CheckBox();
-                checkBox.Content = ZkList[i].Name;
-                this.ZkListBox.Items.Add(checkBox);
+                checkBox.Content = JkList[i].Name;
+                this.JkListBox.Items.Add(checkBox);
             }
         }
 
@@ -131,7 +131,7 @@ namespace GSYGeo
             ScaleList.Add(500);
 
             // 赋值ComboBox，默认全选
-            for(int i = 0; i < ScaleList.Count; i++)
+            for (int i = 0; i < ScaleList.Count; i++)
             {
                 CheckBox checkBox = new CheckBox();
                 checkBox.Content = "1：" + ScaleList[i];
@@ -151,26 +151,32 @@ namespace GSYGeo
         /// <param name="e"></param>
         private void OutputButton_Click(object sender, RoutedEventArgs e)
         {
+            // 读取选中的触探孔列表
+            List<CPT> checkedJkList = new List<CPT>();
+            foreach (CheckBox checkBox in this.JkListBox.Items)
+                if (checkBox.IsChecked == true)
+                    for (int i = 0; i < JkList.Count; i++)
+                        if (JkList[i].Name == checkBox.Content.ToString())
+                            checkedJkList.Add(JkList[i]);
+
+            // 没有选中时退出
+            if (checkedJkList.Count == 0)
+            {
+                MessageBox.Show("亲，您没有选中任何触探孔哦！");
+                return;
+            }
+
             // 选择输出目录
             string path;
 
             System.Windows.Forms.FolderBrowserDialog programPathBrowser = new System.Windows.Forms.FolderBrowserDialog();
             if (programPathBrowser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                path = programPathBrowser.SelectedPath + @"\" + Program.currentProject + @"-钻孔柱状图.dwg";
+                path = programPathBrowser.SelectedPath + @"\" + Program.currentProject + @"-静力触探曲线图.dwg";
             else
                 return;
-            
+
             if (File.Exists((string)path))
                 File.Delete((string)path);
-
-
-            // 读取选中的钻孔列表
-            List<Borehole> checkedZkList = new List<Borehole>();
-            foreach (CheckBox checkBox in this.ZkListBox.Items)
-                if (checkBox.IsChecked == true)
-                    for (int i = 0; i < ZkList.Count; i++)
-                        if (ZkList[i].Name == checkBox.Content.ToString())
-                            checkedZkList.Add(ZkList[i]);
 
             // 读取选中的比例尺列表
             List<double> checkedScaleList = new List<double>();
@@ -180,16 +186,16 @@ namespace GSYGeo
 
 
             // 启动输出窗体
-            ShowProgressBar(path, checkedZkList, checkedScaleList);
+            ShowProgressBar(path, checkedJkList, checkedScaleList);
         }
 
         /// <summary>
-        /// 绘制钻孔柱状图函数
+        /// 绘制静力触探曲线函数
         /// </summary>
         /// <param name="_path">输出文件的路径</param>
         /// <param name="_checkedZkList">选中的钻孔列表</param>
         /// <param name="_checkedScaleList">选中的比例尺列表</param>
-        public static void OutputToCad(string _path, List<Borehole> _checkedZkList, List<double> _checkedScaleList)
+        public static void OutputToCad(string _path, List<CPT> _checkedJkList, List<double> _checkedScaleList)
         {
             // 实例化CAD对象
             CAD cad = new CAD();
@@ -199,23 +205,23 @@ namespace GSYGeo
             DxfTextStyle style2 = cad.AddStyle("GB2312_08", "仿宋_GB2312.ttf", 0.8);
 
             // 循环绘图
-            for (int i = 0; i < _checkedZkList.Count; i++)
+            for (int i = 0; i < _checkedJkList.Count; i++)
             {
-                cad.DrawZk(i, Program.currentProject, ProjectDataBase.ReadProjectCompany(Program.currentProject)[0], _checkedZkList[i], _checkedScaleList, style1, style2);
+                cad.DrawJk(i, Program.currentProject, ProjectDataBase.ReadProjectCompany(Program.currentProject), _checkedJkList[i], _checkedScaleList, style1, style2);
             }
 
             // 保存CAD文件
-            cad.SaveAsDwg(_path, 195 * _checkedZkList.Count / 8, 280, 195 * _checkedZkList.Count);
+            cad.SaveAsDwg(_path, 195 * _checkedJkList.Count / 8, 280, 195 * _checkedJkList.Count);
         }
 
         /// <summary>
         /// 实例化输出进度窗体
         /// </summary>
         /// <param name="obj">输出路径</param>
-        private void ShowProgressBar(string _path,List<Borehole> _checkedZkList,List<double> _checkedScaleList)
+        private void ShowProgressBar(string _path, List<CPT> _checkedJkList, List<double> _checkedScaleList)
         {
             // 实例化窗体
-            OutputProgress prog = new OutputProgress(OutputProgress.OutputType.ZkCad, _path, "输出钻孔柱状图", "正在输出钻孔柱状图……", _checkedZkList, _checkedScaleList);
+            OutputProgress prog = new OutputProgress(OutputProgress.OutputType.JkCad, _path, "输出静力触探曲线图", "正在输出静力触探曲线图……", _checkedJkList, _checkedScaleList);
             prog.ShowDialog();
         }
 
@@ -228,9 +234,9 @@ namespace GSYGeo
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SelectAllZkCheckBox_Checked(object sender, RoutedEventArgs e)
+        private void SelectAllJkCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            foreach(CheckBox item in this.ZkListBox.Items)
+            foreach (CheckBox item in this.JkListBox.Items)
             {
                 item.IsChecked = true;
             }
@@ -241,9 +247,9 @@ namespace GSYGeo
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SelectAllZkCheckBox_Unchecked(object sender, RoutedEventArgs e)
+        private void SelectAllJkCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            foreach (CheckBox item in this.ZkListBox.Items)
+            foreach (CheckBox item in this.JkListBox.Items)
             {
                 item.IsChecked = false;
             }

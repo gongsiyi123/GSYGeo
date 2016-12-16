@@ -24,19 +24,15 @@ namespace GSYGeo
         System.Windows.Controls.ToolTip tt0 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt1 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt2 = new System.Windows.Controls.ToolTip();
-        System.Windows.Controls.ToolTip tt3 = new System.Windows.Controls.ToolTip();
-        System.Windows.Controls.ToolTip tt4 = new System.Windows.Controls.ToolTip();
 
         // 判断确定按钮的可用性参数
         bool setCanDepth = false;
-        bool setCanNumber = false;
 
         // 定义历史取样编号、深度列表
         List<double> LastDepthList;
-        List<string> LastNumberList;
 
         // 带2个参数的构造函数，用于新增取样
-        public ZkSampleDetail(List<string> _lastNumberList,List<double> _lastDepthList)
+        public ZkSampleDetail(List<double> _lastDepthList,string _sampleNumber)
         {
             InitializeComponent();
 
@@ -45,20 +41,22 @@ namespace GSYGeo
             {
                 LastDepthList = _lastDepthList;
             }
-            if (_lastNumberList != null)
-            {
-                LastNumberList = _lastNumberList;   
-            }
+
+            // 赋值编号输入框
+            this.SampleNumberTextBox.Text = _sampleNumber;
 
             // 定义取样深度、编号输入框的工具提示
             DefineToolTip();
 
             // 默认选中"原状样"
             this.UnDisturbed.IsChecked = true;
+
+            // 默认聚焦深度输入框
+            this.SampleDepthTextBox.Focus();
         }
 
         // 带5个参数的构造函数，用于编辑取样
-        public ZkSampleDetail(List<string> _lastNumberList,List<double> _lastDepthList,string _number,double _depth,bool _isDisturbed)
+        public ZkSampleDetail(List<double> _lastDepthList,string _testNumber,double _depth,bool _isDisturbed)
         {
             InitializeComponent();
 
@@ -70,16 +68,12 @@ namespace GSYGeo
             {
                 LastDepthList = _lastDepthList;
             }
-            if (_lastNumberList != null)
-            {
-                LastNumberList = _lastNumberList;
-            }
-
+            
             // 定义取样深度、编号输入框的工具提示
             DefineToolTip();
 
             // 赋值
-            this.SampleNumberTextBox.Text = _number;
+            this.SampleNumberTextBox.Text = _testNumber;
             this.SampleDepthTextBox.Text = _depth.ToString();
             if (_isDisturbed == false)
             {
@@ -89,6 +83,9 @@ namespace GSYGeo
             {
                 this.Disturbed.IsChecked = true;
             }
+
+            // 默认聚焦深度输入框
+            this.SampleDepthTextBox.Focus();
         }
 
         // 定义取样深度、编号输入框的工具提示的函数
@@ -117,45 +114,8 @@ namespace GSYGeo
             tt2.PlacementTarget = this.SampleDepthTextBox;
             tt2.Foreground = Brushes.Red;
             tt2.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
-
-            tt3.Content = "取样编号不能为空";
-            this.SampleNumberTextBox.ToolTip = tt3;
-            tt3.PlacementTarget = this.SampleNumberTextBox;
-            tt3.Foreground = Brushes.Red;
-            tt3.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
-
-            tt4.Content = "取样编号重复";
-            this.SampleNumberTextBox.ToolTip = tt4;
-            tt4.PlacementTarget = this.SampleNumberTextBox;
-            tt4.Foreground = Brushes.Red;
-            tt4.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
         }
-
-        // 当 取样编号 输入框内容变化时，验证是否为空值，并验证是否与历史取样编号重复
-        private void SampleNumberTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            tt3.IsOpen = false;
-            tt4.IsOpen = false;
-            string str = this.SampleNumberTextBox.Text;
-            if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str))
-            {
-                this.SampleNumberTextBox.BorderBrush = Brushes.Red;
-                tt3.IsOpen = true;
-                setCanNumber = false;
-            }
-            else if (LastNumberList.Contains(str))
-            {
-                this.SampleNumberTextBox.BorderBrush = Brushes.Red;
-                tt4.IsOpen = true;
-                setCanNumber = false;
-            }
-            else
-            {
-                this.SampleNumberTextBox.BorderBrush = Brushes.Gray;
-                setCanNumber = true;
-            }
-        }
-
+        
         // 当 取样深度 输入框内容变化时，验证是否为数字，并验证是否与历史取样深度冲突
         private void SampleDepthTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -207,7 +167,7 @@ namespace GSYGeo
         private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             // 绑定"确定"按钮的可用状态
-            if (setCanDepth && setCanNumber)
+            if (setCanDepth)
             {
                 e.CanExecute = true;
             }

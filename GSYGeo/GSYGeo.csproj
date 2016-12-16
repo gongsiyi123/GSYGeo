@@ -81,6 +81,9 @@
     <Compile Include="0 通用类\ProgramPath.cs" />
     <Compile Include="03 钻孔管理模块\类\ZkNTest.cs" />
     <Compile Include="0 通用类\DtOperation.cs" />
+    <Compile Include="06 统计分析模块-06承载力压缩模量计算\窗体\BearingAndModulusCalculation.xaml.cs">
+      <DependentUpon>BearingAndModulusCalculation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="10 帮助模块\窗体\UpdateLog.xaml.cs">
       <DependentUpon>UpdateLog.xaml</DependentUpon>
     </Compile>
@@ -94,25 +97,29 @@
     <Compile Include="03 钻孔管理模块\窗体\ZkSampleDetail.xaml.cs">
       <DependentUpon>ZkSampleDetail.xaml</DependentUpon>
     </Compile>
-    <Compile Include="04 原位测试模块-静力触探\类\PsToDepthConverter.cs" />
-    <Compile Include="05 室内试验模块-土工常规\类\RoutineSoilTest.cs" />
-    <Compile Include="05 室内试验模块-土工常规\窗体\RoutineSoilTestControl.xaml.cs">
+    <Compile Include="04 原位测试模块-01静力触探\类\PsToDepthConverter.cs" />
+    <Compile Include="05 室内试验模块-01土工常规\类\RoutineSoilTest.cs" />
+    <Compile Include="05 室内试验模块-01土工常规\窗体\RoutineSoilTestControl.xaml.cs">
       <DependentUpon>RoutineSoilTestControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="05 室内试验模块-土工常规\类\RoutineSoilTestDataBase.cs" />
+    <Compile Include="05 室内试验模块-01土工常规\类\RoutineSoilTestDataBase.cs" />
     <Compile Include="0 通用类\Statistic.cs" />
-    <Compile Include="06 统计分析模块-标贯动探统计\类\StatisticNTest.cs" />
-    <Compile Include="06 统计分析模块-静力触探摩阻力统计\类\StatisticCPT.cs" />
-    <Compile Include="06 统计分析模块-静力触探摩阻力统计\类\StatisticPs.cs" />
+    <Compile Include="06 统计分析模块-02标贯动探统计\类\StatisticNTest.cs" />
+    <Compile Include="06 统计分析模块-03静力触探摩阻力统计\类\StatisticCPT.cs" />
+    <Compile Include="06 统计分析模块-03静力触探摩阻力统计\类\StatisticPs.cs" />
     <Compile Include="0 通用控件\OutputProgress.xaml.cs">
       <DependentUpon>OutputProgress.xaml</DependentUpon>
     </Compile>
     <Compile Include="0 通用类\Word.cs" />
-    <Compile Include="06 统计分析模块-土工常规统计\窗体\RSTStatistic.xaml.cs">
+    <Compile Include="06 统计分析模块-04土工常规统计\窗体\RSTStatistic.xaml.cs">
       <DependentUpon>RSTStatistic.xaml</DependentUpon>
     </Compile>
-    <Compile Include="06 统计分析模块-土工常规统计\类\StatisticRST.cs" />
-    <Compile Include="06 统计分析模块-颗粒分析统计\类\StatisticGAT.cs" />
+    <Compile Include="06 统计分析模块-04土工常规统计\类\StatisticRST.cs" />
+    <Compile Include="06 统计分析模块-05颗粒分析统计\类\StatisticGAT.cs" />
+    <Compile Include="06 统计分析模块-01工作量统计\类\StatisticWordLoad.cs" />
+    <Compile Include="06 统计分析模块-01工作量统计\窗体\WorkLoadStatistic.xaml.cs">
+      <DependentUpon>WorkLoadStatistic.xaml</DependentUpon>
+    </Compile>
     <Page Include="01 设置模块\窗体\EditPeople.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,7 +132,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="04 原位测试模块-静力触探\窗体\CPTControl.xaml">
+    <Page Include="04 原位测试模块-01静力触探\窗体\CPTControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="06 统计分析模块-06承载力压缩模量计算\窗体\BearingAndModulusCalculation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -133,15 +144,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="05 室内试验模块-颗粒分析\窗体\GrainAnalysisTestControl.xaml">
+    <Page Include="05 室内试验模块-02颗粒分析\窗体\GrainAnalysisTestControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="06 统计分析模块-静力触探摩阻力统计\窗体\CPTStatistic.xaml">
+    <Page Include="06 统计分析模块-03静力触探摩阻力统计\窗体\CPTStatistic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="06 统计分析模块-颗粒分析统计\窗体\GATStatistic.xaml">
+    <Page Include="06 统计分析模块-05颗粒分析统计\窗体\GATStatistic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -163,26 +174,28 @@
     </Compile>
     <Compile Include="03 钻孔管理模块\类\BoreholeDataBase.cs" />
     <Compile Include="0 通用类\CanvasDrawing.cs" />
-    <Compile Include="04 原位测试模块-静力触探\类\CPT.cs" />
-    <Compile Include="04 原位测试模块-静力触探\窗体\CPTControl.xaml.cs">
+    <Compile Include="04 原位测试模块-01静力触探\类\CPT.cs" />
+    <Compile Include="04 原位测试模块-01静力触探\窗体\CPTControl.xaml.cs">
       <DependentUpon>CPTControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="04 原位测试模块-静力触探\类\CPTDataBase.cs" />
+    <Compile Include="04 原位测试模块-01静力触探\类\CPTDataBase.cs" />
     <Compile Include="10 帮助模块\窗体\FeedBack.xaml.cs">
       <DependentUpon>FeedBack.xaml</DependentUpon>
     </Compile>
-    <Compile Include="05 室内试验模块-颗粒分析\类\GrainAnalysisTest.cs" />
-    <Compile Include="05 室内试验模块-颗粒分析\窗体\GrainAnalysisTestControl.xaml.cs">
+    <Compile Include="05 室内试验模块-02颗粒分析\类\GrainAnalysisTest.cs" />
+    <Compile Include="05 室内试验模块-02颗粒分析\窗体\GrainAnalysisTestControl.xaml.cs">
       <DependentUpon>GrainAnalysisTestControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="05 室内试验模块-颗粒分析\类\GrainAnalysisTestDataBase.cs" />
-    <Compile Include="06 统计分析模块-静力触探摩阻力统计\窗体\CPTStatistic.xaml.cs">
+    <Compile Include="05 室内试验模块-02颗粒分析\类\GrainAnalysisTestDataBase.cs" />
+    <Compile Include="06 统计分析模块-03静力触探摩阻力统计\窗体\CPTStatistic.xaml.cs">
       <DependentUpon>CPTStatistic.xaml</DependentUpon>
     </Compile>
-    <Compile Include="06 统计分析模块-颗粒分析统计\窗体\GATStatistic.xaml.cs">
+    <Compile Include="06 统计分析模块-05颗粒分析统计\窗体\GATStatistic.xaml.cs">
       <DependentUpon>GATStatistic.xaml</DependentUpon>
     </Compile>
     <Compile Include="0 通用类\CAD.cs" />
+    <Compile Include="0 通用类\Constants.cs" />
+    <Compile Include="0 标准\HubeiLocalStandard.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -231,11 +244,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="05 室内试验模块-土工常规\窗体\RoutineSoilTestControl.xaml">
+    <Page Include="05 室内试验模块-01土工常规\窗体\RoutineSoilTestControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="06 统计分析模块-标贯动探统计\窗体\NTestStatistic.xaml">
+    <Page Include="06 统计分析模块-02标贯动探统计\窗体\NTestStatistic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -243,11 +256,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="06 统计分析模块-土工常规统计\窗体\RSTStatistic.xaml">
+    <Page Include="06 统计分析模块-04土工常规统计\窗体\RSTStatistic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="07 绘图模块-钻孔柱状图\窗体\OutputZkToCad.xaml">
+    <Page Include="07 绘图模块-01钻孔柱状图\窗体\OutputZkToCad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="07 绘图模块-02静力触探曲线图\窗体\OutputJkToCad.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="06 统计分析模块-01工作量统计\窗体\WorkLoadStatistic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -277,12 +298,16 @@
       <DependentUpon>ZkNTestDetail.xaml</DependentUpon>
     </Compile>
     <Compile Include="0 通用类\OfficeOperation.cs" />
-    <Compile Include="06 统计分析模块-标贯动探统计\窗体\NTestStatistic.xaml.cs">
+    <Compile Include="06 统计分析模块-02标贯动探统计\窗体\NTestStatistic.xaml.cs">
       <DependentUpon>NTestStatistic.xaml</DependentUpon>
     </Compile>
-    <Compile Include="07 绘图模块-钻孔柱状图\窗体\OutputZkToCad.xaml.cs">
+    <Compile Include="07 绘图模块-01钻孔柱状图\窗体\OutputZkToCad.xaml.cs">
       <DependentUpon>OutputZkToCad.xaml</DependentUpon>
     </Compile>
+    <Compile Include="07 绘图模块-02静力触探曲线图\窗体\OutputJkToCad.xaml.cs">
+      <DependentUpon>OutputJkToCad.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="0 通用类\GeoMath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -308,7 +333,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="07 绘图模块-钻孔柱状图\类\" />
+    <Folder Include="06 统计分析模块-06承载力压缩模量计算\类\" />
+    <Folder Include="07 绘图模块-01钻孔柱状图\类\" />
+    <Folder Include="07 绘图模块-02静力触探曲线图\类\" />
     <Folder Include="10 帮助模块\类\" />
   </ItemGroup>
   <ItemGroup>

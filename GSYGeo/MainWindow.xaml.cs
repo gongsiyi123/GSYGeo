@@ -27,7 +27,7 @@ namespace GSYGeo
 
         // 定义导航树数据绑定
         public static TreeViewBinding bind = new TreeViewBinding();
-
+        
         #endregion
 
         #region 构造函数
@@ -60,7 +60,7 @@ namespace GSYGeo
                 Program.SetProgramPath(Program.defaultPath);
             }
 
-            // 如果"巩氏岩土"文件夹不存在，则新建文件夹
+            // 如果"小熠岩土勘察"文件夹不存在，则新建文件夹
             if (!System.IO.Directory.Exists(Program.ReadProgramPath()))
             {
                 System.IO.Directory.CreateDirectory(Program.ReadProgramPath());
@@ -78,7 +78,6 @@ namespace GSYGeo
         {
             this.EditProjectMenu.IsEnabled = _isEnable;
             this.CloseProjectMenu.IsEnabled = _isEnable;
-            this.ExportProjectManu.IsEnabled = _isEnable;
             this.ZkMenu.IsEnabled = _isEnable;
             this.InsituTestMenu.IsEnabled = _isEnable;
             this.IndoorTestMenu.IsEnabled = _isEnable;
@@ -97,7 +96,7 @@ namespace GSYGeo
         // 设置程序标题及相关参数函数，带参数为正在运行或打开项目
         private void SetProgramText(string _projectName)
         {
-            this.Title = _projectName + " - 巩氏岩土";
+            this.Title = _projectName + " - 小熠岩土勘察";
             ShowProjectNavigationMenu.IsChecked = true;
             bind.TreeItem[1].IsExpanded = true;
             bind.TreeItem[2].IsExpanded = true;
@@ -105,7 +104,7 @@ namespace GSYGeo
         // 设置程序标题及相关参数函数，不带参数为未运行或正在关闭项目
         private void SetProgramText()
         {
-            this.Title = "巩氏岩土";
+            this.Title = "小熠岩土勘察";
             ShowProjectNavigationMenu.IsChecked = false;
             bind.TreeItem[1].IsExpanded = false;
             bind.TreeItem[1].Items.Clear();
@@ -462,6 +461,30 @@ namespace GSYGeo
 
         #endregion
 
+        #region 统计分析模块-工作量统计
+
+        /// <summary>
+        /// 单击菜单"统计分析"-"工作量统计"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void WorkloadStatisticMenu_Click(object sender, RoutedEventArgs e)
+        {
+            WLStatistic();
+        }
+
+        /// <summary>
+        /// 统计工作量函数
+        /// </summary>
+        private void WLStatistic()
+        {
+            // 实例化一个WorkLoadStatistic窗口
+            WorkLoadStatistic workLoadStatistic = new WorkLoadStatistic();
+            workLoadStatistic.ShowDialog();
+        }
+
+        #endregion
+
         #region 统计分析模块-标贯/动探统计
 
         /// <summary>
@@ -558,6 +581,29 @@ namespace GSYGeo
 
         #endregion
 
+        #region 统计分析模块-承载力和变形模量计算
+
+        /// <summary>
+        /// 单击菜单"统计分析"-"承载力和变形模量计算"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BearAndModulusCalculateMenu_Click(object sender, RoutedEventArgs e)
+        {
+            BearAndModulusCalculate();
+        }
+
+        /// <summary>
+        /// 承载力和变形模量计算函数
+        /// </summary>
+        private void BearAndModulusCalculate()
+        {
+            BearingAndModulusCalculation calculation = new BearingAndModulusCalculation();
+            calculation.ShowDialog();
+        }
+
+        #endregion
+
         #region 绘图模块-绘制钻孔柱状图
 
         /// <summary>
@@ -578,6 +624,27 @@ namespace GSYGeo
             // 实例化一个OutputZkToCad窗口
             OutputZkToCad outputZk = new OutputZkToCad();
             outputZk.ShowDialog();
+        }
+
+        #endregion
+
+        #region 绘图模块-绘制静力触探曲线图
+
+        /// <summary>
+        /// 单击菜单"绘图"-"绘制静力触探曲线图"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DrawCptMenu_Click(object sender, RoutedEventArgs e)
+        {
+            DrawJk();
+        }
+
+        private void DrawJk()
+        {
+            // 实例化一个OutputJkToCad窗口
+            OutputJkToCad outputJk = new OutputJkToCad();
+            outputJk.ShowDialog();
         }
 
         #endregion
@@ -603,5 +670,21 @@ namespace GSYGeo
 
         #endregion
 
+        #region 其他
+
+        /// <summary>
+        /// 点击"菜单"-"项目"-"退出"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExitProgramMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+
+        #endregion
+
+        
     }
 }

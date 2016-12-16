@@ -85,6 +85,122 @@ namespace GSYGeo
         }
 
         /// <summary>
+        /// 添加勘察工作量统计表格
+        /// </summary>
+        /// <param name="_wordLoadStatistic">勘察工作量数据</param>
+        /// <returns></returns>
+        public MSWord.Table AddWorkLoadStatisticTable(StatisticWordLoad _wordLoadStatistic)
+        {
+            // 赋值工作量数组
+            WorkLoadStatistic.amountList[0] = "";
+            WorkLoadStatistic.amountList[1] = "";
+            WorkLoadStatistic.amountList[2] = _wordLoadStatistic.Borehole + "/" + _wordLoadStatistic.CountBorehole;
+            WorkLoadStatistic.amountList[3] = _wordLoadStatistic.Borehole + "/" + _wordLoadStatistic.CountBorehole;
+            WorkLoadStatistic.amountList[4] = _wordLoadStatistic.UndisturbedSample.ToString();
+            WorkLoadStatistic.amountList[5] = _wordLoadStatistic.DisturbedSample.ToString();
+            WorkLoadStatistic.amountList[6] = _wordLoadStatistic.NTestStandard.ToString();
+            WorkLoadStatistic.amountList[7] = _wordLoadStatistic.NTestN10.ToString();
+            WorkLoadStatistic.amountList[8] = _wordLoadStatistic.NTestN635.ToString();
+            WorkLoadStatistic.amountList[9] = _wordLoadStatistic.NTestN120.ToString();
+            WorkLoadStatistic.amountList[10] = _wordLoadStatistic.CPT + "/" + _wordLoadStatistic.CountCPT;
+            WorkLoadStatistic.amountList[11] = _wordLoadStatistic.RST.ToString();
+            WorkLoadStatistic.amountList[12] = _wordLoadStatistic.Permeability.ToString();
+            WorkLoadStatistic.amountList[13] = _wordLoadStatistic.GAT.ToString();
+            WorkLoadStatistic.amountList[14] = "";
+
+            // 填写表格标题
+            Doc.Paragraphs.Last.Range.Text = "表1 勘察工作量统计表";
+            Doc.Paragraphs.Last.Range.Font.Bold = 1;
+            Doc.Paragraphs.Last.Range.Font.Size = 12;
+            App.Selection.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+            object unite = MSWord.WdUnits.wdStory;
+            App.Selection.EndKey(ref unite, ref Nothing);
+            
+            // 定义表格对象
+            MSWord.Table table = Tables.Add(App.Selection.Range, 16, 5, ref Nothing, ref Nothing);
+
+            // 填充行标题
+            string[] rowheader = new string[] { "工 作 项 目", "单 位", "工作量", "备注" };
+            for (int i = 2; i <= table.Columns.Count; i++)
+            {
+                table.Cell(1, i).Range.Text = rowheader[i - 2];
+            }
+
+            // 设置文档格式
+            Doc.PageSetup.LeftMargin = 50F;
+            Doc.PageSetup.RightMargin = 50F;
+
+            // 设置表格格式
+            table.Select();
+            App.Selection.Tables[1].Rows.Alignment = WdRowAlignment.wdAlignRowCenter;
+            for (int i = 1; i <= table.Rows.Count; i++)
+                table.Rows[i].Range.Bold = 0;
+            table.Rows[1].Range.Bold = 1;
+            table.Range.Font.Size = 10.5F;
+            table.Range.ParagraphFormat.Alignment = MSWord.WdParagraphAlignment.wdAlignParagraphCenter;
+            table.Range.Cells.VerticalAlignment = MSWord.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+            table.Borders.OutsideLineStyle = MSWord.WdLineStyle.wdLineStyleDouble;
+            table.Borders.InsideLineStyle = MSWord.WdLineStyle.wdLineStyleSingle;
+            float[] columnWidth = new float[] { 80,120,60,60,60 };
+            for (int i = 1; i <= table.Columns.Count; i++)
+                table.Columns[i].Width = columnWidth[i - 1];
+
+            // 填充工作量数据
+            for (int i = 0; i < WorkLoadStatistic.amountList.Length; i++)
+            {
+                table.Cell(i + 2, 2).Range.Text = WorkLoadStatistic.typeList[i];
+                table.Cell(i + 2, 3).Range.Text = WorkLoadStatistic.uniteList[i];
+                table.Cell(i + 2, 4).Range.Text = WorkLoadStatistic.amountList[i];
+                table.Cell(i + 2, 5).Range.Text = WorkLoadStatistic.remarkList[i];
+            }
+
+            // 填充第一列
+            table.Cell(2, 1).Range.Text = "测绘";
+            table.Cell(4, 1).Range.Text = "勘探";
+            table.Cell(6, 1).Range.Text = "取样";
+            table.Cell(8, 1).Range.Text = "原位测试";
+            table.Cell(13, 1).Range.Text = "室内试验";
+
+            // 删除空行
+            int d = 0;
+            for (int i = 0; i < 15; i++)
+                if (WorkLoadStatistic.amountList[i].ToString() == "0")
+                {
+                    table.Rows[i + 2 - d].Delete();
+                    d++;
+                }
+                    
+
+            // 合并单元格
+            table.Cell(1, 1).Merge(table.Cell(1, 2));
+            table.Cell(2, 1).Merge(table.Cell(3, 1));
+            table.Cell(4, 1).Merge(table.Cell(5, 1));
+            table.Cell(table.Rows.Count, 1).Merge(table.Cell(table.Rows.Count, 2));
+            int[] mergeIndex = new int[3];
+            for(int i = 6; i <= table.Rows.Count - 1; i++)
+            {
+                if ((mergeIndex[0] == 0) && (table.Cell(i, 2).Range.Text.Contains("原状样") || table.Cell(i, 2).Range.Text.Contains("扰动样")))
+                    mergeIndex[0] = i;
+                if ((mergeIndex[1] == 0) && (table.Cell(i, 2).Range.Text.Contains("标准贯入试验") || table.Cell(i, 2).Range.Text.Contains("触探试验")))
+                    mergeIndex[1] = i;
+                if ((mergeIndex[2] == 0) && (table.Cell(i, 2).Range.Text.Contains("土工常规") || table.Cell(i, 2).Range.Text.Contains("室内渗透") || table.Cell(i, 2).Range.Text.Contains("颗粒分析")))
+                    mergeIndex[2] = i;
+            }
+            for(int i = 0; i < 3; i++)
+            {
+                if (mergeIndex[i] == 0)
+                    continue;
+                else if (i < 2)
+                    table.Cell(mergeIndex[i], 1).Merge(table.Cell(mergeIndex[i + 1] - 1, 1));
+                else
+                    table.Cell(mergeIndex[i], 1).Merge(table.Cell(table.Rows.Count - 1, 1));
+            }
+            
+            // 返回
+            return table;
+        }
+
+        /// <summary>
         /// 添加标贯/动探统计表格
         /// </summary>
         /// <param name="_nTestStatistic">标贯/动探统计数据</param>
@@ -128,7 +244,7 @@ namespace GSYGeo
             table.Range.Cells.VerticalAlignment = MSWord.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
             table.Borders.OutsideLineStyle = MSWord.WdLineStyle.wdLineStyleDouble;
             table.Borders.InsideLineStyle = MSWord.WdLineStyle.wdLineStyleSingle;
-            float[] columnWidth = new float[] { 35, 80, 35, 45, 45, 45, 45, 45, 35, 45, 45 };
+            float[] columnWidth = new float[] { 35, 85, 40, 45, 45, 45, 45, 45, 35, 45, 45 };
             for(int i = 1; i <= table.Columns.Count; i++)
             {
                 table.Columns[i].Width = columnWidth[i - 1];
@@ -163,7 +279,7 @@ namespace GSYGeo
         public MSWord.Table AddPsStatisticTable(List<StatisticCPT> _cptStatistic)
         {
             // 填写表格标题
-            Doc.Paragraphs.Last.Range.Text = "表2 静力触探摩阻力统计表";
+            Doc.Paragraphs.Last.Range.Text = "表4 静力触探摩阻力统计表";
             Doc.Paragraphs.Last.Range.Font.Bold = 1;
             Doc.Paragraphs.Last.Range.Font.Size = 12;
             App.Selection.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
@@ -232,13 +348,13 @@ namespace GSYGeo
         public MSWord.Table AddRSTStatisticTable(List<StatisticRST> _rstStatistic)
         {
             // 去除统计数为0的分层的统计数据
-            for(int i = 0; i < _rstStatistic.Count / 14; i++)
+            for(int i = _rstStatistic.Count / 14 - 1; i > -1; i--)
             {
                 bool isZero = true;
 
-                for(int j = 0; j < 14; j++)
+                for(int j = 13; j > -1; j--)
                 {
-                    if (_rstStatistic[j + i * 14].Count > 0)
+                    if (_rstStatistic[j + i * 14].Count != 0)
                     {
                         isZero = false;
                     }
@@ -254,7 +370,7 @@ namespace GSYGeo
             }
 
             // 填写表格标题
-            Doc.Paragraphs.Last.Range.Text = "表1 土工常规试验成果统计表";
+            Doc.Paragraphs.Last.Range.Text = "表2 土工常规试验成果统计表";
             Doc.Paragraphs.Last.Range.Font.Bold = 1;
             Doc.Paragraphs.Last.Range.Font.Size = 12;
             App.Selection.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
@@ -322,7 +438,7 @@ namespace GSYGeo
             table.Borders.OutsideLineStyle = MSWord.WdLineStyle.wdLineStyleDouble;
             table.Borders.InsideLineStyle = MSWord.WdLineStyle.wdLineStyleSingle;
 
-            float[] columnWidth = new float[] { 20, 50, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 40 };
+            float[] columnWidth = new float[] { 20, 50, 30, 30, 30, 30, 35, 30, 30, 30, 30, 30, 30, 30, 30, 40 };
             for (int i = 1; i <= table.Columns.Count; i++)
             {
                 table.Columns[i].Width = columnWidth[i - 1];
@@ -389,10 +505,15 @@ namespace GSYGeo
             return table;
         }
 
+        /// <summary>
+        /// 添加颗粒分析试验统计表格
+        /// </summary>
+        /// <param name="_gatStatistic">颗粒分析试验数据</param>
+        /// <returns></returns>
         public MSWord.Table AddGATStatisticTable(List<StatisticGAT> _gatStatistic)
         {
             // 填写表格标题
-            Doc.Paragraphs.Last.Range.Text = "表4 颗粒分析试验成果统计表";
+            Doc.Paragraphs.Last.Range.Text = "表5 颗粒分析试验成果统计表";
             Doc.Paragraphs.Last.Range.Font.Bold = 1;
             Doc.Paragraphs.Last.Range.Font.Size = 12;
             App.Selection.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;

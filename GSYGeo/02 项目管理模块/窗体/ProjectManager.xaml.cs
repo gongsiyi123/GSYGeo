@@ -29,7 +29,6 @@ namespace GSYGeo
             InitializeComponent();
 
             // 读取项目列表，绑定ListView
-
             this.ProjectListListView.ItemsSource = projectList;
         }
 

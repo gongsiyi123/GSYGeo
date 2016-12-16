@@ -203,14 +203,10 @@ namespace GSYGeo
             string folderPath;
             System.Windows.Forms.FolderBrowserDialog programPathBrowser = new System.Windows.Forms.FolderBrowserDialog();
             if (programPathBrowser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
                 folderPath = programPathBrowser.SelectedPath;
-            }
             else
-            {
                 return;
-            }
-            object path = folderPath + @"\" + Program.currentProject + @"-标贯动探统计.doc";
+            string path = folderPath + @"\" + Program.currentProject + @"-标贯动探统计.doc";
 
             // 启动输出窗体
             ShowProgressBar(path);
@@ -220,18 +216,15 @@ namespace GSYGeo
         /// 输出Word文档函数
         /// </summary>
         /// <param name="obj">输出路径</param>
-        public static void OutputToWord(object obj)
+        public static void OutputToWord(string _path)
         {
-            // 参数转换
-            object path = obj.ToString();
-
             // 定义统计数据列表
             List<StatisticNTest> statisticList = SelectStatisticData();
 
             // 输出Word
             Word ntestStatisticWord = new Word();
             ntestStatisticWord.AddNTestStatisticTable(statisticList);
-            ntestStatisticWord.SaveAndQuit(path);
+            ntestStatisticWord.SaveAndQuit(_path);
         }
 
         /// <summary>

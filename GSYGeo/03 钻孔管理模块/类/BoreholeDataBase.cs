@@ -217,9 +217,9 @@ namespace GSYGeo
                     zk.Y = Convert.ToDouble(reader["yAxis"]);
                     zk.InitialWaterLevel = Convert.ToDouble(reader["initialWaterLevel"]);
                     zk.StableWaterLevel = Convert.ToDouble(reader["stableWaterLevel"]);
-                    zk.Layers = BoreholeDataBase.ReadZkLayer(Program.currentProject, reader["name"].ToString());
-                    zk.Samples = BoreholeDataBase.ReadZkSample(Program.currentProject, reader["name"].ToString());
-                    zk.NTests = BoreholeDataBase.ReadZkNTest(Program.currentProject, reader["name"].ToString());
+                    zk.Layers = BoreholeDataBase.ReadZkLayer(_projectName, reader["name"].ToString());
+                    zk.Samples = BoreholeDataBase.ReadZkSample(_projectName, reader["name"].ToString());
+                    zk.NTests = BoreholeDataBase.ReadZkNTest(_projectName, reader["name"].ToString());
 
                     zklist.Add(zk);
                 }

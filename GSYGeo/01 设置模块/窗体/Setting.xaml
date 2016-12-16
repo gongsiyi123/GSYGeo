@@ -64,7 +64,30 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem Header="项目"/>
+            <TabItem Header="标准">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="行业标准" Margin="5"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="地方标准" Margin="5"/>
+                    <ListBox Grid.Row="1" Grid.Column="0" Name="IndustrialStandard" Margin="5,0,5,5">
+                        <ListBox.Items>
+                            <RadioButton Name="WaterConservancy" Content="水利水电" IsChecked="True" Checked="WaterConservancy_Checked"/>
+                        </ListBox.Items>
+                    </ListBox>
+                    <ListBox Grid.Row="1" Grid.Column="1" Name="LocalStandard" Margin="5,0,5,5">
+                        <ListBox.Items>
+                            <RadioButton Name="Hubei" Content="湖北省" IsChecked="True" Checked="Hubei_Checked"/>
+                        </ListBox.Items>
+                    </ListBox>
+                </Grid>
+            </TabItem>
         </TabControl>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
