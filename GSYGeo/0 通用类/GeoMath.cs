@@ -66,8 +66,8 @@ namespace GSYGeo
         public static double TwoWayInterpolation(double _numberRow,double _numberCol,double[] _parametersRow,double[] _parametersCol,double[,] _valus)
         {
             // 当行参数数组长度与值二维数组列数不同，或列参数数组长度与值二维数组行数不同时，返回空值
-            if (_valus.GetLength(0) != _parametersCol.Length ||
-                _valus.GetLength(1) != _parametersRow.Length)
+            if (_valus.GetLength(0) != _parametersRow.Length ||
+                _valus.GetLength(1) != _parametersCol.Length)
                 return Constants.NullNumber;
             
             // 枚举行参数数组和列参数数组，查找两个行标和两个列标，无法找到时返回空值
@@ -108,14 +108,14 @@ namespace GSYGeo
 
             // 计算最终结果
             double result11 = _valus[rowIndex1, colIndex1];
-            double result12 = _valus[rowIndex1, colIndex2];
-            double result21 = _valus[rowIndex2, colIndex1];
+            double result12 = _valus[rowIndex2, colIndex1];
+            double result21 = _valus[rowIndex1, colIndex2];
             double result22 = _valus[rowIndex2, colIndex2];
 
-            double result1 = result11 + ratioRow * (result21 - result11);
-            double result2 = result21 + ratioRow * (result22 - result12);
+            double result1 = result12 + ratioRow * (result11 - result12);
+            double result2 = result22 + ratioRow * (result21 - result22);
 
-            result = result1 + ratioCol * (result2 - result1);
+            result = result2 + ratioCol * (result1 - result2);
 
             // 返回结果
             return result;

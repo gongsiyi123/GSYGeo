@@ -98,7 +98,7 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="1" Content="确定" Name="CommitSetting" Margin="5" Command="Save" CommandParameter="Commit"/>
-            <Button Grid.Column="2" Content="取消" Name="CancelSetting" Margin="5" Click="CancelSetting_Click"/>
+            <Button Grid.Column="2" Content="取消" Name="CancelSetting" Margin="5" Click="CancelSetting_Click" IsCancel="True"/>
             <Button Grid.Column="3" Content="应用" Name="ApplySetting" Margin="5" Command="Save" CommandParameter="Apply"/>
             <Button Grid.Column="4" Content="帮助" Margin="5"/>
         </Grid>

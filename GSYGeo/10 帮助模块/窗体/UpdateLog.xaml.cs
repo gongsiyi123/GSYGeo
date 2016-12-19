@@ -35,7 +35,7 @@ namespace GSYGeo
             UpdateContent.Add("项目立项");
             AddUpdate("立项", "2016.10.19", UpdateContent);
 
-            // 内部测试版发布
+            // 内部测试版1.0.0_alpha发布
             UpdateContent.Add("基础功能构建初步完成，内测版软件名称定为\"小熠岩土勘察\"");
             UpdateContent.Add("1、项目管理模块，包括新建、打开、编辑、关闭、删除、导入、导出");
             UpdateContent.Add("2、钻孔模块，包括新建、删除、编辑、数据录入、查看");
@@ -46,6 +46,10 @@ namespace GSYGeo
             UpdateContent.Add("7、设置模块，包括软件和项目的一些常规设置");
             UpdateContent.Add("8、帮助模块，包括用户反馈、更新日志等");
             AddUpdate("1.0.0_alpha", "2016.12.17", UpdateContent);
+
+            // 内部测试版1.1.0_alpha发布
+            UpdateContent.Add("1、统计分析模块，新增承载力和压缩模量综合取值和Word表格输出功能");
+            AddUpdate("1.1.0_alpha", "2016.12.23", UpdateContent);
         }
 
         /// <summary>
@@ -58,11 +62,11 @@ namespace GSYGeo
         {
             StringBuilder updateReport = new StringBuilder();
 
-            updateReport.Append("----------\n");
+            updateReport.Append("------------------------------\n");
             updateReport.Append("版本名称：  ");
             updateReport.Append(_version);
 
-            updateReport.Append("\n----------\n更新日期：\n    ");
+            updateReport.Append("\n------------------------------\n更新日期：\n    ");
             updateReport.Append(_date);
 
             updateReport.Append("\n更新内容：\n    ");

@@ -48,10 +48,10 @@
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="计算指标：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
                         <TextBlock Grid.Row="2" Grid.Column="0" Text="承载力：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="压缩模量：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
-                        <ComboBox Grid.Row="0" Grid.Column="1" Name="RSTTypeComboBox" Margin="0,5,5,5"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" Name="RSTParameterTextBox" Margin="0,5,5,5" IsReadOnly="True"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" Name="RSTBearingTextBox" Margin="0,5,5,5" IsReadOnly="True"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" Name="RSTModulusTextBox" Margin="0,5,5,5" IsReadOnly="True"/>
+                        <ComboBox Grid.Row="0" Grid.Column="1" Name="RSTTypeComboBox" Margin="0,5,5,5" SelectionChanged="RSTTypeComboBox_SelectionChanged"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="RSTParameterTextBox" Margin="0,5,5,5" IsReadOnly="True" TextWrapping="Wrap" HorizontalContentAlignment="Center"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Name="RSTBearingTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Name="RSTModulusTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
                     </Grid>
                 </StackPanel>
             </Border>
@@ -73,10 +73,10 @@
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="计算指标：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
                         <TextBlock Grid.Row="2" Grid.Column="0" Text="承载力：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="压缩模量：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
-                        <ComboBox Grid.Row="0" Grid.Column="1" Name="CPTTypeComboBox" Margin="0,5,5,5"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" Name="CPTParameterTextBox" Margin="0,5,5,5" IsReadOnly="True"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" Name="CPTBearingTextBox" Margin="0,5,5,5" IsReadOnly="True"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" Name="CPTModulusTextBox" Margin="0,5,5,5" IsReadOnly="True"/>
+                        <ComboBox Grid.Row="0" Grid.Column="1" Name="CPTTypeComboBox" Margin="0,5,5,5" SelectionChanged="CPTTypeComboBox_SelectionChanged"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="CPTParameterTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Name="CPTBearingTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Name="CPTModulusTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
                     </Grid>
                 </StackPanel>
             </Border>
@@ -98,10 +98,10 @@
                         <TextBlock Grid.Row="1" Grid.Column="0" Text="计算指标：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
                         <TextBlock Grid.Row="2" Grid.Column="0" Text="承载力：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="压缩模量：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
-                        <ComboBox Grid.Row="0" Grid.Column="1" Name="NTestTypeComboBox" Margin="0,5,5,5"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" Name="NTestParameterTextBox" Margin="0,5,5,5" IsReadOnly="True"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" Name="NTestBearingTextBox" Margin="0,5,5,5" IsReadOnly="True"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" Name="NTestModulusTextBox" Margin="0,5,5,5" IsReadOnly="True"/>
+                        <ComboBox Grid.Row="0" Grid.Column="1" Name="NTestTypeComboBox" Margin="0,5,5,5" SelectionChanged="NTestTypeComboBox_SelectionChanged"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="NTestParameterTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Name="NTestBearingTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Name="NTestModulusTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
                     </Grid>
                 </StackPanel>
             </Border>
@@ -113,7 +113,7 @@
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Name="OutputToWordButton" Content="输出为Word文档" Margin="5"/>
+                <Button Grid.Column="1" Name="OutputToWordButton" Content="输出为Word文档" Margin="5" Click="OutputToWordButton_Click"/>
                 <Button Grid.Column="2" Name="CloseButton" Content="关闭" Margin="5" IsCancel="True"/>
             </Grid>
         </Border>

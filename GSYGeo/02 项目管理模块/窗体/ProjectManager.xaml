@@ -25,7 +25,7 @@
             <Button Grid.Column="1" Name="ImportButton" Content="导入" Margin="5" Click="ImportButton_Click"/>
             <Button Grid.Column="2" Name="ExportButton" Content="导出" Margin="5" IsEnabled="{Binding ElementName=ProjectListListView,Path=SelectedItems.Count}" Click="ExportButton_Click"/>
             <Button Grid.Column="5" Name="DeleteButton" Content="删除" Margin="5" IsEnabled="{Binding ElementName=ProjectListListView,Path=SelectedItems.Count}" Click="DeleteButton_Click"/>
-            <Button Grid.Column="6" Name="CloseButton" Content="关闭" Margin="5" Click="CloseButton_Click"/>
+            <Button Grid.Column="6" Name="CloseButton" Content="关闭" Margin="5" Click="CloseButton_Click" IsCancel="True"/>
         </Grid>
     </Grid>
 </Window>

@@ -31,6 +31,7 @@ namespace GSYGeo
             Ps,
             RST,
             GAT,
+            BearingAndModulus,
             ZkCad,
             JkCad
         };
@@ -220,6 +221,8 @@ namespace GSYGeo
                 RSTStatistic.OutputToWord(Path);
             else if (BWType == OutputType.GAT)
                 GATStatistic.OutputToWord(Path);
+            else if (BWType == OutputType.BearingAndModulus)
+                BearingAndModulusCalculation.OutputToWord(Path);
             else if (BWType == OutputType.ZkCad)
                 OutputZkToCad.OutputToCad(Path, OutputZkList, OutputScaleList);
             else if (BWType == OutputType.JkCad)

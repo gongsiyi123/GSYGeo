@@ -156,6 +156,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="06 统计分析模块-06承载力压缩模量计算\窗体\BearingAndModulusToWord.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -196,6 +200,9 @@
     <Compile Include="0 通用类\CAD.cs" />
     <Compile Include="0 通用类\Constants.cs" />
     <Compile Include="0 标准\HubeiLocalStandard.cs" />
+    <Compile Include="06 统计分析模块-06承载力压缩模量计算\窗体\BearingAndModulusToWord.xaml.cs">
+      <DependentUpon>BearingAndModulusToWord.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

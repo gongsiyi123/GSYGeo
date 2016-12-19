@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GSYGeo"
         mc:Ignorable="d"
-        Title="发送反馈" Height="350" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
+        Title="用户反馈" Height="350" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -33,8 +33,10 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Name="SendButton" Content="发送" Margin="5" Click="SendButton_Click"/>
+                <Button Grid.Column="1" Name="SendButton" Content="发送反馈" Margin="5" Click="SendButton_Click"/>
+                <Button Grid.Column="2" Content="取消" Margin="5" IsCancel="True"/>
             </Grid>
         </Border>
     </Grid>

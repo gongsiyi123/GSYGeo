@@ -285,7 +285,7 @@ namespace GSYGeo
                 folderPath = programPathBrowser.SelectedPath;
             else
                 return;
-            string path = folderPath + @"\" + Program.currentProject + @"-勘察工作量统计.doc";
+            string path = folderPath + @"\" + Program.currentProject + @"-勘察工作量统计表.doc";
 
             // 启动输出窗体
             ShowProgressBar(path);

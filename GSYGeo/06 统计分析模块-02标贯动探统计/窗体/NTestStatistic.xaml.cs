@@ -206,7 +206,7 @@ namespace GSYGeo
                 folderPath = programPathBrowser.SelectedPath;
             else
                 return;
-            string path = folderPath + @"\" + Program.currentProject + @"-标贯动探统计.doc";
+            string path = folderPath + @"\" + Program.currentProject + @"-标贯动探统计表.doc";
 
             // 启动输出窗体
             ShowProgressBar(path);

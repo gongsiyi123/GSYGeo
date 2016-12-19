@@ -194,7 +194,7 @@ namespace GSYGeo
             {
                 return;
             }
-            object path = folderPath + @"\" + Program.currentProject + @"-静力触探摩阻力统计.doc";
+            object path = folderPath + @"\" + Program.currentProject + @"-静力触探摩阻力统计表.doc";
 
             // 启动输出窗体
             ShowProgressBar(path);

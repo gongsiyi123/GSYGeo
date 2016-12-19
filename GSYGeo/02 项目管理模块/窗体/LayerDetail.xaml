@@ -36,7 +36,7 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="1" Name="CommitButton" Content="确定" Margin="5" Command="Save" IsDefault="True"/>
-            <Button Grid.Column="2" Name="CancelButton" Content="取消" Margin="5" Click="CancelButton_Click"/>
+            <Button Grid.Column="2" Name="CancelButton" Content="取消" Margin="5" Click="CancelButton_Click" IsCancel="True"/>
         </Grid>
     </Grid>
 </Window>

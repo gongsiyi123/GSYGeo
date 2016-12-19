@@ -12,14 +12,14 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <ScrollViewer Grid.Row="0" Name="UpdateLogScrollViewer" HorizontalAlignment="Center">
-            <TextBox Name="UpdateLogTextBox" IsReadOnly="True" Margin="5" Background="#FFEAEAEA" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
+            <TextBox Name="UpdateLogTextBox" IsReadOnly="True" Margin="5" TextBlock.LineHeight="18" Background="#FFEAEAEA" TextWrapping="Wrap"/>
         </ScrollViewer>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Content="确定" Margin="5" Click="Button_Click"/>
+            <Button Grid.Column="1" Content="确定" Margin="5" Click="Button_Click" IsDefault="True" IsCancel="True"/>
         </Grid>
     </Grid>
 </Window>

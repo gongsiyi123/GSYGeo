@@ -82,20 +82,20 @@ namespace GSYGeo
         // 试验类型列表
         public static StatisticRST.RSTType[] typeList = new StatisticRST.RSTType[]
         {
-                    StatisticRST.RSTType.waterLevel,
-                    StatisticRST.RSTType.density,
-                    StatisticRST.RSTType.specificGravity,
-                    StatisticRST.RSTType.voidRatio,
-                    StatisticRST.RSTType.saturation,
-                    StatisticRST.RSTType.liquidLimit,
-                    StatisticRST.RSTType.plasticLimit,
-                    StatisticRST.RSTType.plasticIndex,
-                    StatisticRST.RSTType.liquidityIndex,
-                    StatisticRST.RSTType.compressibility,
-                    StatisticRST.RSTType.modulus,
-                    StatisticRST.RSTType.frictionAngle,
-                    StatisticRST.RSTType.cohesion,
-                    StatisticRST.RSTType.permeability
+            StatisticRST.RSTType.waterLevel,
+            StatisticRST.RSTType.density,
+            StatisticRST.RSTType.specificGravity,
+            StatisticRST.RSTType.voidRatio,
+            StatisticRST.RSTType.saturation,
+            StatisticRST.RSTType.liquidLimit,
+            StatisticRST.RSTType.plasticLimit,
+            StatisticRST.RSTType.plasticIndex,
+            StatisticRST.RSTType.liquidityIndex,
+            StatisticRST.RSTType.compressibility,
+            StatisticRST.RSTType.modulus,
+            StatisticRST.RSTType.frictionAngle,
+            StatisticRST.RSTType.cohesion,
+            StatisticRST.RSTType.permeability
         };
 
         // 定义统计数据列表
@@ -346,7 +346,7 @@ namespace GSYGeo
             {
                 return;
             }
-            object path = folderPath + @"\" + Program.currentProject + @"-土工常规试验统计.doc";
+            object path = folderPath + @"\" + Program.currentProject + @"-土工常规试验统计表.doc";
 
             // 启动输出窗体
             ShowProgressBar(path);
