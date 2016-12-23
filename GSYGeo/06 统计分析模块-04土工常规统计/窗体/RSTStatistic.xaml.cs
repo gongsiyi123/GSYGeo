@@ -35,7 +35,7 @@ namespace GSYGeo
 
             // 初始化DataTable
             InitialRSTStatisticDataGrid();
-
+            
             // 设置绑定
             this.RSTStatisticDataGrid.DataContext = dtRST;
 
@@ -99,14 +99,14 @@ namespace GSYGeo
         };
 
         // 定义统计数据列表
-        List<StatisticRST> statisticList;
+        List<StatisticRST> StatisticList = SelectStatisticData();
 
         // 初始化RSTStatisticDataGrid，不带参数
         private void InitialRSTStatisticDataGrid()
         {
             // 初始化统计数据列表
-            statisticList = SelectStatisticData();
-
+            //StatisticList = SelectStatisticData();
+            
             // 定义RSTStatisticDataGrid数据列
             foreach (string sta in staName)
             {
@@ -144,28 +144,32 @@ namespace GSYGeo
             List<double> standardDeviationList = new List<double>();
             List<double> variableCoefficientList = new List<double>();
             List<double> correctionCoefficientList = new List<double>();
-            List<double> standardValue = new List<double>();
-            for (int i = 0; i < statisticList.Count; i++)
+            List<double> standardValueList = new List<double>();
+
+            List<StatisticRST> thislayerlist = new List<StatisticRST>();
+            for (int i = 0; i < StatisticList.Count; i++)
+                if (StatisticList[i].Layer == _layerNumber)
+                    thislayerlist.Add(StatisticList[i]);
+
+            for(int i = 0; i < thislayerlist.Count; i++)
             {
-                if (statisticList[i].Layer == _layerNumber)
+                for(int j = 0; j < typeList.Length; j++)
                 {
-                    for(int j = 0; j < typeList.Length; j++)
+                    if (thislayerlist[i].Type == typeList[j])
                     {
-                        if (statisticList[i].Type == typeList[j])
-                        {
-                            countList.Add(statisticList[i].Count);
-                            maxList.Add(statisticList[i].Max);
-                            minList.Add(statisticList[i].Min);
-                            averageList.Add(statisticList[i].Average);
-                            standardDeviationList.Add(statisticList[i].StandardDeviation);
-                            variableCoefficientList.Add(statisticList[i].VariableCoefficient);
-                            correctionCoefficientList.Add(statisticList[i].CorrectionCoefficient);
-                            standardValue.Add(statisticList[i].StandardValue);
-                        }
+                        countList.Add(thislayerlist[i].Count);
+                        maxList.Add(thislayerlist[i].Max);
+                        minList.Add(thislayerlist[i].Min);
+                        averageList.Add(thislayerlist[i].Average);
+                        standardDeviationList.Add(thislayerlist[i].StandardDeviation);
+                        variableCoefficientList.Add(thislayerlist[i].VariableCoefficient);
+                        correctionCoefficientList.Add(thislayerlist[i].CorrectionCoefficient);
+                        standardValueList.Add(thislayerlist[i].StandardValue);
+                        break;
                     }
                 }
             }
-
+            
             // 无数据时退出
             if (countList.Count == 0)
             {
@@ -192,10 +196,10 @@ namespace GSYGeo
                     dtRST.Rows[1][j] = maxList[j - 1].ToString("0.0");
                     dtRST.Rows[2][j] = minList[j - 1].ToString("0.0");
                     dtRST.Rows[3][j] = averageList[j - 1].ToString("0.0");
-                    dtRST.Rows[4][j] = standardDeviationList[j - 1].ToString() == "-0.19880205" ? "/" : standardDeviationList[j - 1].ToString("0.0");
-                    dtRST.Rows[5][j] = variableCoefficientList[j - 1].ToString() == "-0.19880205" ? "/" : variableCoefficientList[j - 1].ToString("0.00");
-                    dtRST.Rows[6][j] = correctionCoefficientList[j - 1].ToString() == "-0.19880205" ? "/" : correctionCoefficientList[j - 1].ToString("0.00");
-                    dtRST.Rows[7][j] = standardValue[j - 1].ToString() == "-0.19880205" ? "/" : standardValue[j - 1].ToString("0.0");
+                    dtRST.Rows[4][j] = standardDeviationList[j - 1] == Constants.NullNumber ? "/" : standardDeviationList[j - 1].ToString("0.0");
+                    dtRST.Rows[5][j] = variableCoefficientList[j - 1] == Constants.NullNumber ? "/" : variableCoefficientList[j - 1].ToString("0.00");
+                    dtRST.Rows[6][j] = correctionCoefficientList[j - 1] == Constants.NullNumber ? "/" : correctionCoefficientList[j - 1].ToString("0.00");
+                    dtRST.Rows[7][j] = standardValueList[j - 1] == Constants.NullNumber ? "/" : standardValueList[j - 1].ToString("0.0");
                 }
                 else if (j == 2 || j == 3 || j == 4 || j == 9 || j == 10)
                 {
@@ -203,12 +207,12 @@ namespace GSYGeo
                     dtRST.Rows[1][j] = maxList[j - 1].ToString("0.00");
                     dtRST.Rows[2][j] = minList[j - 1].ToString("0.00");
                     dtRST.Rows[3][j] = averageList[j - 1].ToString("0.00");
-                    dtRST.Rows[4][j] = standardDeviationList[j - 1].ToString() == "-0.19880205" ? "/" : standardDeviationList[j - 1].ToString("0.00");
-                    dtRST.Rows[5][j] = variableCoefficientList[j - 1].ToString() == "-0.19880205" ? "/" : variableCoefficientList[j - 1].ToString("0.00");
-                    dtRST.Rows[6][j] = correctionCoefficientList[j - 1].ToString() == "-0.19880205" ? "/" : correctionCoefficientList[j - 1].ToString("0.00");
-                    dtRST.Rows[7][j] = standardValue[j - 1].ToString() == "-0.19880205" ? "/" : standardValue[j - 1].ToString("0.00");
+                    dtRST.Rows[4][j] = standardDeviationList[j - 1] == Constants.NullNumber ? "/" : standardDeviationList[j - 1].ToString("0.00");
+                    dtRST.Rows[5][j] = variableCoefficientList[j - 1] == Constants.NullNumber ? "/" : variableCoefficientList[j - 1].ToString("0.00");
+                    dtRST.Rows[6][j] = correctionCoefficientList[j - 1] == Constants.NullNumber ? "/" : correctionCoefficientList[j - 1].ToString("0.00");
+                    dtRST.Rows[7][j] = standardValueList[j - 1] == Constants.NullNumber ? "/" : standardValueList[j - 1].ToString("0.00");
                 }
-                else
+                else if(j == 14)
                 {
                     dtRST.Rows[0][j] = countList[j - 1].ToString("0");
                     dtRST.Rows[1][j] = maxList[j - 1].ToString() == "-0.19880205" ? "/" : maxList[j - 1].ToString("0.0E0");
@@ -217,7 +221,7 @@ namespace GSYGeo
                     dtRST.Rows[4][j] = standardDeviationList[j - 1].ToString() == "-0.19880205" ? "/" : standardDeviationList[j - 1].ToString("0.0E0");
                     dtRST.Rows[5][j] = variableCoefficientList[j - 1].ToString() == "-0.19880205" ? "/" : variableCoefficientList[j - 1].ToString("0.00");
                     dtRST.Rows[6][j] = correctionCoefficientList[j - 1].ToString() == "-0.19880205" ? "/" : correctionCoefficientList[j - 1].ToString("0.00");
-                    dtRST.Rows[7][j] = standardValue[j - 1].ToString() == "-0.19880205" ? "/" : standardValue[j - 1].ToString("0.0E0");
+                    dtRST.Rows[7][j] = standardValueList[j - 1].ToString() == "-0.19880205" ? "/" : standardValueList[j - 1].ToString("0.0E0");
                 }
             }
         }

@@ -683,8 +683,287 @@ namespace GSYGeo
         }
 
 
+
         #endregion
 
-        
+        #region 导入旧版数据
+
+        /// <summary>
+        /// 单击菜单"工具"-"导入旧版数据"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ImportOldDataMenu_Click(object sender, RoutedEventArgs e)
+        {
+            // 检查是否关闭当前项目
+            if (Program.currentProject != null)
+            {
+                MessageBox.Show("您有正处于打开状态的项目，请关闭当前项目后再执行本操作。");
+                return;
+            }
+
+            // 选择输出目录
+            string folderPath;
+
+            System.Windows.Forms.FolderBrowserDialog programPathBrowser = new System.Windows.Forms.FolderBrowserDialog();
+            if (programPathBrowser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                folderPath = programPathBrowser.SelectedPath;
+            else
+                return;
+
+            if (folderPath.Substring(folderPath.LastIndexOf(@"\")+1) != "金浪岩土")
+            {
+                MessageBox.Show("选择的文件夹不正确，请选择\"金浪岩土\"文件夹！");
+                return;
+            }
+
+            // 耐心等候提示
+            MessageBox.Show("导入过程可能需要15-30秒的时间，请耐心等候，点击\"确定\"继续。");
+
+            // 遍历项目文件夹
+            List<string> projectlist = new List<string>();
+            List<string> ignoreprojectlist = new List<string>();
+            DirectoryInfo dir = new DirectoryInfo(folderPath);
+            foreach (DirectoryInfo dChild in dir.GetDirectories("*"))
+            {
+                // 获取项目名称
+                string projectName = dChild.ToString();
+                
+                // 获取项目文件夹路径
+                string projectPath = folderPath + @"\" + dChild + @"\";
+
+                // 新建项目
+                ProjectDataBase.Create(projectName);
+
+                // 读取分层信息
+                StreamReader reader = new StreamReader(projectPath + "基本信息.txt");
+                int countLine = 0;
+                while (true)
+                {
+                    countLine++;
+                    string line = reader.ReadLine();
+                    if (countLine <= 3)
+                        continue;
+                    if (line == null)
+                        break;
+
+                    string number = line.Substring(0, line.IndexOf("/"));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    string name = line.Substring(0, line.IndexOf("/"));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    string description = line;
+                    string geo = "Q4al";
+                    ProjectDataBase.AddLayer(projectName, number, name, geo, description);
+                }
+                reader.Close();
+
+                // 读取钻孔信息
+                List<string> numlist = ProjectDataBase.ReadLayerNumberList(projectName);
+                List<string> deslist = ProjectDataBase.ReadLayerDescriptionList(projectName);
+                DirectoryInfo dirZk = new DirectoryInfo(projectPath + @"钻孔\");
+                foreach(FileInfo dZkFile in dirZk.GetFiles("*.txt"))
+                {
+                    // 读取基本信息
+                    StreamReader zkReader = new StreamReader(projectPath + @"钻孔\" + dZkFile.ToString());
+                    zkReader.ReadLine();
+                    string zkname= zkReader.ReadLine();
+                    zkReader.ReadLine();
+                    double zkaltitude = Convert.ToDouble(zkReader.ReadLine());
+                    BoreholeDataBase.AddZkBasicInfo(projectName, zkname, zkaltitude, Constants.NullNumber, Constants.NullNumber, Constants.NullNumber, Constants.NullNumber);
+                    zkReader.ReadLine();
+
+                    // 读取分层信息
+                    List<string> zknumberlist = new List<string>();
+                    List<string> zknamelist = new List<string>();
+                    List<string> zkgeolist = new List<string>();
+                    List<string> zkdescriptionlist = new List<string>();
+                    List<double> zkdepthlist = new List<double>();
+                    while (true)
+                    {
+                        string line = zkReader.ReadLine();
+                        if (line == "===取样===")
+                            break;
+
+                        zknumberlist.Add(line.Substring(0, line.IndexOf("/")));
+                        line = line.Substring(line.IndexOf("/") + 1);
+                        zknamelist.Add(line.Substring(0, line.IndexOf("/")));
+                        line = line.Substring(line.IndexOf("/") + 1);
+                        zkdepthlist.Add(Convert.ToDouble(line));
+                        zkgeolist.Add("Q4al");
+                        int index = numlist.IndexOf(zknumberlist[zknumberlist.Count - 1]);
+                        zkdescriptionlist.Add(deslist[index]);
+                    }
+                    BoreholeDataBase.AddLayerListToZk(projectName, zkname, zknumberlist, zknamelist, zkgeolist, zkdescriptionlist, zkdepthlist);
+
+                    // 读取取样信息
+                    List<string> spnumberlist = new List<string>();
+                    List<double> spdepthlist = new List<double>();
+                    List<int> spisdisturbedlist = new List<int>();
+                    countLine = 0;
+                    while (true)
+                    {
+                        string line = zkReader.ReadLine();
+                        if (line == "===标贯===")
+                            break;
+
+                        countLine++;
+                        spnumberlist.Add(countLine.ToString());
+                        spdepthlist.Add(Convert.ToDouble(line.Substring(0, line.IndexOf("/"))));
+                        line = line.Substring(line.IndexOf("/") + 1);
+                        spisdisturbedlist.Add(line == "扰" ? 1 : 0);
+                    }
+                    BoreholeDataBase.AddSampleListToZk(projectName, zkname, spnumberlist, spdepthlist, spisdisturbedlist);
+
+                    // 读取标贯信息
+                    List<string> ntnumberlist = new List<string>();
+                    List<double> ntdepthlist = new List<double>();
+                    List<double> ntvaluelist = new List<double>();
+                    List<string> nttypelist = new List<string>();
+                    countLine = 0;
+                    while (true)
+                    {
+                        string line = zkReader.ReadLine();
+                        if (line == null)
+                            break;
+
+                        countLine++;
+                        ntnumberlist.Add(countLine.ToString());
+                        ntdepthlist.Add(Convert.ToDouble(line.Substring(0, line.IndexOf("/"))));
+                        line = line.Substring(line.IndexOf("/") + 1);
+                        ntvaluelist.Add(Convert.ToDouble(line));
+                        nttypelist.Add("N");
+                    }
+                    BoreholeDataBase.AddNTestListToZk(projectName, zkname, ntnumberlist, ntdepthlist, ntvaluelist, nttypelist);
+
+                    zkReader.Close();
+                }
+
+                // 读取静力触探信息
+                DirectoryInfo dirJk = new DirectoryInfo(projectPath + @"静力触探\");
+                foreach (FileInfo dJkFile in dirJk.GetFiles("*.txt"))
+                {
+                    // 读取基本信息
+                    StreamReader jkReader = new StreamReader(projectPath + @"静力触探\" + dJkFile.ToString());
+                    jkReader.ReadLine();
+                    string jkname = jkReader.ReadLine();
+                    jkReader.ReadLine();
+                    double jkaltitude = Convert.ToDouble(jkReader.ReadLine());
+                    CPTDataBase.AddJkBasicInfo(projectName, jkname, jkaltitude, Constants.NullNumber, Constants.NullNumber);
+                    jkReader.ReadLine();
+
+                    // 读取分层信息
+                    List<string> jknumberlist = new List<string>();
+                    List<string> jknamelist = new List<string>();
+                    List<string> jkgeolist = new List<string>();
+                    List<string> jkdescriptionlist = new List<string>();
+                    List<double> jkdepthlist = new List<double>();
+                    while (true)
+                    {
+                        string line = jkReader.ReadLine();
+                        if (line == "===Ps值===")
+                            break;
+
+                        jknumberlist.Add(line.Substring(0, line.IndexOf("/")));
+                        line = line.Substring(line.IndexOf("/") + 1);
+                        jknamelist.Add(line.Substring(0, line.IndexOf("/")));
+                        line = line.Substring(line.IndexOf("/") + 1);
+                        jkdepthlist.Add(Convert.ToDouble(line));
+                        jkgeolist.Add("Q4al");
+                        int index = numlist.IndexOf(jknumberlist[jknumberlist.Count - 1]);
+                        jkdescriptionlist.Add(deslist[index]);
+                    }
+                    CPTDataBase.AddLayerListToJk(projectName, jkname, jknumberlist, jknamelist, jkgeolist, jkdescriptionlist, jkdepthlist);
+
+                    // 读取Ps值信息
+                    List<double> pslist = new List<double>();
+                    while (true)
+                    {
+                        string line = jkReader.ReadLine();
+                        if (line == null)
+                            break;
+
+                        pslist.Add(Convert.ToDouble(line));
+                    }
+                    CPTDataBase.AddPsListToJk(projectName, jkname, pslist);
+                }
+
+                // 读取土工试验
+                StreamReader rstReader = new StreamReader(projectPath + @"土工试验\NormalTest.txt");
+                List<RoutineSoilTest> rsts = new List<RoutineSoilTest>();
+                while (true)
+                {
+                    string line = rstReader.ReadLine();
+                    if (line == null)
+                        break;
+
+                    string zkNumber = line.Substring(0, line.IndexOf("/"));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    double sampleDepth = Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    line = line.Substring(line.IndexOf("/") + 1);
+
+                    string sampleLayer = ProjectDataBase.ReadLayerNumberList(projectName)[0];
+                    List<ZkLayer> layers = BoreholeDataBase.ReadZkLayer(projectName, zkNumber);
+                    for (int i = 0; i < layers.Count; i++)
+                    {
+                        if (sampleDepth <= layers[i].Depth)
+                        {
+                            sampleLayer = layers[i].Number;
+                            break;
+                        }
+                    }
+
+                    double waterLevel = Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    double density = Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    double specificGravity = Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    double voidRatio = Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    double saturation = Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    double liquidLimit = Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    double plasticLimit = Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    double plasticIndex = Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    double liquidityIndex = Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    double compressibility = Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    double modulus = Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    double frictionAngle = Convert.ToDouble(line.Substring(0, line.IndexOf("/"))) == 0 ? Constants.NullNumber : Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    double cohesion = Convert.ToDouble(line.Substring(0, line.IndexOf("/"))) == 0 ? Constants.NullNumber : Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    line = line.Substring(line.IndexOf("/") + 1);
+                    double permeability = line.Substring(0, line.IndexOf("/")) == "0.000000E+000" ? Constants.NullNumber : Convert.ToDouble(line.Substring(0, line.IndexOf("/")));
+                    RoutineSoilTest rst = new RoutineSoilTest(zkNumber, sampleDepth, sampleLayer, waterLevel, density, specificGravity, voidRatio, saturation, liquidLimit, plasticLimit, plasticIndex, liquidityIndex, compressibility, modulus, frictionAngle, cohesion, permeability);
+                    rsts.Add(rst);
+                }
+                rstReader.Close();
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                RoutineSoilTestDataBase.Refresh(projectName, rsts);
+
+                projectlist.Add(projectName);
+            }
+
+            // 成功提示
+            StringBuilder sb = new StringBuilder();
+            if (projectlist.Count > 0)
+            {
+                sb.AppendLine("已成功导入以下项目：");
+                for (int i = 0; i < projectlist.Count; i++)
+                    sb.AppendLine((i + 1).ToString() + projectlist[i]);
+            }
+            else
+                sb.AppendLine("没有导入任何项目。");
+            MessageBox.Show(sb.ToString());
+        }
+
+        #endregion
     }
 }

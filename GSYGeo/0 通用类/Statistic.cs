@@ -18,9 +18,9 @@ namespace GSYGeo
         /// <returns></returns>
         public static List<double> Trim(List<double> _datalist)
         {
-            for(int i = 0; i < _datalist.Count; i++)
+            for(int i = _datalist.Count - 1; i >= 0; i--)
             {
-                if (_datalist[i] == -0.19880205)
+                if (_datalist[i] == Constants.NullNumber)
                 {
                     _datalist.RemoveAt(i);
                 }

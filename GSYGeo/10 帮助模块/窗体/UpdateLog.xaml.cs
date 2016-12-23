@@ -35,7 +35,7 @@ namespace GSYGeo
             UpdateContent.Add("项目立项");
             AddUpdate("立项", "2016.10.19", UpdateContent);
 
-            // 内部测试版1.0.0_alpha发布
+            // 内部测试版0.1.0_alpha发布
             UpdateContent.Add("基础功能构建初步完成，内测版软件名称定为\"小熠岩土勘察\"");
             UpdateContent.Add("1、项目管理模块，包括新建、打开、编辑、关闭、删除、导入、导出");
             UpdateContent.Add("2、钻孔模块，包括新建、删除、编辑、数据录入、查看");
@@ -45,11 +45,17 @@ namespace GSYGeo
             UpdateContent.Add("6、绘图模块，包括钻孔柱状图、静力触探曲线图的CAD图形输出");
             UpdateContent.Add("7、设置模块，包括软件和项目的一些常规设置");
             UpdateContent.Add("8、帮助模块，包括用户反馈、更新日志等");
-            AddUpdate("1.0.0_alpha", "2016.12.17", UpdateContent);
+            AddUpdate("0.1.0_alpha", "2016.12.17", UpdateContent);
 
-            // 内部测试版1.1.0_alpha发布
+            // 内部测试版0.2.0_alpha发布
             UpdateContent.Add("1、统计分析模块，新增承载力和压缩模量综合取值和Word表格输出功能");
-            AddUpdate("1.1.0_alpha", "2016.12.23", UpdateContent);
+            UpdateContent.Add("2、工具模块，新增导入旧版软件数据功能，该功能为供内部使用的临时功能");
+            AddUpdate("0.2.0_alpha", "2016.12.23", UpdateContent);
+
+            // 内部测试版0.2.1_alpha发布
+            UpdateContent.Add("1、统计分析模块，修复了土工试验统计项含有空数值时的计算错误");
+            UpdateContent.Add("2、统计分析模块，修复了勘察工作量统计输出Word表格的一个合并单元格错误，该错误可导致程序崩溃");
+            AddUpdate("0.2.1_alpha", "2016.12.24", UpdateContent);
         }
 
         /// <summary>

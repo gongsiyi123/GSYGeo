@@ -44,36 +44,7 @@ namespace GSYGeo
             Name = _name;
             Type = _type;
         }
-
-        /// <summary>
-        /// 构造函数，直接输入统计成果
-        /// </summary>
-        /// <param name="_layer">层号</param>
-        /// <param name="_name">岩土名称</param>
-        /// <param name="_type">试验类型</param>
-        /// <param name="_count">统计数</param>
-        /// <param name="_max">最大值</param>
-        /// <param name="_min">最小值</param>
-        /// <param name="_average">平均值</param>
-        /// <param name="_standardDeviation">标准差</param>
-        /// <param name="_variableCoefficient">变异系数</param>
-        /// <param name="_correctionCoefficient">统计修正系数</param>
-        /// <param name="_standardValue">标准值</param>
-        public StatisticRST(string _layer, string _name, RSTType _type, int _count, double _max, double _min, double _average, double _standardDeviation, double _variableCoefficient, double _correctionCoefficient, double _standardValue)
-        {
-            Layer = _layer;
-            Name = _name;
-            Type = _type;
-            Count = _count;
-            Max = _max;
-            Min = _min;
-            Average = _average;
-            StandardDeviation = _standardDeviation;
-            VariableCoefficient = _variableCoefficient;
-            CorrectionCoefficient = _correctionCoefficient;
-            StandardValue = _standardValue;
-        }
-
+        
         /// <summary>
         /// 构造函数，输入原始数据
         /// </summary>
@@ -84,6 +55,7 @@ namespace GSYGeo
         /// <param name="_startCount">起始统计样本数</param>
         public StatisticRST(string _layer, string _name, RSTType _type, List<double> _datalist, int _startCount)
         {
+            DataList = _datalist;
             Layer = _layer;
             Name = _name;
             Type = _type;
@@ -93,7 +65,17 @@ namespace GSYGeo
             Average = Statistic.Average(_datalist);
             StandardDeviation = Statistic.StandardDeviation(_datalist, _startCount);
             VariableCoefficient = Statistic.VariableCoefficient(_datalist, _startCount);
-            CorrectionCoefficient = Statistic.CorrectionCoefficient(_datalist, 6, false);
+
+            if (_type == RSTType.waterLevel ||
+                _type == RSTType.voidRatio ||
+                _type == RSTType.saturation ||
+                _type == RSTType.liquidityIndex ||
+                _type == RSTType.compressibility ||
+                _type == RSTType.permeability)
+                CorrectionCoefficient = Statistic.CorrectionCoefficient(_datalist, 6, true);
+            else
+                CorrectionCoefficient = Statistic.CorrectionCoefficient(_datalist, 6, false);
+
             StandardValue = Statistic.StandardValue(Average, CorrectionCoefficient);
         }
 

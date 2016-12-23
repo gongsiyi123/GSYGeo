@@ -176,24 +176,28 @@ namespace GSYGeo
             table.Cell(2, 1).Merge(table.Cell(3, 1));
             table.Cell(4, 1).Merge(table.Cell(5, 1));
             table.Cell(table.Rows.Count, 1).Merge(table.Cell(table.Rows.Count, 2));
-            int[] mergeIndex = new int[3];
+            int[] mergeIndex = new int[3] { 0, 0, 0 };
             for(int i = 6; i <= table.Rows.Count - 1; i++)
             {
                 if ((mergeIndex[0] == 0) && (table.Cell(i, 2).Range.Text.Contains("原状样") || table.Cell(i, 2).Range.Text.Contains("扰动样")))
                     mergeIndex[0] = i;
                 if ((mergeIndex[1] == 0) && (table.Cell(i, 2).Range.Text.Contains("标准贯入试验") || table.Cell(i, 2).Range.Text.Contains("触探试验")))
                     mergeIndex[1] = i;
-                if ((mergeIndex[2] == 0) && (table.Cell(i, 2).Range.Text.Contains("土工常规") || table.Cell(i, 2).Range.Text.Contains("室内渗透") || table.Cell(i, 2).Range.Text.Contains("颗粒分析")))
+                if ((mergeIndex[2] == 0) && (table.Cell(i, 2).Range.Text.Contains("土工常规") || table.Cell(i, 2).Range.Text.Contains("室内渗透") || table.Cell(i, 2).Range.Text.Contains("颗粒分析") || table.Cell(i, 2).Range.Text.Contains("水质") || table.Cell(i, 2).Range.Text.Contains("击实")))
                     mergeIndex[2] = i;
             }
             for(int i = 0; i < 3; i++)
             {
-                if (mergeIndex[i] == 0)
-                    continue;
-                else if (i < 2)
-                    table.Cell(mergeIndex[i], 1).Merge(table.Cell(mergeIndex[i + 1] - 1, 1));
+                int startIndex = mergeIndex[i];
+                int endIndex;
+                if (i < 2)
+                    endIndex = mergeIndex[i + 1] - 1;
                 else
-                    table.Cell(mergeIndex[i], 1).Merge(table.Cell(table.Rows.Count - 1, 1));
+                    endIndex = table.Rows.Count - 1;
+                if (startIndex == 0)
+                    continue;
+                if (startIndex != endIndex)
+                    table.Cell(startIndex, 1).Merge(table.Cell(endIndex, 1));
             }
             
             // 返回

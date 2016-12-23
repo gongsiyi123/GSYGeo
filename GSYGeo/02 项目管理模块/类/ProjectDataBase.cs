@@ -179,7 +179,7 @@ namespace GSYGeo
                 conn.Open();
 
                 // 查询分层
-                sql = "select number from projectLayer";
+                sql = "select number from projectLayer order by number * 1";
                 SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
                 List<string> layerList = new List<string>();
                 while (reader.Read())
@@ -201,7 +201,7 @@ namespace GSYGeo
                 conn.Open();
 
                 // 查询分层
-                sql = "select name from projectLayer";
+                sql = "select name from projectLayer order by number * 1";
                 SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
                 List<string> layerList = new List<string>();
                 while (reader.Read())
@@ -223,7 +223,7 @@ namespace GSYGeo
                 conn.Open();
 
                 // 查询分层
-                sql = "select geo from projectLayer";
+                sql = "select geo from projectLayer order by number * 1";
                 SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
                 List<string> layerList = new List<string>();
                 while (reader.Read())
@@ -245,7 +245,7 @@ namespace GSYGeo
                 conn.Open();
 
                 // 查询分层
-                sql = "select description from projectLayer";
+                sql = "select description from projectLayer order by number * 1";
                 SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
                 List<string> layerList = new List<string>();
                 while (reader.Read())

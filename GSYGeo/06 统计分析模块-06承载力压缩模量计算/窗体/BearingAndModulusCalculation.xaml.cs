@@ -490,7 +490,7 @@ namespace GSYGeo
         /// <param name="e"></param>
         private void RSTTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CalcuByRst(RstStatisticList, RstSoilType(this.RSTTypeComboBox.SelectedItem.ToString()));
+            CalcuByRst(RstStatisticList, this.RSTTypeComboBox.SelectedItem.ToString());
 
             FillRstTextBox();
         }
@@ -684,7 +684,7 @@ namespace GSYGeo
         /// <param name="e"></param>
         private void CPTTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CalcuByCpt(CptStatisticList, CptSoilType(this.CPTTypeComboBox.SelectedItem.ToString()));
+            CalcuByCpt(CptStatisticList, this.CPTTypeComboBox.SelectedItem.ToString());
 
             FillCptTextBox();
         }
@@ -918,7 +918,7 @@ namespace GSYGeo
         /// <param name="e"></param>
         private void NTestTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CalcuByNTest(NTestStatisticList, NTestSoilType(this.NTestTypeComboBox.SelectedItem.ToString()));
+            CalcuByNTest(NTestStatisticList, this.NTestTypeComboBox.SelectedItem.ToString());
 
             FillNTestTextBox();
         }

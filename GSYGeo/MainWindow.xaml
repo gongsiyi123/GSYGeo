@@ -83,6 +83,8 @@
                 <MenuItem Header="岩土计算器(待开发)" Name="GeotechnicalCalculatorMenu" IsEnabled="False"/>
                 <Separator/>
                 <MenuItem Header="设置" Name="ProgramSettingMenu" Click="MenuItem_Setting_Click"/>
+                <Separator/>
+                <MenuItem Header="导入旧版数据" Name="ImportOldDataMenu" Click="ImportOldDataMenu_Click"/>
             </MenuItem>
             <MenuItem Header="窗口" Name="WindowMenu">
                 <MenuItem Header="显示项目导航窗口" Name="ShowProjectNavigationMenu" IsCheckable="True" IsChecked="False"/>
