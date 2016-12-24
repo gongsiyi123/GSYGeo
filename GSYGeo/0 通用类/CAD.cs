@@ -145,6 +145,14 @@ namespace GSYGeo
             return rectangle;
         }
 
+        /// <summary>
+        /// 方法，向模型空间添加一个圆
+        /// </summary>
+        /// <param name="_centerX">圆心的X坐标</param>
+        /// <param name="_centerY">圆心的Y坐标</param>
+        /// <param name="_radius">圆的半径</param>
+        /// <param name="_isSolid">实心或空心，true为实心</param>
+        /// <returns></returns>
         public DxfCircle AddCircle(double _centerX,double _centerY,double _radius,bool _isSolid)
         {
             DxfCircle circle = new DxfCircle(new Point2D(_centerX, _centerY), _radius);
@@ -347,7 +355,7 @@ namespace GSYGeo
         }
 
         /// <summary>
-        /// 方法，绘制单个钻孔柱状图图
+        /// 方法，绘制单个钻孔柱状图
         /// </summary>
         /// <param name="_drawIndex">柱状图编号，从0开始，用于绘制多个柱状图时计算其摆放位置</param>
         /// <param name="_projectName">工程名称</param>

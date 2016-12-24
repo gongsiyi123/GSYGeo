@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace GSYGeo
 {
-    // 当前项目设置类
+    /// <summary>
+    /// 当前项目设置类
+    /// </summary>
     class ProjectSetting
     {
-        // 无参数的构造函数
+        /// <summary>
+        /// 无参数的构造函数
+        /// </summary>
         public ProjectSetting()
         {
             name = null;
@@ -18,7 +22,13 @@ namespace GSYGeo
             //layerList = null;
         }
 
-        // 带参数的构造函数
+        /// <summary>
+        /// 带参数的构造函数
+        /// </summary>
+        /// <param name="_name">项目名称</param>
+        /// <param name="_province">项目所在省份</param>
+        /// <param name="_city">项目所在县市</param>
+        /// <param name="_layerList">分层信息列表</param>
         public ProjectSetting(string _name,string _province,string _city,List<Layer> _layerList)
         {
             name = _name;
@@ -27,8 +37,9 @@ namespace GSYGeo
             layerList = _layerList;
         }
 
-        // 属性，项目名称
-        private string name;
+        /// <summary>
+        /// 属性，项目名称
+        /// </summary>
         public string Name
         {
             get
@@ -40,9 +51,11 @@ namespace GSYGeo
                 name = value;
             }
         }
+        private string name;
 
-        // 属性，所在省份
-        private string province;
+        /// <summary>
+        /// 属性，所在省份
+        /// </summary>
         public string Province
         {
             get
@@ -54,9 +67,11 @@ namespace GSYGeo
                 province = value;
             }
         }
+        private string province;
 
-        // 属性，所在县市
-        private string city;
+        /// <summary>
+        /// 属性，所在县市
+        /// </summary>
         public string City
         {
             get
@@ -68,9 +83,11 @@ namespace GSYGeo
                 city = value;
             }
         }
+        private string city;
 
-        // 属性，分层列表
-        private List<Layer> layerList = new List<Layer>();
+        /// <summary>
+        /// 属性，分层列表
+        /// </summary>
         public List<Layer> LayerList
         {
             get
@@ -78,9 +95,11 @@ namespace GSYGeo
                 return layerList;
             }
         }
+        private List<Layer> layerList = new List<Layer>();
 
-        // 属性，公司名称
-        private string companyName;
+        /// <summary>
+        /// 属性，公司名称
+        /// </summary>
         public string CompanyName
         {
             get
@@ -92,9 +111,11 @@ namespace GSYGeo
                 companyName = value;
             }
         }
+        private string companyName;
 
-        // 属性，公司资质代码
-        private string companyCode;
+        /// <summary>
+        /// 属性，公司资质代码
+        /// </summary>
         public string CompanyCode
         {
             get
@@ -106,9 +127,11 @@ namespace GSYGeo
                 companyCode = value;
             }
         }
+        private string companyCode;
 
-        // 属性，绘图人
-        private string drawer;
+        /// <summary>
+        /// 属性，绘图人
+        /// </summary>
         public string Drawer
         {
             get
@@ -120,9 +143,11 @@ namespace GSYGeo
                 drawer = value;
             }
         }
+        private string drawer;
 
-        // 属性，报告编写人
-        private string writer;
+        /// <summary>
+        /// 属性，报告编写人
+        /// </summary>
         public string Writer
         {
             get
@@ -134,9 +159,11 @@ namespace GSYGeo
                 writer = value;
             }
         }
+        private string writer;
 
-        // 属性，校核人
-        private string checker;
+        /// <summary>
+        /// 属性，校核人
+        /// </summary>
         public string Checker
         {
             get
@@ -148,9 +175,11 @@ namespace GSYGeo
                 checker = value;
             }
         }
+        private string checker;
 
-        // 属性，审查人
-        private string inspector;
+        /// <summary>
+        /// 属性，审查人
+        /// </summary>
         public string Inspector
         {
             get
@@ -162,9 +191,11 @@ namespace GSYGeo
                 inspector = value;
             }
         }
+        private string inspector;
 
-        // 属性，核定人
-        private string approver;
+        /// <summary>
+        /// 属性，核定人
+        /// </summary>
         public string Approver
         {
             get
@@ -176,9 +207,11 @@ namespace GSYGeo
                 approver = value;
             }
         }
+        private string approver;
 
-        // 属性，批准人
-        private string finalApprover;
+        /// <summary>
+        /// 属性，批准人
+        /// </summary>
         public string FinalApprover
         {
             get
@@ -190,8 +223,11 @@ namespace GSYGeo
                 finalApprover = value;
             }
         }
+        private string finalApprover;
 
-        // 分层结构体
+        /// <summary>
+        /// 分层结构体
+        /// </summary>
         public struct Layer
         {
             public string Number;
@@ -207,7 +243,13 @@ namespace GSYGeo
             }
         }
 
-        // 方法，添加一个分层
+        /// <summary>
+        /// 添加一个分层
+        /// </summary>
+        /// <param name="_number">分层编号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_geo">地质年代成因</param>
+        /// <param name="_description">分层描述</param>
         public void AddLayer(string _number,string _name,string _geo,string _description)
         {
             Layer l = new Layer(_number, _name, _geo, _description);
@@ -215,7 +257,14 @@ namespace GSYGeo
             
         }
 
-        // 方法，编辑一个分层
+        /// <summary>
+        /// 编辑一个分层
+        /// </summary>
+        /// <param name="_oldNumber">老分层编号</param>
+        /// <param name="_number">新分层编号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_geo">地质年代成因</param>
+        /// <param name="_description">分层描述</param>
         public void EditLayer(string _oldNumber, string _number, string _name, string _geo, string _description)
         {
             for(int i = 0; i < layerList.Count; i++)
@@ -228,7 +277,10 @@ namespace GSYGeo
             }
         }
 
-        // 方法，删除一个分层
+        /// <summary>
+        /// 删除一个分层
+        /// </summary>
+        /// <param name="_number">分层编号</param>
         public void DeleteLayer(string _number)
         {
             for (int i = 0; i < layerList.Count; i++)

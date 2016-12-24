@@ -7,8 +7,10 @@ using System.ComponentModel;
 
 namespace GSYGeo
 {
-    // 用于"数据存储路径"与"用户界面控件"之间进行数据绑定的专用类
-    // 本类实例化后可直接操作注册表中数据存储路径的项，用作数据绑定源
+    /// <summary>
+    /// 用于"数据存储路径"与"用户界面控件"之间进行数据绑定的专用类
+    /// 本类实例化后可直接操作注册表中数据存储路径的项，用作数据绑定源
+    /// </summary>
     public class ProgramPath:INotifyPropertyChanged
     {
         public ProgramPath() { }

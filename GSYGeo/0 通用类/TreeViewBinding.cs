@@ -10,10 +10,14 @@ using System.Collections.ObjectModel;
 
 namespace GSYGeo
 {
-    // 设置导航树数据绑定的类
+    /// <summary>
+    /// 设置导航树数据绑定的类
+    /// </summary>
     public class TreeViewBinding:ObservableCollection<string>
     {
-        // 构造函数
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public TreeViewBinding()
         {
             // 初始化导航树，添加一级节点
@@ -24,7 +28,9 @@ namespace GSYGeo
             treeItem.Add(new TreeViewItem { Header = "室内试验" });
         }
 
-        // 属性，TreeViewItem列表
+        /// <summary>
+        /// 属性，TreeViewItem列表
+        /// </summary>
         private ObservableCollection<TreeViewItem> treeItem;
         public ObservableCollection<TreeViewItem> TreeItem
         {
@@ -38,7 +44,9 @@ namespace GSYGeo
             }
         }
 
-        // 方法，重置导航树为初始结构
+        /// <summary>
+        /// 方法，重置导航树为初始结构
+        /// </summary>
         public void RefreshTreeItem()
         {
             // 清除所有节点
@@ -52,7 +60,10 @@ namespace GSYGeo
             treeItem.Add(new TreeViewItem { Header = "室内试验" });
         }
 
-        // 方法，重置钻孔列表
+        /// <summary>
+        /// 方法，重置钻孔列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
         public void ReSetZkItem(string _projectName)
         {
             treeItem[1].Items.Clear();
@@ -63,7 +74,10 @@ namespace GSYGeo
             }
         }
 
-        // 方法，重置原位测试-静力触探列表
+        /// <summary>
+        /// 方法，重置原位测试-静力触探列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
         public void ReSetJkItem(string _projectName)
         {
             for(int i = 0; i < treeItem[2].Items.Count; i++)
@@ -82,13 +96,22 @@ namespace GSYGeo
             }
         }
 
-        // 方法，查询二级菜单下的子项个数
+        /// <summary>
+        /// 方法，查询二级菜单下的子项个数
+        /// </summary>
+        /// <param name="_index">二级菜单的索引号</param>
+        /// <returns></returns>
         public int CountSecondTreeItem(int _index)
         {
             return treeItem[_index].Items.Count;
         }
 
-        // 方法，查询二级菜单下是否存在某个子项
+        /// <summary>
+        /// 方法，查询二级菜单下是否存在某个子项
+        /// </summary>
+        /// <param name="_index">二级菜单的索引号</param>
+        /// <param name="_s">要查询项的header名称</param>
+        /// <returns></returns>
         public bool IsExistSecondTreeItem(int _index,string _s)
         {
             bool isExist = false;
@@ -104,7 +127,11 @@ namespace GSYGeo
             return isExist;
         }
 
-        // 方法，导航树二级菜单新增一个item
+        /// <summary>
+        /// 方法，导航树二级菜单新增一个item
+        /// </summary>
+        /// <param name="_index">二级菜单的索引号</param>
+        /// <param name="_s">要增加项的header名称</param>
         public void AddItemToSecondTree(int _index,string _s)
         {
             TreeViewItem item = new TreeViewItem();
@@ -112,7 +139,11 @@ namespace GSYGeo
             treeItem[_index].Items.Add(item);
         }
 
-        // 方法，导航树二级菜单删除一个item
+        /// <summary>
+        /// 方法，导航树二级菜单删除一个item
+        /// </summary>
+        /// <param name="_index">二级菜单的索引号</param>
+        /// <param name="_s">要删除项的header名称</param>
         public void RemoveItemFromSecondTree(int _index, string _s)
         {
             for (int i = 0; i < treeItem[_index].Items.Count; i++)
@@ -125,7 +156,12 @@ namespace GSYGeo
             }
         }
 
-        // 方法，导航树三级菜单新增一个item
+        /// <summary>
+        /// 方法，导航树三级菜单新增一个item
+        /// </summary>
+        /// <param name="_parentIndex">一级菜单的索引号</param>
+        /// <param name="_index">二级菜单的索引号</param>
+        /// <param name="_s">三级菜单要新增项的header名称</param>
         public void AddItemToThirdTree(int _parentIndex,int _index,string _s)
         {
             TreeViewItem item = new TreeViewItem();
@@ -134,7 +170,12 @@ namespace GSYGeo
             parentItem.Items.Add(item);
         }
 
-        // 方法，导航树三级菜单删除一个item
+        /// <summary>
+        /// 方法，导航树三级菜单删除一个item
+        /// </summary>
+        /// <param name="_parentIndex">一级菜单的索引号</param>
+        /// <param name="_index">二级菜单的索引号</param>
+        /// <param name="_s">三级菜单要删除项的header名称</param>
         public void RemoveItemFromThirdTree(int _parentIndex,int _index,string _s)
         {
             TreeViewItem parentItem = (TreeViewItem)treeItem[_parentIndex].Items[_index];

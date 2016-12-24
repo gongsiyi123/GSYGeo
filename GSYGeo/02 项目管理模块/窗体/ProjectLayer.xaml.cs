@@ -20,10 +20,14 @@ namespace GSYGeo
     /// </summary>
     public partial class ProjectLayer : Window
     {
-        // 定义DataGrid控件的数据源Datatable
+        /// <summary>
+        /// 定义DataGrid控件的数据源Datatable
+        /// </summary>
         public DataTable dt = new DataTable("Layer");
 
-        // 无参数的构造函数
+        /// <summary>
+        /// 无参数的构造函数
+        /// </summary>
         public ProjectLayer()
         {
             InitializeComponent();
@@ -35,7 +39,13 @@ namespace GSYGeo
             this.LayerListDataGrid.DataContext = dt;
         }
 
-        // 带参数的构造函数
+        /// <summary>
+        /// 带参数的构造函数
+        /// </summary>
+        /// <param name="_numberList">分层编号列表</param>
+        /// <param name="_nameList">岩土名称列表</param>
+        /// <param name="_geoList">地质年代成因列表</param>
+        /// <param name="_descriptionList">分层描述列表</param>
         public ProjectLayer(List<string> _numberList,List<string> _nameList,List<string> _geoList,List<string> _descriptionList)
         {
             InitializeComponent();
@@ -47,7 +57,9 @@ namespace GSYGeo
             this.LayerListDataGrid.DataContext = dt.DefaultView;
         }
 
-        // 初始化DataTable，不带参数
+        /// <summary>
+        /// 初始化DataTable，不带参数
+        /// </summary>
         private void InitialDataTable()
         {
             // 定义DataTable数据列
@@ -57,7 +69,13 @@ namespace GSYGeo
             dt.Columns.Add(new DataColumn("descriptionList", typeof(string)));
         }
 
-        // 初始化DataTable，带参数
+        /// <summary>
+        /// 初始化DataTable，带参数
+        /// </summary>
+        /// <param name="_numberList"></param>
+        /// <param name="_nameList"></param>
+        /// <param name="_geoList"></param>
+        /// <param name="_descriptionList"></param>
         private void InitialDataTable(List<string> _numberList, List<string> _nameList, List<string> _geoList, List<string> _descriptionList)
         {
             // 定义DataTable数据列并赋值
@@ -79,7 +97,13 @@ namespace GSYGeo
             }
         }
 
-        // 向DataTable添加行
+        /// <summary>
+        /// 向DataTable添加行
+        /// </summary>
+        /// <param name="_number">分层编号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_geo">地质年代成因</param>
+        /// <param name="_description">分层描述</param>
         private void AddRowToDataTable(string _number,string _name,string _geo,string _description)
         {
             DataRow dr = dt.NewRow();
@@ -90,7 +114,14 @@ namespace GSYGeo
             dt.Rows.Add(dr);
         }
 
-        // 编辑DataTable行
+        /// <summary>
+        /// 编辑DataTable行
+        /// </summary>
+        /// <param name="_rowIndex">行号，从0开始</param>
+        /// <param name="_number">分层编号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_geo">地质年代成因</param>
+        /// <param name="_description">分层描述</param>
         private void EditRowDataTable(int _rowIndex,string _number, string _name, string _geo, string _description)
         {
             DataRow dr = dt.Rows[_rowIndex];
@@ -102,13 +133,20 @@ namespace GSYGeo
             dr.EndEdit();
         }
 
-        // 删除DataTable行
+        /// <summary>
+        /// 删除DataTable行
+        /// </summary>
+        /// <param name="_rowIndex">行号，从0开始</param>
         private void DeleteRowDataTable(int _rowIndex)
         {
             dt.Rows.RemoveAt(_rowIndex);
         }
 
-        // 点击"添加"
+        /// <summary>
+        /// 点击"添加"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddLayerButton_Click(object sender, RoutedEventArgs e)
         {
             LayerDetail layerDetail = new LayerDetail();
@@ -123,7 +161,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"编辑"
+        /// <summary>
+        /// 点击"编辑"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditLayerButton_Click(object sender, RoutedEventArgs e)
         {
             // 赋值传递数据
@@ -147,7 +189,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"删除"
+        /// <summary>
+        /// 点击"删除"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteLayerButton_Click(object sender, RoutedEventArgs e)
         {
             DataRowView drv = (DataRowView)this.LayerListDataGrid.SelectedItem;
@@ -160,20 +206,32 @@ namespace GSYGeo
             }
         }
 
-        // 点击DataGrid空白处取消选中状态
+        /// <summary>
+        /// 点击DataGrid空白处取消选中状态
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LayerListDataGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.LayerListDataGrid.UnselectAll();
         }
 
-        // 点击"确定"
+        /// <summary>
+        /// 点击"确定"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommitButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
             Close();
         }
 
-        // 点击"取消"
+        /// <summary>
+        /// 点击"取消"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;

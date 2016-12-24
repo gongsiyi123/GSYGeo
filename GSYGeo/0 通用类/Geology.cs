@@ -20,7 +20,18 @@ namespace GSYGeo
         {
             {"q4ml","Q4ml" },
             {"q4al","Q4al" },
-            {"q4aldl","Q4al+dl" }
+            {"q4pl","Q4pl" },
+            {"q4dl","Q4dl" },
+            {"q4l","Q4l" },
+            { "q4el","Q4el" },
+            {"q4col","Q4col" },
+            {"q4aldl","Q4al+dl" },
+            {"q4all","Q4al+l" },
+            {"q4plel","Q4pl+el" },
+            {"q3al","Q3al" },
+            {"q3all","Q3al+l" },
+            {"q3alpl","Q3al+pl" },
+            {"q3dlcol","Q3dl+col" },
         };
 
         /// <summary>

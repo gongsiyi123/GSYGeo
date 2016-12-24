@@ -22,13 +22,18 @@ namespace GSYGeo
     {
         #region 参数定义
 
-        // 定义数据统计列表GATStatisticDataGrid控件的数据源DataTable
+        /// <summary>
+        /// 定义数据统计列表GATStatisticDataGrid控件的数据源DataTable
+        /// </summary>
         public static DataTable dtGAT = new DataTable("Statistic");
 
         #endregion
 
         #region 构造函数
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public GATStatistic()
         {
             InitializeComponent();
@@ -46,10 +51,12 @@ namespace GSYGeo
         }
 
         #endregion
-        
+
         #region 统计累积数据
 
-        // 定义统计项目
+        /// <summary>
+        /// 定义统计项目
+        /// </summary>
         private string[] staName = new string[]
         {
             "layerNumber",
@@ -70,10 +77,14 @@ namespace GSYGeo
             "group0_075to0"
         };
 
-        // 定义统计数据列表
+        /// <summary>
+        /// 定义统计数据列表
+        /// </summary>
         public static List<StatisticGAT> statisticList;
 
-        // 初始化GATStatisticDataGrid，不带参数
+        /// <summary>
+        /// 初始化GATStatisticDataGrid，不带参数
+        /// </summary>
         private void InitialGATStatisticDataGrid()
         {
             // 初始化统计数据列表
@@ -115,6 +126,10 @@ namespace GSYGeo
             }
         }
 
+        /// <summary>
+        /// 读取统计数据
+        /// </summary>
+        /// <returns></returns>
         public static List<StatisticGAT> SelectStatisticData()
         {
             // 定义统计数据列表
@@ -140,6 +155,11 @@ namespace GSYGeo
             return _statisticList;
         }
 
+        /// <summary>
+        /// 筛选统计数据
+        /// </summary>
+        /// <param name="_layerNumber">分层编号</param>
+        /// <returns></returns>
         public static List<StatisticGAT> SelectStatisticData(string _layerNumber)
         {
             // 定义统计数据列表
@@ -171,7 +191,10 @@ namespace GSYGeo
             return _statisticList;
         }
 
-        // 根据所选分层刷新DataTable
+        /// <summary>
+        /// 根据所选分层刷新DataTable
+        /// </summary>
+        /// <param name="_layerNumber">分层编号</param>
         private void RefreshDataTableByLayer(string _layerNumber)
         {
             // 恢复初始状态
@@ -214,6 +237,9 @@ namespace GSYGeo
             }
         }
 
+        /// <summary>
+        /// 初始化各下拉选框
+        /// </summary>
         private void InitialComboBox()
         {
             List<string> layerNumberlist = ProjectDataBase.ReadLayerNumberList(Program.currentProject);
@@ -226,6 +252,11 @@ namespace GSYGeo
             this.LayerNumberComboBox.ItemsSource = layerlist;
         }
 
+        /// <summary>
+        /// 分层编号下拉框选择变化时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LayerNumberComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // 筛选
@@ -243,6 +274,9 @@ namespace GSYGeo
 
         #region 绘图
 
+        /// <summary>
+        /// 绘制累计曲线图
+        /// </summary>
         private void Draw()
         {
             // 清理旧图形
@@ -258,6 +292,12 @@ namespace GSYGeo
             DrawCurve(m, w, h);
         }
 
+        /// <summary>
+        /// 绘制坐标轴
+        /// </summary>
+        /// <param name="m">margin</param>
+        /// <param name="w">宽度</param>
+        /// <param name="h">高度</param>
         private void DrawAxis(double m, double w, double h)
         {
             // 绘制坐标轴和标签
@@ -310,6 +350,12 @@ namespace GSYGeo
             
         }
 
+        /// <summary>
+        /// 绘制曲线
+        /// </summary>
+        /// <param name="m">margin</param>
+        /// <param name="w">宽度</param>
+        /// <param name="h">高度</param>
         private void DrawCurve(double m, double w, double h)
         {
             if (statisticList.Count == 0)

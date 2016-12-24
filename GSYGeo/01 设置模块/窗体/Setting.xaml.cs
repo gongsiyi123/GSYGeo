@@ -24,20 +24,33 @@ namespace GSYGeo
     /// </summary>
     public partial class Setting : Window
     {
-        // 实例化ProgramPath类并赋初始值为当前数据存储路径，用于对"配置"-"数据存储位置"文本框进行数据绑定
+        /// <summary>
+        /// 实例化ProgramPath类并赋初始值为当前数据存储路径，用于对"配置"-"数据存储位置"文本框进行数据绑定
+        /// </summary>
         ProgramPath programPath = new ProgramPath(Program.ReadProgramPath());
 
-        // 实例化Company类，用于对 "公司" 文本框进行数据绑定
+        /// <summary>
+        /// 实例化Company类，用于对 "公司" 文本框进行数据绑定
+        /// </summary>
         Company company = new Company();
 
-        // 定义设置变化判断变量
+        /// <summary>
+        /// 定义设置变化判断变量
+        /// </summary>
         private bool isDirty = false;
 
-        // 定义标准表里
+        /// <summary>
+        /// 定义标准表里的行业标注
+        /// </summary>
         private string industrialStandard = null;
+        /// <summary>
+        /// 定义标准表里的地方标注
+        /// </summary>
         private string localStandard = null;
 
-        // 默认构造函数
+        /// <summary>
+        /// 默认构造函数
+        /// </summary>
         public Setting()
         {
             InitializeComponent();
@@ -49,7 +62,9 @@ namespace GSYGeo
             isDirty = false;
         }
 
-        // 设置数据绑定函数
+        /// <summary>
+        /// 设置数据绑定函数
+        /// </summary>
         private void SetBinding()
         {
             // "配置"-"数据存储位置" 绑定到 programPath实例
@@ -82,8 +97,12 @@ namespace GSYGeo
                 this.CompanyPeopleListView.ItemsSource = company.People;
             }
         }
-        
-        // 点击"配置"-"浏览"
+
+        /// <summary>
+        /// 点击"配置"-"浏览"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SetDataBasePath_Click(object sender, RoutedEventArgs e)
         {
             // 保存旧路径
@@ -136,7 +155,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"公司"-"添加"
+        /// <summary>
+        /// 点击"公司"-"添加"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddPeopleButton_Click(object sender, RoutedEventArgs e)
         {
             EditPeople newPeople = new EditPeople();
@@ -149,7 +172,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"公司"-"编辑"
+        /// <summary>
+        /// 点击"公司"-"编辑"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditPeopleButton_Click(object sender, RoutedEventArgs e)
         {
             string oldName = this.CompanyPeopleListView.SelectedValue.ToString();
@@ -163,7 +190,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"公司"-"删除"
+        /// <summary>
+        /// 点击"公司"-"删除"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeletePeopleButton_Click(object sender, RoutedEventArgs e)
         {
             // 删除选中的人员并刷新listview
@@ -171,13 +202,21 @@ namespace GSYGeo
             this.CompanyPeopleListView.Items.Refresh();
         }
 
-        // 设置鼠标点击人员列表控件CompanyPeopleListView的空白处时清空选择
+        /// <summary>
+        /// 设置鼠标点击人员列表控件CompanyPeopleListView的空白处时清空选择
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CompanyPeopleListView_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.CompanyPeopleListView.UnselectAll();
         }
 
-        // Save命令的Executed事件处理函数
+        /// <summary>
+        /// Save命令的Executed事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBindingSave_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             // 保存"公司"设置
@@ -196,7 +235,11 @@ namespace GSYGeo
             }
         }
 
-        // Save命令的CanExecuted事件处理函数
+        /// <summary>
+        /// Save命令的CanExecuted事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBindingSave_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             // 设置"确定"按钮的可用状态
@@ -213,31 +256,51 @@ namespace GSYGeo
             
         }
 
-        // "公司"-"公司名称"文本框内文本有变化时
+        /// <summary>
+        /// "公司"-"公司名称"文本框内文本有变化时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CompanyNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             isDirty = true;
         }
 
-        // "公司"-"资质编号"文本框内文本有变化时
+        /// <summary>
+        /// "公司"-"资质编号"文本框内文本有变化时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CompanyCodeTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             isDirty = true;
         }
 
-        // 点击"取消"
+        /// <summary>
+        /// 点击"取消"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelSetting_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-        // 选择行业标准-水利水电
+        /// <summary>
+        /// 选择行业标准-水利水电
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void WaterConservancy_Checked(object sender, RoutedEventArgs e)
         {
             industrialStandard = "WaterConservancy";
         }
 
-        // 选择地方标准-湖北省
+        /// <summary>
+        /// 选择地方标准-湖北省
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Hubei_Checked(object sender, RoutedEventArgs e)
         {
             localStandard = "Hubei";

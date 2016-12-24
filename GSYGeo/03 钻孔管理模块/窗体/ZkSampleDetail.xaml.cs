@@ -19,19 +19,29 @@ namespace GSYGeo
     /// </summary>
     public partial class ZkSampleDetail : Window
     {
-        // 定义工具提示
+        /// <summary>
+        /// 定义工具提示
+        /// </summary>
         System.Windows.Controls.ToolTip tt = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt0 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt1 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt2 = new System.Windows.Controls.ToolTip();
 
-        // 判断确定按钮的可用性参数
+        /// <summary>
+        /// 判断确定按钮的可用性参数
+        /// </summary>
         bool setCanDepth = false;
 
-        // 定义历史取样编号、深度列表
+        /// <summary>
+        /// 定义历史取样编号、深度列表
+        /// </summary>
         List<double> LastDepthList;
 
-        // 带2个参数的构造函数，用于新增取样
+        /// <summary>
+        /// 带2个参数的构造函数，用于新增取样
+        /// </summary>
+        /// <param name="_lastDepthList">历史取样编号列表</param>
+        /// <param name="_sampleNumber">取样深度</param>
         public ZkSampleDetail(List<double> _lastDepthList,string _sampleNumber)
         {
             InitializeComponent();
@@ -55,7 +65,13 @@ namespace GSYGeo
             this.SampleDepthTextBox.Focus();
         }
 
-        // 带5个参数的构造函数，用于编辑取样
+        /// <summary>
+        /// 带5个参数的构造函数，用于编辑取样
+        /// </summary>
+        /// <param name="_lastDepthList">历史取样编号列表</param>
+        /// <param name="_testNumber">取样编号</param>
+        /// <param name="_depth">取样深度</param>
+        /// <param name="_isDisturbed">取样类型，true为扰动样</param>
         public ZkSampleDetail(List<double> _lastDepthList,string _testNumber,double _depth,bool _isDisturbed)
         {
             InitializeComponent();
@@ -88,7 +104,9 @@ namespace GSYGeo
             this.SampleDepthTextBox.Focus();
         }
 
-        // 定义取样深度、编号输入框的工具提示的函数
+        /// <summary>
+        /// 定义取样深度、编号输入框的工具提示的函数
+        /// </summary>
         private void DefineToolTip()
         {
             tt.Content = "输入的深度不是有效数字";
@@ -115,8 +133,12 @@ namespace GSYGeo
             tt2.Foreground = Brushes.Red;
             tt2.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
         }
-        
-        // 当 取样深度 输入框内容变化时，验证是否为数字，并验证是否与历史取样深度冲突
+
+        /// <summary>
+        /// 当 取样深度 输入框内容变化时，验证是否为数字，并验证是否与历史取样深度冲突
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SampleDepthTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             tt.IsOpen = false;
@@ -156,14 +178,22 @@ namespace GSYGeo
             }
         }
 
-        // Save命令的Executed事件处理函数
+        /// <summary>
+        /// Save命令的Executed事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             this.DialogResult = true;
             this.Close();
         }
 
-        // Save命令的CanExecuted事件处理函数
+        /// <summary>
+        /// Save命令的CanExecuted事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             // 绑定"确定"按钮的可用状态
@@ -173,7 +203,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"取消"
+        /// <summary>
+        /// 点击"取消"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;

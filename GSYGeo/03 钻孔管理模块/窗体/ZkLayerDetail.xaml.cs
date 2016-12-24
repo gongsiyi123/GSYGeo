@@ -19,17 +19,26 @@ namespace GSYGeo
     /// </summary>
     public partial class ZkLayerDetail : Window
     {
-        // 定义工具提示
+        /// <summary>
+        /// 定义工具提示
+        /// </summary>
         System.Windows.Controls.ToolTip tt = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt2 = new System.Windows.Controls.ToolTip();
 
-        // 判断确定按钮的可用性参数
+        /// <summary>
+        /// 判断确定按钮的可用性参数
+        /// </summary>
         bool canCommit = false;
 
-        // 上一层层底深度的数值
+        /// <summary>
+        /// 上一层层底深度的数值
+        /// </summary>
         double LastDepth = -1;
 
-        // 带1个参数的构造函数，用于新建分层
+        /// <summary>
+        /// 带1个参数的构造函数，用于新建分层
+        /// </summary>
+        /// <param name="_lastDepth">上一层层底深度</param>
         public ZkLayerDetail(double _lastDepth)
         {
             InitializeComponent();
@@ -46,7 +55,13 @@ namespace GSYGeo
             DefineToolTip();
         }
 
-        // 带4个参数的构造函数，用于编辑分层
+        /// <summary>
+        /// 带4个参数的构造函数，用于编辑分层
+        /// </summary>
+        /// <param name="_lastDepth">上一层层底深度</param>
+        /// <param name="_number">分层编号</param>
+        /// <param name="_depth">层底深度</param>
+        /// <param name="_description">分层描述</param>
         public ZkLayerDetail(double _lastDepth,string _number,double _depth,string _description)
         {
             InitializeComponent();
@@ -71,7 +86,9 @@ namespace GSYGeo
             this.LayerDescriptionTextBox.Text = _description;
         }
 
-        // 定义层底深度输入框的工具提示的函数
+        /// <summary>
+        /// 定义层底深度输入框的工具提示的函数
+        /// </summary>
         private void DefineToolTip()
         {
             tt.Content = "输入的深度不是有效数字";
@@ -87,7 +104,11 @@ namespace GSYGeo
             tt2.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
         }
 
-        // 当 层底深度 输入框内容变化时，验证是否为数字，并验证是否比上一层低
+        /// <summary>
+        /// 当 层底深度 输入框内容变化时，验证是否为数字，并验证是否比上一层低
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LayerDepthTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             string str = this.LayerDepthTextBox.Text;
@@ -119,7 +140,11 @@ namespace GSYGeo
             }
         }
 
-        // 选择分层编号选框时
+        /// <summary>
+        /// 选择分层编号选框时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LayerNumberComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.LayerNameComboBox.SelectedIndex = this.LayerNumberComboBox.SelectedIndex;
@@ -127,14 +152,22 @@ namespace GSYGeo
             this.LayerDescriptionTextBox.Text = ProjectDataBase.ReadLayerDescriptionList(Program.currentProject)[this.LayerNumberComboBox.SelectedIndex];
         }
 
-        // Save命令的Executed事件处理函数
+        /// <summary>
+        /// Save命令的Executed事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             this.DialogResult = true;
             this.Close();
         }
 
-        // Save命令的CanExecuted事件处理函数
+        /// <summary>
+        /// Save命令的CanExecuted事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             // 绑定"确定"按钮的可用状态
@@ -144,7 +177,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"取消"
+        /// <summary>
+        /// 点击"取消"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;

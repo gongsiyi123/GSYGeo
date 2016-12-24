@@ -25,17 +25,17 @@ namespace GSYGeo
         }
 
         /// <summary>
-        /// 属性，钻孔编号
+        /// 钻孔编号
         /// </summary>
         public string JkNumber { get; set; }
 
         /// <summary>
-        /// 属性，摩阻力的深度
+        /// 摩阻力的深度
         /// </summary>
         public double PsDepth { get; set; }
 
         /// <summary>
-        /// 属性，摩阻力的值
+        /// 摩阻力的值
         /// </summary>
         public double PsValue { get; set; }
     }

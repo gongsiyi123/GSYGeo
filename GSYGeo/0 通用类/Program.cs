@@ -8,17 +8,26 @@ using Microsoft.Win32;
 
 namespace GSYGeo
 {
-    // 存储程序通用设置信息的类
+    /// <summary>
+    /// 存储程序通用设置信息的类
+    /// </summary>
     public class Program
     {
-        // 静态字段，存储当前正在操作的项目名称
+        /// <summary>
+        /// 静态字段，存储当前正在操作的项目名称
+        /// </summary>
         public static string currentProject = null;
 
-        // 静态字段，设置默认数据存储路径为"我的文档\小熠岩土勘察"
+        /// <summary>
+        /// 静态字段，设置默认数据存储路径为"我的文档\小熠岩土勘察"
+        /// </summary>
         public static string defaultPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\小熠岩土勘察";
 
-        // 判断数据存储路径的注册表项是否存在
-        // 返回一个布尔值，true表示注册表项存在，false表示不存在
+        /// <summary>
+        /// 判断数据存储路径的注册表项是否存在
+        /// 返回一个布尔值，true表示注册表项存在，false表示不存在
+        /// </summary>
+        /// <returns></returns>
         public static bool IsExitProgramPath()
         {
             RegistryKey lcu = Registry.CurrentUser;
@@ -34,8 +43,11 @@ namespace GSYGeo
             }
         }
 
-        // 读取数据存储路径的注册表项
-        // 返回值为注册表中的路径字符串
+        /// <summary>
+        /// 读取数据存储路径的注册表项
+        /// 返回值为注册表中的路径字符串
+        /// </summary>
+        /// <returns></returns>
         public static string ReadProgramPath()
         {
             RegistryKey lcu = Registry.CurrentUser;
@@ -51,8 +63,11 @@ namespace GSYGeo
             }
         }
 
-        // 写入数据存储路径的注册表项
-        // 输入值为新的路径字符串，无返回值
+        /// <summary>
+        /// 写入数据存储路径的注册表项
+        /// 输入值为新的路径字符串，无返回值
+        /// </summary>
+        /// <param name="_newPath">新的数据存储路径</param>
         public static void SetProgramPath(string _newPath)
         {
             // 读取注册表中的路径键值，如果存在，则写入输入的键值，如果不存在，则新建并写入键值

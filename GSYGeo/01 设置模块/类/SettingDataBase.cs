@@ -7,17 +7,23 @@ using System.Data.SQLite;
 
 namespace GSYGeo
 {
-    // 操作设置信息数据库的类
+    /// <summary>
+    /// 操作设置信息数据库的类
+    /// </summary>
     class SettingDataBase
     {
-        // 创建设置信息数据库，并初始化
+        /// <summary>
+        /// 创建设置信息数据库，并初始化
+        /// </summary>
         public static void Create()
         {
             SQLiteConnection.CreateFile(Program.ReadProgramPath() + "\\设置信息.gsygeo");
             Initial();
         }
 
-        // 初始化设置信息数据库，创建基本表结构
+        /// <summary>
+        /// 初始化设置信息数据库，创建基本表结构
+        /// </summary>
         private static void Initial()
         {
             // 创建连接到设置信息数据库
@@ -48,8 +54,11 @@ namespace GSYGeo
                 new SQLiteCommand(sql, conn).ExecuteNonQuery();
             }
         }
-        
-        // 向设置信息表添加 公司人员 ，输入参数为人员姓名字符串
+
+        /// <summary>
+        /// 向设置信息表添加 公司人员 ，输入参数为人员姓名字符串
+        /// </summary>
+        /// <param name="_peopleName">公司人员</param>
         public static void AddCompanyPeople(string _peopleName)
         {
             // 创建连接到设置信息数据库
@@ -65,7 +74,10 @@ namespace GSYGeo
             }
         }
 
-        // 编辑公司名称
+        /// <summary>
+        /// 编辑公司名称
+        /// </summary>
+        /// <param name="_name">公司名称</param>
         public static void EditCompanyName(string _name)
         {
             // 创建连接到设置信息数据库
@@ -81,7 +93,10 @@ namespace GSYGeo
             }
         }
 
-        // 编辑公司资质代码
+        /// <summary>
+        /// 编辑公司资质代码
+        /// </summary>
+        /// <param name="_code">公司资质代码</param>
         public static void EditCompanyCode(string _code)
         {
             // 创建连接到设置信息数据库
@@ -97,7 +112,10 @@ namespace GSYGeo
             }
         }
 
-        // 编辑行业标准
+        /// <summary>
+        /// 编辑行业标准
+        /// </summary>
+        /// <param name="_standard">行业标准</param>
         public static void EditIndustrialStandard(string _standard)
         {
             // 创建连接到设置信息数据库
@@ -113,7 +131,10 @@ namespace GSYGeo
             }
         }
 
-        // 编辑地方标准
+        /// <summary>
+        /// 编辑地方标准
+        /// </summary>
+        /// <param name="_standard">地方标准</param>
         public static void EditLocalStandard(string _standard)
         {
             // 创建连接到设置信息数据库
@@ -129,7 +150,10 @@ namespace GSYGeo
             }
         }
 
-        // 查询行业标准
+        /// <summary>
+        /// 查询行业标准
+        /// </summary>
+        /// <returns></returns>
         public static string ReadIndustrialStandard()
         {
             // 创建连接到设置信息数据库
@@ -152,7 +176,10 @@ namespace GSYGeo
             }
         }
 
-        // 查询地方标准
+        /// <summary>
+        /// 查询地方标准
+        /// </summary>
+        /// <returns></returns>
         public static string ReadLocalStandard()
         {
             // 创建连接到设置信息数据库
@@ -175,7 +202,11 @@ namespace GSYGeo
             }
         }
 
-        // 编辑公司人员
+        /// <summary>
+        /// 编辑公司人员
+        /// </summary>
+        /// <param name="_oldName">旧名字</param>
+        /// <param name="_name">新名字</param>
         public static void EditCompanyPeople(string _oldName,string _name)
         {
             // 创建连接到设置信息数据库
@@ -191,7 +222,10 @@ namespace GSYGeo
             }
         }
 
-        // 删除公司人员
+        /// <summary>
+        /// 删除公司人员
+        /// </summary>
+        /// <param name="_name">人员名字</param>
         public static void DeleteCompanyPeople(string _name)
         {
             // 创建连接到设置信息数据库
@@ -207,7 +241,10 @@ namespace GSYGeo
             }
         }
 
-        // 查询公司信息，返回值为 公司名称 字符串
+        /// <summary>
+        /// 查询公司名称
+        /// </summary>
+        /// <returns></returns>
         public static string ReadCompanyName()
         {
             // 创建连接到设置信息数据库
@@ -229,7 +266,10 @@ namespace GSYGeo
             }
         }
 
-        // 查询公司信息，返回值为 公司资质代码 字符串
+        /// <summary>
+        /// 查询公司资质代码
+        /// </summary>
+        /// <returns></returns>
         public static string ReadCompanyCode()
         {
             // 创建连接到设置信息数据库
@@ -251,7 +291,10 @@ namespace GSYGeo
             }
         }
 
-        // 查询公司人员，返回值为 公司人员 字符串泛型集合
+        /// <summary>
+        /// 查询公司人员，返回值为 公司人员 字符串列表
+        /// </summary>
+        /// <returns></returns>
         public static List<string> ReadCompanyPeople()
         {
             // 创建连接到设置信息数据库
@@ -273,7 +316,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询是否存在同名人员，输入值为人员姓名，返回值为布尔值，true表示存在
+        /// <summary>
+        /// 查询是否存在同名人员，返回值为布尔值，true表示存在
+        /// </summary>
+        /// <param name="_name">人员姓名</param>
+        /// <returns></returns>
         public static bool IsExistPeople(string _name)
         {
             // 创建连接到设置信息数据库
@@ -302,7 +349,10 @@ namespace GSYGeo
             }
         }
 
-        // 向比例尺表添加比例尺
+        /// <summary>
+        /// 向比例尺表添加比例尺
+        /// </summary>
+        /// <param name="_scale">比例尺</param>
         public static void AddScale(double _scale)
         {
             // 创建连接到设置信息数据库
@@ -318,7 +368,10 @@ namespace GSYGeo
             }
         }
 
-        // 向比例尺表删除比例尺
+        /// <summary>
+        /// 向比例尺表删除比例尺
+        /// </summary>
+        /// <param name="_scale">比例尺</param>
         public static void DeleteScale(double _scale)
         {
             // 创建连接到设置信息数据库
@@ -334,7 +387,10 @@ namespace GSYGeo
             }
         }
 
-        // 查询比例尺列表
+        /// <summary>
+        /// 查询比例尺列表
+        /// </summary>
+        /// <returns></returns>
         public static List<double> ReadOutputScale()
         {
             // 创建连接到设置信息数据库

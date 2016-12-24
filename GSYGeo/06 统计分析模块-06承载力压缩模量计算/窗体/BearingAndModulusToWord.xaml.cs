@@ -125,6 +125,9 @@ namespace GSYGeo
             }
         }
 
+        /// <summary>
+        /// 初始化DataTable
+        /// </summary>
         public void InitialDataTable()
         {
             // 初始化DataTable的列

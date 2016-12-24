@@ -6,20 +6,33 @@ using System.Threading.Tasks;
 
 namespace GSYGeo
 {
-    // 静力触探类
+    /// <summary>
+    /// 静力触探类
+    /// </summary>
     public class CPT
     {
-        // 无参数的构造函数
+        /// <summary>
+        /// 无参数的构造函数
+        /// </summary>
         public CPT() { }
 
-        // 带2个参数的构造函数
+        /// <summary>
+        /// 带2个参数的构造函数
+        /// </summary>
+        /// <param name="_name">触探孔编号</param>
+        /// <param name="_altitude">触探孔孔口高程</param>
         public CPT(string _name,double _altitude)
         {
             name = _name;
             altitude = _altitude;
         }
 
-        // 带3个参数的构造函数
+        /// <summary>
+        /// 带3个参数的构造函数
+        /// </summary>
+        /// <param name="_name">触探孔编号</param>
+        /// <param name="_altitude">触探孔孔口高程</param>
+        /// <param name="_psList">Ps值列表</param>
         public CPT(string _name,double _altitude,List<double> _psList)
         {
             name = _name;
@@ -27,8 +40,9 @@ namespace GSYGeo
             psList = _psList;
         }
 
-        // 属性，触探孔名称
-        private string name;
+        /// <summary>
+        /// 触探孔名称
+        /// </summary>
         public string Name
         {
             get
@@ -40,9 +54,11 @@ namespace GSYGeo
                 name = value;
             }
         }
+        private string name;
 
-        // 属性，孔口高程
-        private double altitude;
+        /// <summary>
+        /// 孔口高程
+        /// </summary>
         public double Altitude
         {
             get
@@ -54,9 +70,11 @@ namespace GSYGeo
                 altitude = value;
             }
         }
+        private double altitude;
 
-        // 属性，触探孔坐标X
-        private double x;
+        /// <summary>
+        /// 触探孔坐标X
+        /// </summary>
         public double X
         {
             get
@@ -68,9 +86,11 @@ namespace GSYGeo
                 x = value;
             }
         }
+        private double x;
 
-        // 属性，触探孔坐标Y
-        private double y;
+        /// <summary>
+        /// 触探孔坐标Y
+        /// </summary>
         public double Y
         {
             get
@@ -82,9 +102,11 @@ namespace GSYGeo
                 y = value;
             }
         }
+        private double y;
 
-        // 属性，分层列表
-        private List<ZkLayer> layers;
+        /// <summary>
+        /// 分层列表
+        /// </summary>
         public List<ZkLayer> Layers
         {
             get
@@ -96,9 +118,11 @@ namespace GSYGeo
                 layers = value;
             }
         }
+        private List<ZkLayer> layers;
 
-        // 属性，Ps值列表
-        private List<double> psList;
+        /// <summary>
+        /// Ps值列表
+        /// </summary>
         public List<double> PsList
         {
             get
@@ -110,14 +134,30 @@ namespace GSYGeo
                 psList = value;
             }
         }
+        private List<double> psList;
 
-        // 方法，添加一个分层
+        /// <summary>
+        /// 添加一个分层
+        /// </summary>
+        /// <param name="_number">分层编号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_geo">地质年代成因</param>
+        /// <param name="_description">分层描述</param>
+        /// <param name="_depth">层底深度</param>
         public void AddLayer(string _number, string _name, string _geo, string _description, double _depth)
         {
             layers.Add(new ZkLayer(_number, _name, _geo, _description, _depth));
         }
 
-        // 方法，编辑一个分层
+        /// <summary>
+        /// 编辑一个分层
+        /// </summary>
+        /// <param name="_oldNumber">老分层编号</param>
+        /// <param name="_number">新分层编号</param>
+        /// <param name="_name">新岩土名称</param>
+        /// <param name="_geo">新地质年代成因</param>
+        /// <param name="_description">新分层描述</param>
+        /// <param name="_depth">新层底深度</param>
         public void EditLayer(string _oldNumber, string _number, string _name, string _geo, string _description, double _depth)
         {
             if (layers != null)
@@ -132,7 +172,10 @@ namespace GSYGeo
             }
         }
 
-        // 方法，删除一个分层
+        /// <summary>
+        /// 删除一个分层
+        /// </summary>
+        /// <param name="_number">分层编号</param>
         public void DeleteLayer(string _number)
         {
             if (layers != null)
@@ -147,7 +190,10 @@ namespace GSYGeo
             }
         }
 
-        // 方法，刷新Ps值列表
+        /// <summary>
+        /// 刷新Ps值列表
+        /// </summary>
+        /// <param name="_newPsList">新Ps值列表</param>
         public void RefreshPsList(List<double> _newPsList)
         {
             psList.Clear();

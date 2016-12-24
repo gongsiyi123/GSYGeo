@@ -19,7 +19,9 @@ namespace GSYGeo
     /// </summary>
     public partial class LayerDetail : Window
     {
-        // 无参数的构造函数
+        /// <summary>
+        /// 无参数的构造函数
+        /// </summary>
         public LayerDetail()
         {
             InitializeComponent();
@@ -27,7 +29,13 @@ namespace GSYGeo
             InitialComboBox();
         }
 
-        // 带参数的构造函数
+        /// <summary>
+        /// 带参数的构造函数
+        /// </summary>
+        /// <param name="_number">分层编号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_geo">地质年代成因</param>
+        /// <param name="_description">分层描述</param>
         public LayerDetail(string _number,string _name,string _geo,string _description)
         {
             InitializeComponent();
@@ -35,32 +43,46 @@ namespace GSYGeo
             // 窗口赋值
             this.LayerNumberTextBox.Text = _number;
             this.LayerNameTextBox.Text = _name;
-            //this.LayerGeoTextBox.Text = _geo;
             InitialComboBox();
             this.LayerGeoComboBox.Text = _geo;
             this.LayerDescriptionTextBox.Text = _description;
         }
 
+        /// <summary>
+        /// 初始化地质年代和成因选框
+        /// </summary>
         private void InitialComboBox()
         {
             this.LayerGeoComboBox.ItemsSource = Geology.Genesis.Values;
         }
 
-        // 点击"取消"
+        /// <summary>
+        /// 点击"取消"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
             this.Close();
         }
 
-        // Save命令的Executed事件处理函数
+        /// <summary>
+        /// Save命令的Executed事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBindingSave_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             this.DialogResult = true;
             this.Close();
         }
 
-        // Save命令的CanExecuted事件处理函数
+        /// <summary>
+        /// Save命令的CanExecuted事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBindingSave_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             // 绑定"确定"按钮的可用状态

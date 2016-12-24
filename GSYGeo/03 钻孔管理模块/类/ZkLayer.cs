@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace GSYGeo
 {
-    // 钻孔分层类
+    /// <summary>
+    /// 钻孔分层类
+    /// </summary>
     public class ZkLayer
     {
-        // 带参数的构造函数
+        /// <summary>
+        /// 带参数的构造函数
+        /// </summary>
+        /// <param name="_number">分层编号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_geo">地质年代成因</param>
+        /// <param name="_description">分层描述</param>
+        /// <param name="_depth">层底深度</param>
         public ZkLayer(string _number, string _name, string _geo, string _description, double _depth)
         {
             this.number = _number;
@@ -19,8 +28,9 @@ namespace GSYGeo
             this.depth = _depth;
         }
 
-        // 属性，分层编号
-        private string number;
+        /// <summary>
+        /// 分层编号
+        /// </summary>
         public string Number
         {
             get
@@ -32,9 +42,11 @@ namespace GSYGeo
                 number = value;
             }
         }
+        private string number;
 
-        // 属性，岩土名称
-        private string name;
+        /// <summary>
+        /// 岩土名称
+        /// </summary>
         public string Name
         {
             get
@@ -46,9 +58,11 @@ namespace GSYGeo
                 name = value;
             }
         }
+        private string name;
 
-        // 属性，年代成因
-        private string geo;
+        /// <summary>
+        /// 年代成因
+        /// </summary>
         public string Geo
         {
             get
@@ -60,9 +74,11 @@ namespace GSYGeo
                 geo = value;
             }
         }
+        private string geo;
 
-        // 属性，地质描述
-        private string description;
+        /// <summary>
+        /// 地质描述
+        /// </summary>
         public string Description
         {
             get
@@ -74,9 +90,11 @@ namespace GSYGeo
                 description = value;
             }
         }
+        private string description;
 
-        // 属性，层底深度
-        private double depth;
+        /// <summary>
+        /// 层底深度
+        /// </summary>
         public double Depth
         {
             get
@@ -88,5 +106,6 @@ namespace GSYGeo
                 depth = value;
             }
         }
+        private double depth;
     }
 }

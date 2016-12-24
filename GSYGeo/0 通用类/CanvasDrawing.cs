@@ -9,10 +9,19 @@ using System.Windows.Shapes;
 
 namespace GSYGeo
 {
-    // 用于在Canvas上绘制图形的类
+    /// <summary>
+    /// 用于在Canvas上绘制图形的类
+    /// </summary>
     public static class CanvasDrawing
     {
-        // 绘制一条直线，粗细为1，颜色为黑色
+        /// <summary>
+        /// 绘制一条直线，粗细为1，颜色为黑色
+        /// </summary>
+        /// <param name="_canvas">Canvas控件的名称</param>
+        /// <param name="_startX">起点的X坐标</param>
+        /// <param name="_startY">起点的Y坐标</param>
+        /// <param name="_endX">终点的X坐标</param>
+        /// <param name="_endY">终点的Y坐标</param>
         public static void DrawLine(this Canvas _canvas,double _startX, double _startY, double _endX,double _endY)
         {
             LineGeometry myLineGeometry = new LineGeometry();
@@ -26,8 +35,17 @@ namespace GSYGeo
 
             _canvas.Children.Add(myPath);
         }
-        
-        // 绘制一条直线，并指定粗细和颜色
+
+        /// <summary>
+        /// 绘制一条直线，并指定粗细和颜色
+        /// </summary>
+        /// <param name="_canvas">Canvas控件的名称</param>
+        /// <param name="_startX">起点的X坐标</param>
+        /// <param name="_startY">起点的Y坐标</param>
+        /// <param name="_endX">终点的X坐标</param>
+        /// <param name="_endY">终点的Y坐标</param>
+        /// <param name="_thickness">直线的线宽</param>
+        /// <param name="_brush">直线的画刷颜色</param>
         public static void DrawLine(this Canvas _canvas,double _startX, double _startY, double _endX,double _endY,double _thickness,Brush _brush)
         {
             LineGeometry myLineGeometry = new LineGeometry();
@@ -42,7 +60,12 @@ namespace GSYGeo
             _canvas.Children.Add(myPath);
         }
 
-        // 绘制一条多段线，粗细为1，颜色为黑色
+        /// <summary>
+        /// 绘制一条多段线，粗细为1，颜色为黑色
+        /// </summary>
+        /// <param name="_canas">Canvas控件的名称</param>
+        /// <param name="_XList">直线端点X坐标列表</param>
+        /// <param name="_YList">直线端点Y坐标列表</param>
         public static void DrawPLine(this Canvas _canas,List<double> _XList, List<double> _YList)
         {
             Path myPath = new Path();
@@ -68,7 +91,14 @@ namespace GSYGeo
             _canas.Children.Add(myPath);
         }
 
-        // 绘制一条多段线，并指定粗细和颜色
+        /// <summary>
+        /// 绘制一条多段线，并指定粗细和颜色
+        /// </summary>
+        /// <param name="_canas">Canvas控件的名称</param>
+        /// <param name="_XList">直线端点X坐标列表</param>
+        /// <param name="_YList">直线端点Y坐标列表</param>
+        /// <param name="_thickness">多段线的线宽</param>
+        /// <param name="_brush">多段线的画刷颜色</param>
         public static void DrawPLine(this Canvas _canas, List<double> _XList, List<double> _YList,double _thickness,Brush _brush)
         {
             Path myPath = new Path();
@@ -94,7 +124,14 @@ namespace GSYGeo
             _canas.Children.Add(myPath);
         }
 
-        // 绘制一条虚线，粗细为1，颜色为黑色
+        /// <summary>
+        /// 绘制一条虚线，粗细为1，颜色为黑色
+        /// </summary>
+        /// <param name="_canvas">Canvas控件的名称</param>
+        /// <param name="_startX">起点的X坐标</param>
+        /// <param name="_startY">起点的Y坐标</param>
+        /// <param name="_endX">终点的X坐标</param>
+        /// <param name="_endY">终点的Y坐标</param>
         public static void DrawDotLine(this Canvas _canvas,double _startX, double _startY, double _endX,double _endY)
         {
             LineGeometry myLineGeometry = new LineGeometry();
@@ -110,7 +147,16 @@ namespace GSYGeo
             _canvas.Children.Add(myPath);
         }
 
-        // 绘制一条虚线，并指定颜色和粗细
+        /// <summary>
+        /// 绘制一条虚线，并指定颜色和粗细
+        /// </summary>
+        /// <param name="_canvas">Canvas控件的名称</param>
+        /// <param name="_startX">起点的X坐标</param>
+        /// <param name="_startY">起点的Y坐标</param>
+        /// <param name="_endX">终点的X坐标</param>
+        /// <param name="_endY">终点的Y坐标</param>
+        /// <param name="_thickness">虚线的线宽</param>
+        /// <param name="_brush">虚线的画刷颜色</param>
         public static void DrawDotLine(this Canvas _canvas, double _startX, double _startY, double _endX, double _endY,double _thickness,Brush _brush)
         {
             LineGeometry myLineGeometry = new LineGeometry();
@@ -126,7 +172,14 @@ namespace GSYGeo
             _canvas.Children.Add(myPath);
         }
 
-        // 绘制一个圆，粗细为1，颜色为紫色，并指定是实心或空心
+        /// <summary>
+        /// 绘制一个圆，粗细为1，颜色为紫色，并指定是实心或空心
+        /// </summary>
+        /// <param name="_canvas">Canvas控件的名称</param>
+        /// <param name="_X">圆心的X坐标</param>
+        /// <param name="_Y">圆心的Y坐标</param>
+        /// <param name="_D">圆心的直径</param>
+        /// <param name="_isFill">是否为实心，true为实心</param>
         public static void DrawCircle(this Canvas _canvas,double _X,double _Y,double _D,bool _isFill)
         {
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
@@ -143,7 +196,16 @@ namespace GSYGeo
             _canvas.Children.Add(myPath);
         }
 
-        // 绘制一个圆，指定粗细和颜色，并指定是实心或空心
+        /// <summary>
+        /// 绘制一个圆，指定粗细和颜色，并指定是实心或空心
+        /// </summary>
+        /// <param name="_canvas">Canvas控件的名称</param>
+        /// <param name="_X">圆心的X坐标</param>
+        /// <param name="_Y">圆心的Y坐标</param>
+        /// <param name="_D">圆心的直径</param>
+        /// <param name="_isFill">是否为实心，true为实心</param>
+        /// <param name="_thickness">圆的线宽</param>
+        /// <param name="_brush">圆的画刷颜色</param>
         public static void DrawCircle(this Canvas _canvas, double _X, double _Y, double _R, bool _isFill,double _thickness,Brush _brush)
         {
             EllipseGeometry myEllipseGeometry = new EllipseGeometry();
@@ -160,7 +222,13 @@ namespace GSYGeo
             _canvas.Children.Add(myPath);
         }
 
-        // 绘制一个文字，字体大小为11，颜色为黑色，不加粗，非斜体，左对齐
+        /// <summary>
+        /// 绘制一个文字，字体大小为11，颜色为黑色，不加粗，非斜体，左对齐
+        /// </summary>
+        /// <param name="_canvas">Canvas控件的名称</param>
+        /// <param name="_X">左上角点的X坐标</param>
+        /// <param name="_Y">左上角点的Y坐标</param>
+        /// <param name="_text">文本内容</param>
         public static void DrawText(this Canvas _canvas,double _X,double _Y,string _text)
         {
             TextBlock myTextBlock = new TextBlock();
@@ -174,7 +242,18 @@ namespace GSYGeo
             _canvas.Children.Add(myTextBlock);
         }
 
-        // 绘制一个文字，并指定字体大小，颜色，是否加粗，是否斜体，对齐方式
+        /// <summary>
+        /// 绘制一个文字，并指定字体大小，颜色，是否加粗，是否斜体，对齐方式
+        /// </summary>
+        /// <param name="_canvas">Canvas控件的名称</param>
+        /// <param name="_X">左上角点的X坐标</param>
+        /// <param name="_Y">左上角点的Y坐标</param>
+        /// <param name="_text">文本内容</param>
+        /// <param name="_fontSize">字体大小</param>
+        /// <param name="_brush">字体颜色</param>
+        /// <param name="_isBold">是否加粗</param>
+        /// <param name="_isItalic">是否为斜体</param>
+        /// <param name="_isLeft">是否为左对齐，true为左对齐</param>
         public static void DrawText(this Canvas _canvas,double _X,double _Y,string _text,double _fontSize,Brush _brush,bool _isBold,bool _isItalic,bool _isLeft)
         {
             TextBlock myTextBlock = new TextBlock();
@@ -197,7 +276,13 @@ namespace GSYGeo
             _canvas.Children.Add(myTextBlock);
         }
 
-        // 绘制一个竖向文字，字体大小为11，颜色为黑色，不加粗，非斜体，左对齐，设置旋转
+        /// <summary>
+        /// 绘制一个竖向文字，字体大小为11，颜色为黑色，不加粗，非斜体，左对齐，设置旋转
+        /// </summary>
+        /// <param name="_canvas">Canvas控件的名称</param>
+        /// <param name="_X">左上角点的X坐标</param>
+        /// <param name="_Y">左上角点的Y坐标</param>
+        /// <param name="_text">文本内容</param>
         public static void DrawVerticalText(this Canvas _canvas, double _X, double _Y, string _text)
         {
             string s = _text;

@@ -7,6 +7,9 @@ using System.Windows.Data;
 
 namespace GSYGeo
 {
+    /// <summary>
+    /// 将布尔值转换为字符串的值转换器
+    /// </summary>
     public class BoolToStringConverter:IValueConverter
     {
         public string FalseValue { get; set; }

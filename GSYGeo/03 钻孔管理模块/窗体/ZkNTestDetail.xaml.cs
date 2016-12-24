@@ -19,7 +19,9 @@ namespace GSYGeo
     /// </summary>
     public partial class ZkNTestDetail : Window
     {
-        // 定义工具提示
+        /// <summary>
+        /// 定义工具提示
+        /// </summary>
         System.Windows.Controls.ToolTip tt1 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt2 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt3 = new System.Windows.Controls.ToolTip();
@@ -28,14 +30,22 @@ namespace GSYGeo
         System.Windows.Controls.ToolTip tt8 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt9 = new System.Windows.Controls.ToolTip();
 
-        // 判断确定按钮的可用性参数
+        /// <summary>
+        /// 判断确定按钮的可用性参数
+        /// </summary>
         bool setCanDepth = false;
         bool setCanValue = false;
 
-        // 定义深度列表
+        /// <summary>
+        /// 定义深度列表
+        /// </summary>
         List<double> LastDepthList;
 
-        // 带2个参数的构造函数，用于新增试验
+        /// <summary>
+        /// 带2个参数的构造函数，用于新增试验
+        /// </summary>
+        /// <param name="_lastDepthList">历史试验深度列表</param>
+        /// <param name="_testNumber">试验编号</param>
         public ZkNTestDetail(List<double> _lastDepthList, string _testNumber)
         {
             InitializeComponent();
@@ -59,7 +69,14 @@ namespace GSYGeo
             this.NTestDepthTextBox.Focus();
         }
 
-        // 带5个参数的构造函数，用于编辑试验
+        /// <summary>
+        /// 带5个参数的构造函数，用于编辑试验
+        /// </summary>
+        /// <param name="_lastDepthList">历史试验深度列表</param>
+        /// <param name="_testNumber">试验编号</param>
+        /// <param name="_depth">试验深度</param>
+        /// <param name="_value">试验击数</param>
+        /// <param name="_type">试验类型</param>
         public ZkNTestDetail(List<double> _lastDepthList, string _testNumber, double _depth,double _value,ZkNTest.ntype _type)
         {
             InitializeComponent();
@@ -101,7 +118,9 @@ namespace GSYGeo
             this.NTestDepthTextBox.Focus();
         }
 
-        // 定义试验编号、深度的工具提示的函数
+        /// <summary>
+        /// 定义试验编号、深度的工具提示的函数
+        /// </summary>
         private void DefineToolTip()
         {
             tt1.Content = "输入的深度不是有效数字";
@@ -146,8 +165,12 @@ namespace GSYGeo
             tt9.Foreground = Brushes.Red;
             tt9.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
         }
-        
-        // 当 试验深度 输入框内容变化时，验证是否为数字，并验证是否与历史试验深度冲突
+
+        /// <summary>
+        /// 当 试验深度 输入框内容变化时，验证是否为数字，并验证是否与历史试验深度冲突
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NTestDepthTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             tt1.IsOpen = false;
@@ -187,7 +210,11 @@ namespace GSYGeo
             }
         }
 
-        // 当 试验击数 输入框内容变化时，验证是否为数字，并验证合法性
+        /// <summary>
+        /// 当 试验击数 输入框内容变化时，验证是否为数字，并验证合法性
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NTestValueTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             tt7.IsOpen = false;
@@ -220,14 +247,22 @@ namespace GSYGeo
             }
         }
 
-        // Save命令的Executed事件处理函数
+        /// <summary>
+        /// Save命令的Executed事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             this.DialogResult = true;
             this.Close();
         }
 
-        // Save命令的CanExecuted事件处理函数
+        /// <summary>
+        /// Save命令的CanExecuted事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             // 绑定"确定"按钮的可用状态
@@ -237,7 +272,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"取消"
+        /// <summary>
+        /// 点击"取消"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;

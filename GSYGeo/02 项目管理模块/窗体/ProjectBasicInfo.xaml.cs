@@ -21,10 +21,14 @@ namespace GSYGeo
     /// </summary>
     public partial class ProjectBasicInfo : UserControl
     {
-        // 定义DataGrid控件的数据源Datatable
+        /// <summary>
+        /// 定义DataGrid控件的数据源Datatable
+        /// </summary>
         public DataTable dt = new DataTable("Layer");
 
-        // 默认构造函数
+        /// <summary>
+        /// 默认构造函数
+        /// </summary>
         public ProjectBasicInfo()
         {
             InitializeComponent();
@@ -36,7 +40,9 @@ namespace GSYGeo
             this.ProjectLayerDataGrid.DataContext = dt;
         }
 
-        // 赋值项目数据
+        /// <summary>
+        /// 赋值项目数据
+        /// </summary>
         private void InitialProjectBasicInfo()
         {
             if (Program.currentProject != null)
@@ -66,7 +72,9 @@ namespace GSYGeo
             }
         }
 
-        // 初始化DataTable，不带参数
+        /// <summary>
+        /// 初始化DataTable，不带参数
+        /// </summary>
         private void InitialDataTable()
         {
             // 定义DataTable数据列
@@ -76,7 +84,13 @@ namespace GSYGeo
             dt.Columns.Add(new DataColumn("descriptionList", typeof(string)));
         }
 
-        // 初始化DataTable，带参数
+        /// <summary>
+        /// 初始化DataTable，带参数
+        /// </summary>
+        /// <param name="_numberList">分层编号列表</param>
+        /// <param name="_nameList">岩土名称列表</param>
+        /// <param name="_geoList">地质年代成因列表</param>
+        /// <param name="_descriptionList">分层描述列表</param>
         private void InitialDataTable(List<string> _numberList, List<string> _nameList, List<string> _geoList, List<string> _descriptionList)
         {
             if (dt.Columns.Count == 0)
@@ -100,13 +114,21 @@ namespace GSYGeo
             }
         }
 
-        // 控件可视性变化时刷新数据
+        /// <summary>
+        /// 控件可视性变化时刷新数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             InitialProjectBasicInfo();
         }
 
-        // 鼠标点击时取消DataGrid的选择
+        /// <summary>
+        /// 鼠标点击时取消DataGrid的选择
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProjectLayerDataGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.ProjectLayerDataGrid.UnselectAll();

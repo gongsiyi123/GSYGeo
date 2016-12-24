@@ -20,10 +20,14 @@ namespace GSYGeo
     /// </summary>
     public partial class ProjectManager : Window
     {
-        // 定义项目列表
+        /// <summary>
+        /// 定义项目列表
+        /// </summary>
         List<string> projectList = ProjectDataBase.ReadProjectList();
 
-        // 构造函数
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public ProjectManager()
         {
             InitializeComponent();
@@ -32,7 +36,11 @@ namespace GSYGeo
             this.ProjectListListView.ItemsSource = projectList;
         }
 
-        // 点击"导入"
+        /// <summary>
+        /// 点击"导入"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ImportButton_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog selectProjectFileDialog = new Microsoft.Win32.OpenFileDialog();
@@ -80,7 +88,11 @@ namespace GSYGeo
             this.ProjectListListView.Items.Refresh();
         }
 
-        // 点击"导出"
+        /// <summary>
+        /// 点击"导出"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExportButton_Click(object sender, RoutedEventArgs e)
         {
             List<string> list = new List<string>();
@@ -115,7 +127,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"删除"
+        /// <summary>
+        /// 点击"删除"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             List<string> list = new List<string>();
@@ -152,13 +168,21 @@ namespace GSYGeo
             this.ProjectListListView.Items.Refresh();
         }
 
-        // 设置ListView点击空白处时取消选择
+        /// <summary>
+        /// 设置ListView点击空白处时取消选择
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProjectListListView_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.ProjectListListView.UnselectAll();
         }
 
-        // 点击"关闭"
+        /// <summary>
+        /// 点击"关闭"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

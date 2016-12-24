@@ -9,10 +9,15 @@ using System.Collections.ObjectModel;
 
 namespace GSYGeo
 {
-    // 操作静力触探数据库的类
+    /// <summary>
+    /// 操作静力触探数据库的类
+    /// </summary>
     class CPTDataBase
     {
-        // 初始化触探孔数据库，若基本表结构不存在则创建基本表结构
+        /// <summary>
+        /// 初始化触探孔数据库，若基本表结构不存在则创建基本表结构
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
         public static void Initial(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -39,7 +44,14 @@ namespace GSYGeo
             }
         }
 
-        // 添加一个触探孔，输入基本信息
+        /// <summary>
+        /// 添加一个触探孔，输入基本信息
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">触探孔编号</param>
+        /// <param name="_altitude">触探孔孔口高程</param>
+        /// <param name="_xAxis">触探孔孔口X坐标</param>
+        /// <param name="_yAxis">触探孔孔口Y坐标</param>
         public static void AddJkBasicInfo(string _projectName,string _name,double _altitude,double _xAxis,double _yAxis)
         {
             // 创建连接到项目信息数据库
@@ -55,7 +67,16 @@ namespace GSYGeo
             }
         }
 
-        // 向某个触探孔添加分层列表
+        /// <summary>
+        /// 向某个触探孔添加分层列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">触探孔编号</param>
+        /// <param name="_numberList">分层编号列表</param>
+        /// <param name="_nameList">岩土名称列表</param>
+        /// <param name="_geoList">地质年代成因列表</param>
+        /// <param name="_descriptionList">分层描述列表</param>
+        /// <param name="_depthList">层底深度列表</param>
         public static void AddLayerListToJk(string _projectName, string _name, List<string> _numberList, List<string> _nameList, List<string> _geoList, List<string> _descriptionList, List<double> _depthList)
         {
             // 创建连接到项目信息数据库
@@ -77,7 +98,12 @@ namespace GSYGeo
             }
         }
 
-        // 向某个触探孔添加摩阻力列表
+        /// <summary>
+        /// 向某个触探孔添加摩阻力列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">触探孔编号</param>
+        /// <param name="_psList">Ps值列表</param>
         public static void AddPsListToJk(string _projectName,string _name,List<double> _psList)
         {
             // 创建连接到项目信息数据库
@@ -99,7 +125,11 @@ namespace GSYGeo
             }
         }
 
-        // 清空某个触探孔的全部数据
+        /// <summary>
+        /// 清空某个触探孔的全部数据
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">触探孔编号</param>
         public static void RemoveJk(string _projectName,string _name)
         {
             // 创建连接到项目信息数据库
@@ -119,7 +149,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询触探孔编号列表
+        /// <summary>
+        /// 查询触探孔编号列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static List<string> ReadJkList(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -141,7 +175,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询触探孔编号列表，输出为TreeViewItem形式
+        /// <summary>
+        /// 查询触探孔编号列表，输出为TreeViewItem形式
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static ObservableCollection<TreeViewItem> ReadJkListAsTreeViewItem(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -165,7 +203,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询触探孔列表，输出为CPT类形式
+        /// <summary>
+        /// 查询触探孔列表，输出为CPT类形式
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static List<CPT> ReadJkListAsClass(string _projectName)
         {
             // 创建连接到设置信息数据库
@@ -197,7 +239,12 @@ namespace GSYGeo
             }
         }
 
-        // 查询某个触探孔的孔口高程
+        /// <summary>
+        /// 查询某个触探孔的孔口高程
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">触探孔编号</param>
+        /// <returns></returns>
         public static double ReadAltitude(string _projectName,string _name)
         {
             // 创建连接到项目信息数据库
@@ -215,7 +262,12 @@ namespace GSYGeo
             }
         }
 
-        // 查询某个触探孔的X坐标
+        /// <summary>
+        /// 查询某个触探孔的X坐标
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">触探孔编号</param>
+        /// <returns></returns>
         public static double ReadXAxis(string _projectName, string _name)
         {
             // 创建连接到项目信息数据库
@@ -233,7 +285,12 @@ namespace GSYGeo
             }
         }
 
-        // 查询某个触探孔的Y坐标
+        /// <summary>
+        /// 查询某个触探孔的Y坐标
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">触探孔编号</param>
+        /// <returns></returns>
         public static double ReadYAxis(string _projectName, string _name)
         {
             // 创建连接到项目信息数据库
@@ -251,7 +308,12 @@ namespace GSYGeo
             }
         }
 
-        // 查询某个触探孔的分层列表
+        /// <summary>
+        /// 查询某个触探孔的分层列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">触探孔编号</param>
+        /// <returns></returns>
         public static List<ZkLayer> ReadJkLayer(string _projectName, string _name)
         {
             // 创建连接到项目信息数据库
@@ -278,7 +340,12 @@ namespace GSYGeo
             }
         }
 
-        // 查询某个触探孔的摩阻力列表
+        /// <summary>
+        /// 查询某个触探孔的摩阻力列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">触探孔编号</param>
+        /// <returns></returns>
         public static List<double> ReadJkPs(string _projectName,string _name)
         {
             // 创建连接到项目信息数据库

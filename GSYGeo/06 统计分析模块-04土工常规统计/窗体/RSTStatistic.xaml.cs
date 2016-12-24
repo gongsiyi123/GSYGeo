@@ -22,13 +22,18 @@ namespace GSYGeo
     {
         #region 参数定义
 
-        // 定义数据统计列表RSTStatisticDataGrid控件的数据源DataTable
+        /// <summary>
+        /// 定义数据统计列表RSTStatisticDataGrid控件的数据源DataTable
+        /// </summary>
         DataTable dtRST = new DataTable("Statistic");
 
         #endregion
 
         #region 构造函数
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public RSTStatistic()
         {
             InitializeComponent();
@@ -48,7 +53,9 @@ namespace GSYGeo
 
         #region 统计数据
 
-        // 定义统计项目
+        /// <summary>
+        /// 定义统计项目
+        /// </summary>
         private string[] staName = new string[]
         {
             "statisticType",
@@ -79,7 +86,9 @@ namespace GSYGeo
             "标准值"
         };
 
-        // 试验类型列表
+        /// <summary>
+        /// 试验类型列表
+        /// </summary>
         public static StatisticRST.RSTType[] typeList = new StatisticRST.RSTType[]
         {
             StatisticRST.RSTType.waterLevel,
@@ -98,15 +107,16 @@ namespace GSYGeo
             StatisticRST.RSTType.permeability
         };
 
-        // 定义统计数据列表
+        /// <summary>
+        /// 定义统计数据列表
+        /// </summary>
         List<StatisticRST> StatisticList = SelectStatisticData();
 
-        // 初始化RSTStatisticDataGrid，不带参数
+        /// <summary>
+        /// 初始化RSTStatisticDataGrid，不带参数
+        /// </summary>
         private void InitialRSTStatisticDataGrid()
         {
-            // 初始化统计数据列表
-            //StatisticList = SelectStatisticData();
-            
             // 定义RSTStatisticDataGrid数据列
             foreach (string sta in staName)
             {
@@ -123,7 +133,10 @@ namespace GSYGeo
             }
         }
 
-        // 根据所选分层刷新DataTable
+        /// <summary>
+        /// 根据所选分层刷新DataTable
+        /// </summary>
+        /// <param name="_layerNumber">分层编号</param>
         private void RefreshDataTableByLayer(string _layerNumber)
         {
             // 恢复初始状态
@@ -283,30 +296,29 @@ namespace GSYGeo
                 }
 
                 // 赋值统计数据列表
-                //for(int j = 0; j < rsts.Count; j++)
-                //{
-                    statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[0], datalist_waterLevel, 6));
-                    statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[1], datalist_density, 6));
-                    statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[2], datalist_specificGravity, 6));
-                    statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[3], datalist_voidRatio, 6));
-                    statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[4], datalist_saturation, 6));
-                    statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[5], datalist_liquidLimit, 6));
-                    statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[6], datalist_plasticLimit, 6));
-                    statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[7], datalist_plasticIndex, 6));
-                    statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[8], datalist_liquidityIndex, 6));
-                    statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[9], datalist_compressibility, 6));
-                    statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[10], datalist_modulus, 6));
-                    statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[11], datalist_frictionAngle, 6));
-                    statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[12], datalist_cohesion, 6));
-                    statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[13], datalist_permeability, 6));
-                //}
-                
+                statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[0], datalist_waterLevel, 6));
+                statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[1], datalist_density, 6));
+                statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[2], datalist_specificGravity, 6));
+                statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[3], datalist_voidRatio, 6));
+                statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[4], datalist_saturation, 6));
+                statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[5], datalist_liquidLimit, 6));
+                statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[6], datalist_plasticLimit, 6));
+                statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[7], datalist_plasticIndex, 6));
+                statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[8], datalist_liquidityIndex, 6));
+                statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[9], datalist_compressibility, 6));
+                statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[10], datalist_modulus, 6));
+                statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[11], datalist_frictionAngle, 6));
+                statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[12], datalist_cohesion, 6));
+                statisticList.Add(new StatisticRST(layerNumber, layerName, typeList[13], datalist_permeability, 6));
             }
 
             // 返回
             return statisticList;
         }
 
+        /// <summary>
+        /// 初始化各下拉选框
+        /// </summary>
         private void InitialComboBox()
         {
             List<string> layerNumberlist = ProjectDataBase.ReadLayerNumberList(Program.currentProject);
@@ -319,6 +331,11 @@ namespace GSYGeo
             this.LayerNumberComboBox.ItemsSource = layerlist;
         }
 
+        /// <summary>
+        /// 分层编号下拉选框变化时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LayerNumberComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // 筛选

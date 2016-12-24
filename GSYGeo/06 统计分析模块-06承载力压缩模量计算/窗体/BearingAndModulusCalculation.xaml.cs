@@ -104,6 +104,9 @@ namespace GSYGeo
             StatisticResult.ModulusFinal = "/";
         }
 
+        /// <summary>
+        /// 初始化Ps值统计结构体
+        /// </summary>
         private void ClearCptStatisticResult()
         {
             StatisticResult.CptType = "无法识别";
@@ -115,6 +118,9 @@ namespace GSYGeo
             StatisticResult.ModulusFinal = "/";
         }
 
+        /// <summary>
+        /// 初始化标贯动探统计结构体
+        /// </summary>
         private void ClearNTestStatisticResult()
         {
             StatisticResult.NTestType = "无法识别";
@@ -668,7 +674,7 @@ namespace GSYGeo
         }
 
         /// <summary>
-        /// 填充各显示框
+        /// 填充各文本框
         /// </summary>
         private void FillCptTextBox()
         {
@@ -904,6 +910,9 @@ namespace GSYGeo
             }
         }
 
+        /// <summary>
+        /// 填充各文本框
+        /// </summary>
         private void FillNTestTextBox()
         {
             this.NTestParameterTextBox.Text = StatisticResult.NTestParameter;

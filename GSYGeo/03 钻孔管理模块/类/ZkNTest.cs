@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace GSYGeo
 {
-    // 钻孔标贯/动探试验类
+    /// <summary>
+    /// 钻孔标贯/动探试验类
+    /// </summary>
     public class ZkNTest
     {
-        // 带参数的构造函数
+        /// <summary>
+        /// 带参数的构造函数
+        /// </summary>
+        /// <param name="_zkNumber">钻孔编号</param>
+        /// <param name="_name">试验编号</param>
+        /// <param name="_depth">试验深度</param>
+        /// <param name="_value">试验击数</param>
+        /// <param name="_type">试验类型</param>
         public ZkNTest(string _zkNumber,string _name,double _depth,double _value,ntype _type)
         {
             this.zkNumber = _zkNumber;
@@ -19,8 +28,9 @@ namespace GSYGeo
             this.type = _type;
         }
 
-        // 属性，试验所属钻孔
-        private string zkNumber;
+        /// <summary>
+        /// 试验所属钻孔
+        /// </summary>
         public string ZkNumber
         {
             get
@@ -32,9 +42,11 @@ namespace GSYGeo
                 zkNumber = value;
             }
         }
+        private string zkNumber;
 
-        // 属性，试验编号
-        private string name;
+        /// <summary>
+        /// 试验编号
+        /// </summary>
         public string Name
         {
             get
@@ -46,9 +58,11 @@ namespace GSYGeo
                 name = value;
             }
         }
+        private string name;
 
-        // 属性，试验深度
-        private double depth;
+        /// <summary>
+        /// 试验深度
+        /// </summary>
         public double Depth
         {
             get
@@ -60,9 +74,11 @@ namespace GSYGeo
                 depth = value;
             }
         }
+        private double depth;
 
-        // 属性，试验数值
-        private double testValue;
+        /// <summary>
+        /// 试验数值
+        /// </summary>
         public double Value
         {
             get
@@ -74,9 +90,11 @@ namespace GSYGeo
                 testValue = value;
             }
         }
+        private double testValue;
 
-        // 属性，试验类型
-        private ntype type;
+        /// <summary>
+        /// 试验类型
+        /// </summary>
         public ntype Type
         {
             get
@@ -88,9 +106,11 @@ namespace GSYGeo
                 type = value;
             }
         }
+        private ntype type;
 
-        // 字段，试验类型枚举
+        /// <summary>
+        /// 试验类型枚举
+        /// </summary>
         public enum ntype { N,N10,N635,N120}
-
     }
 }

@@ -23,22 +23,34 @@ namespace GSYGeo
     {
         #region 参数定义
 
-        // 判断是否为新建触探孔的参数
+        /// <summary>
+        /// 判断是否为新建触探孔的参数
+        /// </summary>
         public bool isNewJk;
 
-        // 定义编辑触探孔时的老触探孔名称
+        /// <summary>
+        /// 定义编辑触探孔时的老触探孔名称
+        /// </summary>
         public string oldJkName = "";
 
-        // 定义分层列表LayerListDataGrid控件的数据源DataTable
+        /// <summary>
+        /// 定义分层列表LayerListDataGrid控件的数据源DataTable
+        /// </summary>
         public DataTable dtLayer = new DataTable("Layer");
 
-        // 定义摩阻力列表PsListDataGrid控件的数据源DataTable
+        /// <summary>
+        /// 定义摩阻力列表PsListDataGrid控件的数据源DataTable
+        /// </summary>
         public DataTable dtPs = new DataTable("Ps");
 
-        // 定义摩阻力深度列表PsDepthListDataGrid控件的数据源DataTable
+        /// <summary>
+        /// 定义摩阻力深度列表PsDepthListDataGrid控件的数据源DataTable
+        /// </summary>
         public DataTable dtDepth = new DataTable("PsDepth");
 
-        // 定义钻孔编号、孔口高程的工具提示
+        /// <summary>
+        /// 定义钻孔编号、孔口高程的工具提示
+        /// </summary>
         System.Windows.Controls.ToolTip tt0 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt1 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt2 = new System.Windows.Controls.ToolTip();
@@ -46,7 +58,9 @@ namespace GSYGeo
         System.Windows.Controls.ToolTip tt4 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt5 = new System.Windows.Controls.ToolTip();
 
-        // 定义保存按钮可用性判断参数
+        /// <summary>
+        /// 定义保存按钮可用性判断参数
+        /// </summary>
         bool setCanJkName = false;
         bool setCanJkAltitude = false;
         bool setCanJkAxisX = true;
@@ -56,7 +70,9 @@ namespace GSYGeo
 
         #region 工具提示
 
-        // 定义工具提示
+        /// <summary>
+        /// 定义工具提示
+        /// </summary>
         private void DefineToolTip()
         {
             tt0.Content = "触探孔编号重复";
@@ -96,7 +112,11 @@ namespace GSYGeo
             tt5.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
         }
 
-        // 触探孔编号输入框内容变化时
+        /// <summary>
+        /// 触探孔编号输入框内容变化时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void JKNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             tt0.IsOpen = false;
@@ -121,7 +141,11 @@ namespace GSYGeo
             }
         }
 
-        // 孔口高程输入框内容变化时
+        /// <summary>
+        /// 孔口高程输入框内容变化时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void JKAltitudeTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             tt2.IsOpen = false;
@@ -147,7 +171,11 @@ namespace GSYGeo
             }
         }
 
-        // X坐标输入框内容变化时
+        /// <summary>
+        /// X坐标输入框内容变化时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AxisXTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             tt4.IsOpen = false;
@@ -171,7 +199,11 @@ namespace GSYGeo
             }
         }
 
-        // Y坐标输入框内容变化时
+        /// <summary>
+        /// Y坐标输入框内容变化时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AxisYTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             tt5.IsOpen = false;
@@ -199,7 +231,9 @@ namespace GSYGeo
 
         #region 构造函数
 
-        // 无参数的构造函数，新建静力触探孔时调用
+        /// <summary>
+        /// 无参数的构造函数，新建静力触探孔时调用
+        /// </summary>
         public CPTControl()
         {
             InitializeComponent();
@@ -220,7 +254,10 @@ namespace GSYGeo
             this.PsListDataGrid.DataContext = dtPs;
         }
 
-        // 带参数的构造函数，选取某静力触探孔时调用
+        /// <summary>
+        /// 带参数的构造函数，选取某静力触探孔时调用
+        /// </summary>
+        /// <param name="_selectCPT">所选静力触探孔</param>
         public CPTControl(CPT _selectCPT)
         {
             InitializeComponent();
@@ -258,7 +295,9 @@ namespace GSYGeo
 
         #region 触探孔分层
 
-        // 初始化LayerListDataTable，不带参数
+        /// <summary>
+        /// 初始化LayerListDataTable，不带参数
+        /// </summary>
         private void InitialLayerListDataTable()
         {
             // 定义LayerListDataTable数据列
@@ -269,7 +308,10 @@ namespace GSYGeo
             dtLayer.Columns.Add(new DataColumn("descriptionList", typeof(string)));
         }
 
-        // 初始化LayerListDataTable，带参数
+        /// <summary>
+        /// 初始化LayerListDataTable，带参数
+        /// </summary>
+        /// <param name="_layers">钻孔分层列表</param>
         private void InitialLayerListDataTable(List<ZkLayer> _layers)
         {
             // 定义LayerListDataTable数据列
@@ -293,7 +335,14 @@ namespace GSYGeo
             }
         }
 
-        // 向LayerListDataTable添加行
+        /// <summary>
+        /// 向LayerListDataTable添加行
+        /// </summary>
+        /// <param name="_number">分层编号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_geo">地质年代成因</param>
+        /// <param name="_depth">层底深度</param>
+        /// <param name="_description">分层描述</param>
         private void AddRowToLayerListDataTable(string _number, string _name, string _geo, double _depth, string _description)
         {
             DataRow dr = dtLayer.NewRow();
@@ -305,7 +354,15 @@ namespace GSYGeo
             dtLayer.Rows.Add(dr);
         }
 
-        // 编辑LayerListDataTable行
+        /// <summary>
+        /// 编辑LayerListDataTable行
+        /// </summary>
+        /// <param name="_rowIndex">行号</param>
+        /// <param name="_number">分层编号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_geo">地质年代成因</param>
+        /// <param name="_depth">层底深度</param>
+        /// <param name="_description">分层描述</param>
         private void EditRowLayerListDataTable(int _rowIndex, string _number, string _name, string _geo, double _depth, string _description)
         {
             DataRow dr = dtLayer.Rows[_rowIndex];
@@ -318,13 +375,20 @@ namespace GSYGeo
             dr.EndEdit();
         }
 
-        // 删除LayerListDataTable行
+        /// <summary>
+        /// 删除LayerListDataTable行
+        /// </summary>
+        /// <param name="_rowIndex">行号</param>
         private void DeleteRowLayerListDataTable(int _rowIndex)
         {
             dtLayer.Rows.RemoveAt(_rowIndex);
         }
 
-        // 点击"添加分层"
+        /// <summary>
+        /// 点击"添加分层"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddLayerButton_Click(object sender, RoutedEventArgs e)
         {
             // 传递上一层的层底深度，如果没有上一层，则将lastDepth赋值为-1
@@ -352,7 +416,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"编辑分层"
+        /// <summary>
+        /// 点击"编辑分层"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditLayerButton_Click(object sender, RoutedEventArgs e)
         {
             // 传递上一层的层底深度，如果没有上一层，则将lastDepth赋值为-1
@@ -389,7 +457,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"删除分层"
+        /// <summary>
+        /// 点击"删除分层"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteLayerButton_Click(object sender, RoutedEventArgs e)
         {
             DataRowView drv = (DataRowView)this.LayerListDataGrid.SelectedItem;
@@ -409,7 +481,9 @@ namespace GSYGeo
 
         #region 触探孔摩阻力
 
-        // 初始化PsListDataTable，不带参数
+        /// <summary>
+        /// 初始化PsListDataTable，不带参数
+        /// </summary>
         private void InitialPsListDataTable()
         {
             // 定义PsListDataTable数据列
@@ -420,7 +494,10 @@ namespace GSYGeo
             dtPs.RowChanged += new DataRowChangeEventHandler(RowChanged);
         }
 
-        // 初始化PsListDataTable，带参数
+        /// <summary>
+        /// 初始化PsListDataTable，带参数
+        /// </summary>
+        /// <param name="_psList">ps值列表</param>
         private void InitialPsListDataTable(List<double> _psList)
         {
             // 定义PsListDataTable数据列
@@ -439,8 +516,11 @@ namespace GSYGeo
             // 订阅RowChanged事件，处理函数为RowChanged
             dtPs.RowChanged += new DataRowChangeEventHandler(RowChanged);
         }
-        
-        // 刷新PsListDataTable
+
+        /// <summary>
+        /// 刷新PsListDataTable
+        /// </summary>
+        /// <param name="_psList">ps值列表</param>
         private void RefreshPsListDataTable(List<double> _psList)
         {
             dtPs.Rows.Clear();
@@ -457,7 +537,11 @@ namespace GSYGeo
 
         #region 保存触探孔
 
-        // Save命令的Executed事件处理函数
+        /// <summary>
+        /// Save命令的Executed事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBindingSave_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             // 提取触探孔基本信息参数
@@ -511,7 +595,11 @@ namespace GSYGeo
             this.Visibility = Visibility.Collapsed;
         }
 
-        // Save命令的CanExecuted事件处理函数
+        /// <summary>
+        /// Save命令的CanExecuted事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBindingSave_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             // 绑定"保存此钻孔"的可用状态
@@ -525,7 +613,11 @@ namespace GSYGeo
 
         #region 删除触探孔
 
-        // 点击"删除此钻孔"
+        /// <summary>
+        /// 点击"删除此钻孔"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteJkButton_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrEmpty(oldJkName) && !string.IsNullOrWhiteSpace(oldJkName))
@@ -546,7 +638,11 @@ namespace GSYGeo
 
         #region 相关事件
 
-        // dtPs.RowChanged事件的处理函数
+        /// <summary>
+        /// dtPs.RowChanged事件的处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RowChanged(object sender,DataRowChangeEventArgs e)
         {
             DrawJk();
@@ -556,7 +652,9 @@ namespace GSYGeo
 
         #region 绘制摩阻力曲线图
 
-        // 绘制钻孔柱状图函数
+        /// <summary>
+        /// 绘制钻孔柱状图函数
+        /// </summary>
         public void DrawJk()
         {
             // 清空旧柱状图
@@ -609,7 +707,9 @@ namespace GSYGeo
             DrawJkCurve(maxPs);
         }
 
-        // 绘制触探孔孔表头函数
+        /// <summary>
+        /// 绘制触探孔孔表头函数
+        /// </summary>
         private void DrawJkLabel()
         {
             // 提取绘图区域宽度和高度
@@ -622,7 +722,9 @@ namespace GSYGeo
             this.JkCanvas.DrawText(15, 32, this.JKAltitudeTextBox.Text, 14, Brushes.Black, true, false, true);
         }
 
-        // 绘制地面线和触探孔线函数
+        /// <summary>
+        /// 绘制地面线和触探孔线函数
+        /// </summary>
         private void DrawJkLine()
         {
             // 提取绘图区域宽度和高度
@@ -637,7 +739,10 @@ namespace GSYGeo
             this.JkCanvas.DrawLine(25, y, 25, h, 8, Brushes.Black);
         }
 
-        // 绘制刻度和网格函数
+        /// <summary>
+        /// 绘制刻度和网格函数
+        /// </summary>
+        /// <param name="_maxScale">最大尺寸</param>
         private void DrawJkScale(double _maxScale)
         {
             // 提取绘图区域宽度和高度
@@ -661,7 +766,13 @@ namespace GSYGeo
             }
         }
 
-        // 绘制触探孔分层函数
+        /// <summary>
+        /// 绘制触探孔分层函数
+        /// </summary>
+        /// <param name="_depth">层底深度</param>
+        /// <param name="_oldDepth">上一层层底深度</param>
+        /// <param name="_maxDepth">最大钻探深度</param>
+        /// <param name="_layerLabel">分层标签</param>
         private void DrawJkLayer(double _depth, double _oldDepth, double _maxDepth, string _layerLabel)
         {
             // 提取绘图区域宽度和高度
@@ -684,7 +795,10 @@ namespace GSYGeo
             this.JkCanvas.DrawText(50, (y + oldY) / 2 - 10, _layerLabel, 14, Brushes.Red, true, false, false);
         }
 
-        // 绘制摩阻力曲线函数
+        /// <summary>
+        /// 绘制摩阻力曲线函数
+        /// </summary>
+        /// <param name="_maxScale">最大尺寸</param>
         private void DrawJkCurve(double _maxScale)
         {
             // 提取绘图区域宽度和高度
@@ -766,6 +880,5 @@ namespace GSYGeo
         }
 
         #endregion
-
     }
 }

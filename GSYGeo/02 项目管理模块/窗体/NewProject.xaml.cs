@@ -21,20 +21,30 @@ namespace GSYGeo
     /// </summary>
     public partial class NewProject : Window
     {
-        // 实例化ProjectSetting类
+        /// <summary>
+        /// 实例化ProjectSetting类
+        /// </summary>
         ProjectSetting projectSetting = new ProjectSetting();
 
-        // 定义分层数据表
+        /// <summary>
+        /// 定义分层数据表
+        /// </summary>
         private DataTable dt = new DataTable("Layer");
 
-        // 判断是否为新建项目的变量
+        /// <summary>
+        /// 判断是否为新建项目的变量
+        /// </summary>
         private bool isNew = false;
 
-        // 定义编辑项目时新旧项目名称
+        /// <summary>
+        /// 定义编辑项目时新旧项目名称
+        /// </summary>
         public string oldFile;
         public string newFile;
 
-        // 无参数的构造函数
+        /// <summary>
+        /// 无参数的构造函数
+        /// </summary>
         public NewProject()
         {
             InitializeComponent();
@@ -43,7 +53,17 @@ namespace GSYGeo
             isNew = true;
         }
 
-        // 带参数的构造函数，其中string[] _company，必须为string[8]形式
+        /// <summary>
+        /// 带参数的构造函数，其中string[] _company，必须为string[8]形式
+        /// </summary>
+        /// <param name="_name">项目名称</param>
+        /// <param name="_province">项目所在省份（可空）</param>
+        /// <param name="_city">项目所在县市（可空）</param>
+        /// <param name="_layerNumber">分层编号列表</param>
+        /// <param name="_layerName">岩土名称列表</param>
+        /// <param name="_layerGeo">地质年代成因列表</param>
+        /// <param name="_layerDescription">分层描述列表</param>
+        /// <param name="_company">公司信息数组</param>
         public NewProject(string _name,string _province,string _city,List<string> _layerNumber,List<string> _layerName,List<string> _layerGeo,List<string> _layerDescription,string[] _company)
         {
             InitializeComponent();
@@ -83,7 +103,11 @@ namespace GSYGeo
             this.ProjectCityTextBox.Text = projectSetting.City;
         }
 
-        // Save命令的Executed事件处理函数
+        /// <summary>
+        /// Save命令的Executed事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBindingSave_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             // 新建项目的操作
@@ -167,7 +191,11 @@ namespace GSYGeo
             this.Close();
         }
 
-        // Save命令的CanExecuted事件处理函数
+        /// <summary>
+        /// Save命令的CanExecuted事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBindingSave_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             // 设置"确定"按钮的可用状态
@@ -177,7 +205,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"项目划分岩土层设置"
+        /// <summary>
+        /// 点击"项目划分岩土层设置"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProjectLayerSettingButton_Click(object sender, RoutedEventArgs e)
         {
             // 传递projectSetting参数至ProjectLayer窗口
@@ -233,7 +265,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"项目公司信息设置"
+        /// <summary>
+        /// 点击"项目公司信息设置"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ProjectCompanySettingButton_Click(object sender, RoutedEventArgs e)
         {
             // 赋值传递数据，并初始化projectCompany窗体
@@ -278,7 +314,11 @@ namespace GSYGeo
             }   
         }
 
-        // 点击"取消"
+        /// <summary>
+        /// 点击"取消"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelProjectSetting_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

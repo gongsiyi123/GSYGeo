@@ -9,10 +9,15 @@ using System.Collections.ObjectModel;
 
 namespace GSYGeo
 {
-    // 操作钻孔数据库的类
+    /// <summary>
+    /// 操作钻孔数据库的类
+    /// </summary>
     class BoreholeDataBase
     {
-        // 初始化钻孔数据库，若基本表结构不存在则创建基本表结构
+        /// <summary>
+        /// 初始化钻孔数据库，若基本表结构不存在则创建基本表结构
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
         public static void Initial(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -44,7 +49,16 @@ namespace GSYGeo
             }
         }
 
-        // 添加一个钻孔，输入基本信息
+        /// <summary>
+        /// 添加一个钻孔，输入基本信息
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">钻孔编号</param>
+        /// <param name="_altitude">孔口高程</param>
+        /// <param name="_xAxis">孔口X坐标</param>
+        /// <param name="_yAxis">孔口Y坐标</param>
+        /// <param name="_iniWL">钻孔初见水位</param>
+        /// <param name="_staWL">钻孔稳定水位</param>
         public static void AddZkBasicInfo(string _projectName,string _name,double _altitude,double _xAxis,double _yAxis,double _iniWL,double _staWL)
         {
             // 创建连接到项目信息数据库
@@ -60,7 +74,16 @@ namespace GSYGeo
             }
         }
 
-        // 向某个钻孔添加分层列表
+        /// <summary>
+        /// 向某个钻孔添加分层列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">钻孔编号</param>
+        /// <param name="_numberList">分层编号列表</param>
+        /// <param name="_nameList">岩土名称列表</param>
+        /// <param name="_geoList">地质年代成因列表</param>
+        /// <param name="_descriptionList">分层描述列表</param>
+        /// <param name="_depthList">层底深度列表</param>
         public static void AddLayerListToZk(string _projectName,string _name,List<string> _numberList,List<string> _nameList,List<string> _geoList,List<string> _descriptionList,List<double> _depthList)
         {
             // 创建连接到项目信息数据库
@@ -82,7 +105,14 @@ namespace GSYGeo
             }
         }
 
-        // 向某个钻孔添加取样列表
+        /// <summary>
+        /// 向某个钻孔添加取样列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">钻孔编号</param>
+        /// <param name="_numberList">取样编号列表</param>
+        /// <param name="_depthList">取样深度列表</param>
+        /// <param name="_isDisturbedList">取样类型列表</param>
         public static void AddSampleListToZk(string _projectName,string _name,List<string> _numberList,List<double> _depthList,List<int> _isDisturbedList)
         {
             // 创建连接到项目信息数据库
@@ -104,7 +134,15 @@ namespace GSYGeo
             }
         }
 
-        // 向某个钻孔添加标贯/动探列表
+        /// <summary>
+        /// 向某个钻孔添加标贯/动探列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">钻孔编号</param>
+        /// <param name="_numberList">试验编号</param>
+        /// <param name="_depthList">试验深度</param>
+        /// <param name="_valueList">试验击数</param>
+        /// <param name="_typeList">试验类型</param>
         public static void AddNTestListToZk(string _projectName,string _name,List<string> _numberList,List<double> _depthList,List<double> _valueList,List<string> _typeList)
         {
             // 创建连接到项目信息数据库
@@ -126,7 +164,11 @@ namespace GSYGeo
             }
         }
 
-        // 清空某个钻孔的全部数据
+        /// <summary>
+        /// 清空某个钻孔的全部数据
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">钻孔编号</param>
         public static void RemoveZk(string _projectName,string _name)
         {
             // 创建连接到项目信息数据库
@@ -148,7 +190,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询钻孔编号列表
+        /// <summary>
+        /// 查询钻孔编号列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static List<string> ReadZkList(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -170,7 +216,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询钻孔编号列表，输出为TreeViewItem形式
+        /// <summary>
+        /// 查询钻孔编号列表，输出为TreeViewItem形式
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static ObservableCollection<TreeViewItem> ReadZkListAsTreeViewItem(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -194,7 +244,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询钻孔列表，输出为Borehole类形式
+        /// <summary>
+        /// 查询钻孔编号列表，输出为Borehole类形式
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static List<Borehole> ReadZkListAsClass(string _projectName)
         {
             // 创建连接到设置信息数据库
@@ -229,7 +283,12 @@ namespace GSYGeo
             }
         }
 
-        // 查询某个钻孔的孔口高程
+        /// <summary>
+        /// 查询某个钻孔的孔口高程
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">钻孔编号</param>
+        /// <returns></returns>
         public static double ReadAltitude(string _projectName,string _name)
         {
             // 创建连接到项目信息数据库
@@ -247,7 +306,12 @@ namespace GSYGeo
             }
         }
 
-        // 查询某个钻孔的X坐标
+        /// <summary>
+        /// 查询某个钻孔的X坐标
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">钻孔编号</param>
+        /// <returns></returns>
         public static double ReadXAxis(string _projectName,string _name)
         {
             // 创建连接到项目信息数据库
@@ -265,7 +329,12 @@ namespace GSYGeo
             }
         }
 
-        // 查询某个钻孔的Y坐标
+        /// <summary>
+        /// 查询某个钻孔的Y坐标
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">钻孔编号</param>
+        /// <returns></returns>
         public static double ReadYAxis(string _projectName,string _name)
         {
             // 创建连接到项目信息数据库
@@ -283,7 +352,12 @@ namespace GSYGeo
             }
         }
 
-        // 查询某个钻孔的初见水位
+        /// <summary>
+        /// 查询某个钻孔的初见水位
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">钻孔编号</param>
+        /// <returns></returns>
         public static double ReadInitialWaterLevel(string _projectName,string _name)
         {
             // 创建连接到项目信息数据库
@@ -301,7 +375,12 @@ namespace GSYGeo
             }
         }
 
-        // 查询某个钻孔的稳定水位
+        /// <summary>
+        /// 查询某个钻孔的稳定水位
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">钻孔编号</param>
+        /// <returns></returns>
         public static double ReadStableWaterLevel(string _projectName,string _name)
         {
             // 创建连接到项目信息数据库
@@ -319,7 +398,12 @@ namespace GSYGeo
             }
         }
 
-        // 查询某个钻孔的分层列表
+        /// <summary>
+        /// 查询某个钻孔的分层列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">钻孔编号</param>
+        /// <returns></returns>
         public static List<ZkLayer> ReadZkLayer(string _projectName,string _name)
         {
             // 创建连接到项目信息数据库
@@ -346,7 +430,12 @@ namespace GSYGeo
             }
         }
 
-        // 查询某个钻孔的取样列表
+        /// <summary>
+        /// 查询某个钻孔的取样列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">钻孔编号</param>
+        /// <returns></returns>
         public static List<ZkSample> ReadZkSample(string _projectName,string _name)
         {
             // 创建连接到项目信息数据库
@@ -371,7 +460,12 @@ namespace GSYGeo
             }
         }
 
-        // 查询某个钻孔的标贯/动探列表
+        /// <summary>
+        /// 查询某个钻孔的标贯/动探列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">钻孔编号</param>
+        /// <returns></returns>
         public static List<ZkNTest> ReadZkNTest(string _projectName,string _name)
         {
             // 创建连接到项目信息数据库

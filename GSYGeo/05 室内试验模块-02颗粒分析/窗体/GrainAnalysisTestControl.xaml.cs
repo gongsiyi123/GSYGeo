@@ -23,20 +23,29 @@ namespace GSYGeo
     {
         #region 参数定义
 
-        // 定义试验数据列表TestDataListDataGrid控件的数据源DataTable
+        /// <summary>
+        /// 定义试验数据列表TestDataListDataGrid控件的数据源DataTable
+        /// </summary>
         public DataTable dtGAT = new DataTable("GAT");
 
-        // 定义判断当前是否正在编辑DataGrid的变量
+        /// <summary>
+        /// 定义判断当前是否正在编辑DataGrid的变量
+        /// </summary>
         bool isEditing = false;
 
-        // 定义备份DataTable
+        /// <summary>
+        /// 定义备份DataTable
+        /// </summary>
         private DataTable dtBackUp = new DataTable("BackUp");
 
         #endregion
 
         #region 构造函数
 
-        // 带参数的构造函数
+        /// <summary>
+        /// 带参数的构造函数
+        /// </summary>
+        /// <param name="_gats">颗分试验数据列表</param>
         public GrainAnalysisTestControl(List<GrainAnalysisTest> _gats)
         {
             InitializeComponent();
@@ -62,7 +71,10 @@ namespace GSYGeo
 
         #region 公用函数
 
-        // 设置按钮的可用性函数
+        /// <summary>
+        /// 设置按钮的可用性函数
+        /// </summary>
+        /// <param name="_isEditing">是否正在编辑</param>
         private void SetButtonEnable(bool _isEditing)
         {
             if (_isEditing)
@@ -95,13 +107,17 @@ namespace GSYGeo
 
         #region 试验数据
 
-        // 定义试验项目
+        /// <summary>
+        /// 定义试验项目
+        /// </summary>
         private string[] gatName = new string[]
         {
             "zkNumber","sampleDepth","sampleLayer","Group20ToMax","Group2To20","Group0_5To2","Group0_25To0_5","Group0_075To0_25","Group0To0_075"
         };
 
-        // 初始化TestDataListDataGrid，不带参数
+        /// <summary>
+        /// 初始化TestDataListDataGrid，不带参数
+        /// </summary>
         private void InitialTestDataListDataGrid()
         {
             // 定义TestDataListDataGrie数据列
@@ -111,7 +127,10 @@ namespace GSYGeo
             }
         }
 
-        // 初始化TestDataListDataGrid，带参数
+        /// <summary>
+        /// 初始化TestDataListDataGrid，带参数
+        /// </summary>
+        /// <param name="_gats">颗分试验数据列表</param>
         private void InitialTestDataListDataGrid(List<GrainAnalysisTest> _gats)
         {
             // 定义TestDataListDataGrie数据列
@@ -138,7 +157,10 @@ namespace GSYGeo
             }
         }
 
-        // 重置刷新TestDataListDataGrid
+        /// <summary>
+        /// 重置刷新TestDataListDataGrid
+        /// </summary>
+        /// <param name="_gats">颗分试验数据列表</param>
         private void RefreshTestDataListDataGrid(List<GrainAnalysisTest> _gats)
         {
             // 清空旧数据
@@ -166,7 +188,9 @@ namespace GSYGeo
 
         #region 筛选、清空和编辑
 
-        // 填充筛选ComboBox函数
+        /// <summary>
+        /// 填充筛选ComboBox函数
+        /// </summary>
         private void InitialComboBox()
         {
             List<string> zklist = BoreholeDataBase.ReadZkList(Program.currentProject);
@@ -185,7 +209,11 @@ namespace GSYGeo
             this.SelectByLayerComboBox.SelectedIndex = 0;
         }
 
-        // 筛选数据函数
+        /// <summary>
+        /// 筛选数据函数
+        /// </summary>
+        /// <param name="_zk">钻孔编号</param>
+        /// <param name="_layer">分层编号</param>
         private void SelectData(string _zk, string _layer)
         {
             if (_zk == "全部钻孔")
@@ -205,7 +233,11 @@ namespace GSYGeo
             RefreshTestDataListDataGrid(gats);
         }
 
-        // 选择钻孔筛选框时
+        /// <summary>
+        /// 选择钻孔筛选框时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SelectByZkComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string zk = this.SelectByZkComboBox.SelectedItem == null ? "" : this.SelectByZkComboBox.SelectedItem.ToString();
@@ -213,7 +245,11 @@ namespace GSYGeo
             SelectData(zk, layer);
         }
 
-        // 选择分层筛选框时
+        /// <summary>
+        /// 选择分层筛选框时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SelectByLayerComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string zk = this.SelectByZkComboBox.SelectedItem == null ? "" : this.SelectByZkComboBox.SelectedItem.ToString();
@@ -221,7 +257,11 @@ namespace GSYGeo
             SelectData(zk, layer);
         }
 
-        // 点击"编辑"按钮
+        /// <summary>
+        /// 点击"编辑"按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             this.SelectByZkComboBox.SelectedIndex = 0;
@@ -229,7 +269,11 @@ namespace GSYGeo
             SetButtonEnable(true);
         }
 
-        // 点击"清空"按钮
+        /// <summary>
+        /// 点击"清空"按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             dtBackUp = dtGAT.Clone();
@@ -243,7 +287,11 @@ namespace GSYGeo
             ClearButton.IsEnabled = false;
         }
 
-        // 点击"恢复"按钮
+        /// <summary>
+        /// 点击"恢复"按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RecoverButton_Click(object sender, RoutedEventArgs e)
         {
             if (dtBackUp != null)
@@ -261,7 +309,10 @@ namespace GSYGeo
 
         #region 保存
 
-        // 检查保存数据合法性函数
+        /// <summary>
+        /// 检查保存数据合法性函数
+        /// </summary>
+        /// <returns></returns>
         private bool CanSave()
         {
             for (int i = 0; i < dtGAT.Rows.Count; i++)
@@ -316,7 +367,9 @@ namespace GSYGeo
             return true;
         }
 
-        // 计算取样所属分层函数
+        /// <summary>
+        /// 计算取样所属分层函数
+        /// </summary>
         private void CalcuSampleLayer()
         {
             List<string> zkNumbers = BoreholeDataBase.ReadZkList(Program.currentProject);
@@ -343,7 +396,9 @@ namespace GSYGeo
             }
         }
 
-        // 保存试验数据函数
+        /// <summary>
+        /// 保存试验数据函数
+        /// </summary>
         private void Save()
         {
             // 提取参数
@@ -371,7 +426,11 @@ namespace GSYGeo
             GrainAnalysisTestDataBase.Refresh(Program.currentProject, gats);
         }
 
-        // 点击"保存"
+        /// <summary>
+        /// 点击"保存"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             // 恢复筛选状态
@@ -455,8 +514,6 @@ namespace GSYGeo
             }
         }
 
-
         #endregion
-
     }
 }

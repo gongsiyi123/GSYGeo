@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace GSYGeo
 {
-    // 钻孔取样类
+    /// <summary>
+    /// 钻孔取样类
+    /// </summary>
     public class ZkSample
     {
-        // 带参数的构造函数
+        /// <summary>
+        /// 带参数的构造函数
+        /// </summary>
+        /// <param name="_name">取样编号</param>
+        /// <param name="_depth">取样深度</param>
+        /// <param name="_isDisturbed">取样类型</param>
         public ZkSample(string _name,double _depth,bool _isDisturbed)
         {
             this.name = _name;
@@ -17,8 +24,9 @@ namespace GSYGeo
             this.isDisturbed = _isDisturbed;
         }
 
-        // 属性，取样名称
-        private string name;
+        /// <summary>
+        /// 取样名称
+        /// </summary>
         public string Name
         {
             get
@@ -30,9 +38,11 @@ namespace GSYGeo
                 name = value;
             }
         }
+        private string name;
 
-        // 属性，取样深度
-        private double depth;
+        /// <summary>
+        /// 取样深度
+        /// </summary>
         public double Depth
         {
             get
@@ -44,9 +54,11 @@ namespace GSYGeo
                 depth = value;
             }
         }
+        private double depth;
 
-        // 属性，取样类型
-        private bool isDisturbed;
+        /// <summary>
+        /// 取样类型
+        /// </summary>
         public bool IsDisturbed
         {
             get
@@ -58,5 +70,6 @@ namespace GSYGeo
                 isDisturbed = value;
             }
         }
+        private bool isDisturbed;
     }
 }

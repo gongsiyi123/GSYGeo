@@ -8,10 +8,15 @@ using System.IO;
 
 namespace GSYGeo
 {
-    // 操作项目数据库的类
+    /// <summary>
+    /// 操作项目数据库的类
+    /// </summary>
     class ProjectDataBase
     {
-        // 查询项目文件夹中的所有项目数据库文件
+        /// <summary>
+        /// 查询项目文件夹中的所有项目数据库文件，返回项目名称字符串列表
+        /// </summary>
+        /// <returns></returns>
         public static List<string> ReadProjectList()
         {
             List<string> projectList = new List<string>();
@@ -28,14 +33,20 @@ namespace GSYGeo
             return projectList;
         }
 
-        // 创建项目数据库，并初始化
+        /// <summary>
+        /// 创建项目数据库，并初始化
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
         public static void Create(string _projectName)
         {
             SQLiteConnection.CreateFile(Program.ReadProgramPath() + "\\" + _projectName + ".gsygeo");
             Initial(_projectName);
         }
 
-        // 初始化项目数据库，创建基本表结构
+        /// <summary>
+        /// 初始化项目数据库，创建基本表结构
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
         private static void Initial(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -72,7 +83,14 @@ namespace GSYGeo
             GrainAnalysisTestDataBase.Initial(_projectName);
         }
 
-        // 向项目信息表中添加 岩土分层
+        /// <summary>
+        /// 向项目信息表中添加 岩土分层
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_number">分层编号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_geo">地质年代成因</param>
+        /// <param name="_description">分层描述</param>
         public static void AddLayer(string _projectName,string _number,string _name,string _geo,string _description)
         {
             // 创建连接到项目信息数据库
@@ -88,7 +106,13 @@ namespace GSYGeo
             }
         }
 
-        // 编辑项目基本信息
+        /// <summary>
+        /// 编辑项目基本信息
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">项目名称</param>
+        /// <param name="_province">项目所在省份</param>
+        /// <param name="_city">项目所在县市</param>
         public static void EditProjectBasicInfo(string _projectName,string _name,string _province,string _city)
         {
             // 创建连接到项目信息数据库
@@ -104,7 +128,18 @@ namespace GSYGeo
             }
         }
 
-        // 编辑项目公司信息
+        /// <summary>
+        /// 编辑项目公司信息
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_companyName">公司名称</param>
+        /// <param name="_companyCode">公司资质代码</param>
+        /// <param name="_drawer">绘图人</param>
+        /// <param name="_writer">报告编写人</param>
+        /// <param name="_checker">校核人</param>
+        /// <param name="_inspector">审查人</param>
+        /// <param name="_approver">核定人</param>
+        /// <param name="_finalApprover">批准人</param>
         public static void EditProjectCompany(string _projectName,string _companyName,string _companyCode,string _drawer,string _writer,string _checker,string _inspector,string _approver,string _finalApprover)
         {
             // 创建连接到项目信息数据库
@@ -120,7 +155,15 @@ namespace GSYGeo
             }
         }
 
-        // 编辑岩土分层
+        /// <summary>
+        /// 编辑岩土分层
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_oldLayerNumber">老分层编号</param>
+        /// <param name="_number">新分层编号</param>
+        /// <param name="_name">新岩土名称</param>
+        /// <param name="_geo">新地质年代成因</param>
+        /// <param name="_description">新分层描述</param>
         public static void EditLayer(string _projectName,string _oldLayerNumber,string _number,string _name,string _geo,string _description)
         {
             // 创建连接到项目信息数据库
@@ -136,7 +179,11 @@ namespace GSYGeo
             }
         }
 
-        // 删除岩土分层
+        /// <summary>
+        /// 删除岩土分层
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_number">分层编号</param>
         public static void DeleteLayer(string _projectName,string _number)
         {
             // 创建连接到项目信息数据库
@@ -152,7 +199,10 @@ namespace GSYGeo
             }
         }
 
-        // 删除全部岩土分层
+        /// <summary>
+        /// 删除全部岩土分层
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
         public static void DeleteAllLayer(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -168,7 +218,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询岩土分层，返回 分层编号 列表
+        /// <summary>
+        /// 查询岩土分层，返回 分层编号 列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static List<string> ReadLayerNumberList(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -190,7 +244,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询岩土分层，返回 分层名称 列表
+        /// <summary>
+        /// 查询岩土分层，返回 分层名称 列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static List<string> ReadLayerNameList(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -212,7 +270,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询岩土分层，返回 分层年代成因 列表description
+        /// <summary>
+        /// 查询岩土分层，返回 分层年代成因 列表description
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static List<string> ReadLayerGeoList(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -234,7 +296,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询岩土分层，返回 分层描述 列表
+        /// <summary>
+        /// 查询岩土分层，返回 分层描述 列表
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static List<string> ReadLayerDescriptionList(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -256,7 +322,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询项目名称
+        /// <summary>
+        /// 查询项目名称
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static string ReadProjectName(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -273,7 +343,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询项目所在省份
+        /// <summary>
+        /// 查询项目所在省份
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static string ReadProjectProvince(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -291,7 +365,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询项目所在县市
+        /// <summary>
+        /// 查询项目所在县市
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static string ReadProjectCity(string _projectName)
         {
             // 创建连接到项目信息数据库
@@ -309,7 +387,11 @@ namespace GSYGeo
             }
         }
 
-        // 查询项目公司信息
+        /// <summary>
+        /// 查询项目公司信息
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static string[] ReadProjectCompany(string _projectName)
         {
             // 创建连接到项目信息数据库

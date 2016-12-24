@@ -56,6 +56,10 @@ namespace GSYGeo
             UpdateContent.Add("1、统计分析模块，修复了土工试验统计项含有空数值时的计算错误");
             UpdateContent.Add("2、统计分析模块，修复了勘察工作量统计输出Word表格的一个合并单元格错误，该错误可导致程序崩溃");
             AddUpdate("0.2.1_alpha", "2016.12.24", UpdateContent);
+
+            // 内部测试版0.2.2_alpha发布
+            UpdateContent.Add("1、项目管理模块，新增部分地质年代和成因选项");
+            AddUpdate("0.2.2_alpha", "2016.12.26", UpdateContent);
         }
 
         /// <summary>

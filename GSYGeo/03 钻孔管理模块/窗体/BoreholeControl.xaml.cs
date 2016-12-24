@@ -23,22 +23,34 @@ namespace GSYGeo
     {
         #region 参数定义
 
-        // 判断是否为新建钻孔的参数
+        /// <summary>
+        /// 判断是否为新建钻孔的参数
+        /// </summary>
         public bool isNewZk;
 
-        // 定义编辑钻孔时的老钻孔名称
+        /// <summary>
+        /// 定义编辑钻孔时的老钻孔名称
+        /// </summary>
         public string oldZkName = "";
 
-        // 定义分层列表LayerListDataGrid控件的数据源DataTable
+        /// <summary>
+        /// 定义分层列表LayerListDataGrid控件的数据源DataTable
+        /// </summary>
         public DataTable dtLayer = new DataTable("Layer");
 
-        // 定义取样列表SampleListDataGrid控件的数据源DataTable
+        /// <summary>
+        /// 定义取样列表SampleListDataGrid控件的数据源DataTable
+        /// </summary>
         public DataTable dtSample = new DataTable("Sample");
 
-        // 定义标贯/动探列表NTestListDataTable控件的数据源DataTable
+        /// <summary>
+        /// 定义标贯/动探列表NTestListDataTable控件的数据源DataTable
+        /// </summary>
         public DataTable dtNTest = new DataTable("NTest");
 
-        // 定义钻孔编号、孔口高程的工具提示
+        /// <summary>
+        /// 定义钻孔编号、孔口高程的工具提示
+        /// </summary>
         System.Windows.Controls.ToolTip tt0 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt1 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt2 = new System.Windows.Controls.ToolTip();
@@ -47,8 +59,10 @@ namespace GSYGeo
         System.Windows.Controls.ToolTip tt5 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt6 = new System.Windows.Controls.ToolTip();
         System.Windows.Controls.ToolTip tt7 = new System.Windows.Controls.ToolTip();
-        
-        // 定义保存按钮可用性判断参数
+
+        /// <summary>
+        /// 定义保存按钮可用性判断参数
+        /// </summary>
         bool setCanZkName = false;
         bool setCanZkAltitude = false;
         bool setCanZkAxisX = true;
@@ -60,7 +74,9 @@ namespace GSYGeo
 
         #region 工具提示
 
-        // 定义工具提示
+        /// <summary>
+        /// 定义工具提示
+        /// </summary>
         private void DefineToolTip()
         {
             tt0.Content = "钻孔编号重复";
@@ -112,7 +128,11 @@ namespace GSYGeo
             tt7.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
         }
 
-        // 钻孔编号输入框内容变化时
+        /// <summary>
+        /// 钻孔编号输入框内容变化时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ZKNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             tt0.IsOpen = false;
@@ -140,7 +160,11 @@ namespace GSYGeo
             }
         }
 
-        // 孔口高程输入框内容变化时
+        /// <summary>
+        /// 孔口高程输入框内容变化时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ZKAltitudeTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             tt2.IsOpen = false;
@@ -169,7 +193,11 @@ namespace GSYGeo
             }
         }
 
-        // X坐标输入框内容变化时
+        /// <summary>
+        /// X坐标输入框内容变化时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AxisXTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             tt4.IsOpen = false;
@@ -193,7 +221,11 @@ namespace GSYGeo
             }
         }
 
-        // Y坐标输入框内容变化时
+        /// <summary>
+        /// Y坐标输入框内容变化时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AxisYTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             tt5.IsOpen = false;
@@ -217,7 +249,11 @@ namespace GSYGeo
             }
         }
 
-        // 初见水位输入框内容变化时
+        /// <summary>
+        /// 初见水位输入框内容变化时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void InitialWaterLevelTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             tt6.IsOpen = false;
@@ -241,7 +277,11 @@ namespace GSYGeo
             }
         }
 
-        // 稳定水位输入框内容变化时
+        /// <summary>
+        /// 稳定水位输入框内容变化时
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StableWaterLevelTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             tt7.IsOpen = false;
@@ -269,7 +309,9 @@ namespace GSYGeo
 
         #region 构造函数
 
-        // 无参数的构造函数，新建钻孔时调用
+        /// <summary>
+        /// 无参数的构造函数，新建钻孔时调用
+        /// </summary>
         public BoreholeControl()
         {
             InitializeComponent();
@@ -292,7 +334,10 @@ namespace GSYGeo
             this.NTestListDataGrid.DataContext = dtNTest;
         }
 
-        // 带参数的构造函数，选取某钻孔时调用
+        /// <summary>
+        /// 带参数的构造函数，选取某钻孔时调用
+        /// </summary>
+        /// <param name="_selectedZk">所选钻孔</param>
         public BoreholeControl(Borehole _selectedZk)
         {
             InitializeComponent();
@@ -364,7 +409,9 @@ namespace GSYGeo
 
         #region 钻孔分层
 
-        // 初始化LayerListDataTable，不带参数
+        /// <summary>
+        /// 初始化LayerListDataTable，不带参数
+        /// </summary>
         private void InitialLayerListDataTable()
         {
             // 定义LayerListDataTable数据列
@@ -375,7 +422,14 @@ namespace GSYGeo
             dtLayer.Columns.Add(new DataColumn("descriptionList", typeof(string)));
         }
 
-        // 初始化LayerListDataTable，带参数
+        /// <summary>
+        /// 初始化LayerListDataTable，带参数
+        /// </summary>
+        /// <param name="_numberList">分层编号列表</param>
+        /// <param name="_nameList">岩土名称列表</param>
+        /// <param name="_geoList">地质年代成因列表</param>
+        /// <param name="_depthList">层底深度列表</param>
+        /// <param name="_descriptionList">分层描述列表</param>
         private void InitialLayerListDataTable(List<string> _numberList,List<string> _nameList,List<string> _geoList,List<double> _depthList,List<string> _descriptionList)
         {
             // 定义LayerListDataTable数据列
@@ -399,7 +453,14 @@ namespace GSYGeo
             }
         }
 
-        // 向LayerListDataTable添加行
+        /// <summary>
+        /// 向LayerListDataTable添加行
+        /// </summary>
+        /// <param name="_number">分层编号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_geo">地质年代成因</param>
+        /// <param name="_depth">层底深度</param>
+        /// <param name="_description">分层描述</param>
         private void AddRowToLayerListDataTable(string _number,string _name,string _geo,double _depth,string _description)
         {
             DataRow dr = dtLayer.NewRow();
@@ -412,7 +473,15 @@ namespace GSYGeo
             dtLayer.Rows.Add(dr);
         }
 
-        // 编辑LayerListDataTable行
+        /// <summary>
+        /// 编辑LayerListDataTable行
+        /// </summary>
+        /// <param name="_rowIndex">行号</param>
+        /// <param name="_number">分层编号</param>
+        /// <param name="_name">岩土名称</param>
+        /// <param name="_geo">地质年代成因</param>
+        /// <param name="_depth">层底深度</param>
+        /// <param name="_description">分层描述</param>
         private void EditRowLayerListDataTable(int _rowIndex, string _number, string _name, string _geo, double _depth, string _description)
         {
             DataRow dr = dtLayer.Rows[_rowIndex];
@@ -425,13 +494,20 @@ namespace GSYGeo
             dr.EndEdit();
         }
 
-        // 删除LayerListDataTable行
+        /// <summary>
+        /// 删除LayerListDataTable行
+        /// </summary>
+        /// <param name="_rowIndex">行号</param>
         private void DeleteRowLayerListDataTable(int _rowIndex)
         {
             dtLayer.Rows.RemoveAt(_rowIndex);
         }
 
-        // 点击"添加分层"
+        /// <summary>
+        /// 点击"添加分层"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddLayerButton_Click(object sender, RoutedEventArgs e)
         {
             // 传递上一层的层底深度，如果没有上一层，则将lastDepth赋值为-1
@@ -459,7 +535,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"编辑分层"
+        /// <summary>
+        /// 点击"编辑分层"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditLayerButton_Click(object sender, RoutedEventArgs e)
         {
             // 传递上一层的层底深度，如果没有上一层，则将lastDepth赋值为-1
@@ -496,7 +576,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"删除分层"
+        /// <summary>
+        /// 点击"删除分层"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteLayerButton_Click(object sender, RoutedEventArgs e)
         {
             DataRowView drv = (DataRowView)this.LayerListDataGrid.SelectedItem;
@@ -516,7 +600,9 @@ namespace GSYGeo
 
         #region 钻孔取样
 
-        // 初始化SampleListDataTable，不带参数
+        /// <summary>
+        /// 初始化SampleListDataTable，不带参数
+        /// </summary>
         private void InitialSampleListDataTable()
         {
             // 定义LayerListDataTable数据列
@@ -525,7 +611,12 @@ namespace GSYGeo
             dtSample.Columns.Add(new DataColumn("isDisturbedList", typeof(bool)));
         }
 
-        // 初始化SampleListDataTable，带参数
+        /// <summary>
+        /// 初始化SampleListDataTable，带参数
+        /// </summary>
+        /// <param name="_numberList">取样编号列表</param>
+        /// <param name="_depthList">取样深度列表</param>
+        /// <param name="_isDisturbedList">取样类型列表</param>
         private void InitialSampleListDataTable(List<string> _numberList,List<double> _depthList,List<bool> _isDisturbedList)
         {
             // 定义LayerListDataTable数据列
@@ -545,7 +636,12 @@ namespace GSYGeo
             }
         }
 
-        // 向SampleListDataTable添加行
+        /// <summary>
+        /// 向SampleListDataTable添加行
+        /// </summary>
+        /// <param name="_number">取样编号</param>
+        /// <param name="_depth">取样深度</param>
+        /// <param name="_isDisturbed">取样类型</param>
         private void AddRowToSampleListDataTable(string _number,double _depth,bool _isDisturbed)
         {
             DataRow dr = dtSample.NewRow();
@@ -555,7 +651,13 @@ namespace GSYGeo
             dtSample.Rows.Add(dr);
         }
 
-        // 编辑SampleListDataTable行
+        /// <summary>
+        /// 编辑SampleListDataTable行
+        /// </summary>
+        /// <param name="_rowIndex">行号</param>
+        /// <param name="_number">取样编号</param>
+        /// <param name="_depth">取样深度</param>
+        /// <param name="_isDisturbed">取样类型</param>
         private void EditRowSampleListDataTable(int _rowIndex,string _number,double _depth,bool _isDisturbed)
         {
             DataRow dr = dtSample.Rows[_rowIndex];
@@ -566,7 +668,10 @@ namespace GSYGeo
             dr.EndEdit();
         }
 
-        // 删除SampleListDataTable行
+        /// <summary>
+        /// 删除SampleListDataTable行
+        /// </summary>
+        /// <param name="_rowIndex">行号</param>
         private void DeleteRowSampleListDataTable(int _rowIndex)
         {
             dtSample.Rows.RemoveAt(_rowIndex);
@@ -581,7 +686,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"添加取样"
+        /// <summary>
+        /// 点击"添加取样"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddSampleButton_Click(object sender, RoutedEventArgs e)
         {
             // 传递历史取样深度列表和历史取样编号列表
@@ -623,7 +732,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"编辑取样"
+        /// <summary>
+        /// 点击"编辑取样"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditSampleButton_Click(object sender, RoutedEventArgs e)
         {
             int selectIndex = this.SampleListDataGrid.SelectedIndex;
@@ -673,7 +786,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"删除取样"
+        /// <summary>
+        /// 点击"删除取样"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteSampleButton_Click(object sender, RoutedEventArgs e)
         {
             DataRowView drv = (DataRowView)this.SampleListDataGrid.SelectedItem;
@@ -688,10 +805,14 @@ namespace GSYGeo
                 DrawZk();
             }
         }
+
         #endregion
 
         #region 钻孔标贯/动探试验
-        // 初始化NTestListDataTable，不带参数
+
+        /// <summary>
+        /// 初始化NTestListDataTable，不带参数
+        /// </summary>
         private void InitialNTestListDataTable()
         {
             // 定义NTestListDataTable数据列
@@ -701,7 +822,13 @@ namespace GSYGeo
             dtNTest.Columns.Add(new DataColumn("typeList", typeof(ZkNTest.ntype)));
         }
 
-        // 初始化NTestListDataTable，带参数
+        /// <summary>
+        /// 初始化NTestListDataTable，带参数
+        /// </summary>
+        /// <param name="_numberList">标贯/动探编号列表</param>
+        /// <param name="_depthList">标贯/动探深度列表</param>
+        /// <param name="_valueList">标贯/动探击数列表</param>
+        /// <param name="_typeList">标贯/动探类型列表</param>
         private void InitialNTestListDataTable(List<string> _numberList,List<double> _depthList,List<double> _valueList,List<ZkNTest.ntype> _typeList)
         {
             // 定义NTestListDataTable数据列
@@ -723,7 +850,13 @@ namespace GSYGeo
             }
         }
 
-        // 向NTestListDataTable添加行
+        /// <summary>
+        /// 向NTestListDataTable添加行
+        /// </summary>
+        /// <param name="_number">标贯/动探编号</param>
+        /// <param name="_depth">标贯/动探深度</param>
+        /// <param name="_value">标贯/动探击数</param>
+        /// <param name="_type">标贯/动探类型</param>
         private void AddRowToNTestListDataTable(string _number,double _depth,double _value,ZkNTest.ntype _type)
         {
             DataRow dr = dtNTest.NewRow();
@@ -734,7 +867,14 @@ namespace GSYGeo
             dtNTest.Rows.Add(dr);
         }
 
-        // 编辑NTestListDataTable行
+        /// <summary>
+        /// 编辑NTestListDataTable行
+        /// </summary>
+        /// <param name="_rowIndex"></param>
+        /// <param name="_number">标贯/动探编号</param>
+        /// <param name="_depth">标贯/动探深度</param>
+        /// <param name="_value">标贯/动探击数</param>
+        /// <param name="_type">标贯/动探类型</param>
         private void EditRowNTestListDataTable(int _rowIndex,string _number,double _depth,double _value,ZkNTest.ntype _type)
         {
             DataRow dr = dtNTest.Rows[_rowIndex];
@@ -746,7 +886,10 @@ namespace GSYGeo
             dr.EndEdit();
         }
 
-        // 删除NTestListDataTable行
+        /// <summary>
+        /// 删除NTestListDataTable行
+        /// </summary>
+        /// <param name="_rowIndex">行号</param>
         private void DeleteRowNTestListDataTable(int _rowIndex)
         {
             dtNTest.Rows.RemoveAt(_rowIndex);
@@ -761,7 +904,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"添加标贯/动探"
+        /// <summary>
+        /// 点击"添加标贯/动探"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddNTestButton_Click(object sender, RoutedEventArgs e)
         {
             // 传递历史取样编号列表
@@ -810,7 +957,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"编辑标贯/动探"
+        /// <summary>
+        /// 点击"编辑标贯/动探"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditNTestButton_Click(object sender, RoutedEventArgs e)
         {
             int selectIndex = this.NTestListDataGrid.SelectedIndex;
@@ -869,7 +1020,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"删除标贯/动探"
+        /// <summary>
+        /// 点击"删除标贯/动探"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteNTestButton_Click(object sender, RoutedEventArgs e)
         {
             DataRowView drv = (DataRowView)this.NTestListDataGrid.SelectedItem;
@@ -884,11 +1039,16 @@ namespace GSYGeo
                 DrawZk();
             }
         }
+
         #endregion
 
         #region 保存钻孔
-        
-        // Save命令的Executed事件处理函数
+
+        /// <summary>
+        /// Save命令的Executed事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBindingSave_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             // 提取钻孔基本信息参数
@@ -967,7 +1127,11 @@ namespace GSYGeo
             this.Visibility = Visibility.Collapsed;
         }
 
-        // Save命令的CanExecuted事件处理函数
+        /// <summary>
+        /// Save命令的CanExecuted事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBindingSave_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             // 绑定"保存此钻孔"的可用状态
@@ -981,7 +1145,11 @@ namespace GSYGeo
 
         #region 删除钻孔
 
-        // 点击"删除此钻孔"
+        /// <summary>
+        /// 点击"删除此钻孔"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteZkButton_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrEmpty(oldZkName) && !string.IsNullOrWhiteSpace(oldZkName))
@@ -1000,7 +1168,9 @@ namespace GSYGeo
 
         #region 绘制柱状图
 
-        // 绘制钻孔柱状图函数
+        /// <summary>
+        /// 绘制钻孔柱状图函数
+        /// </summary>
         public void DrawZk()
         {
             // 清空旧柱状图
@@ -1044,7 +1214,9 @@ namespace GSYGeo
             }
         }
 
-        // 绘制钻孔表头函数
+        /// <summary>
+        /// 绘制钻孔表头函数
+        /// </summary>
         private void DrawZkLabel()
         {
             // 提取绘图区域宽度和高度
@@ -1057,7 +1229,9 @@ namespace GSYGeo
             this.ZkCanvas.DrawText(w / 2 - 15, 32, this.ZKAltitudeTextBox.Text, 14, Brushes.Black, true, false, true);
         }
 
-        // 绘制地面线和钻孔线函数
+        /// <summary>
+        /// 绘制地面线和钻孔线函数
+        /// </summary>
         private void DrawZkLine()
         {
             // 提取绘图区域宽度和高度
@@ -1072,7 +1246,13 @@ namespace GSYGeo
             this.ZkCanvas.DrawLine(w / 2, y, w / 2, h, 8, Brushes.Black);
         }
 
-        // 绘制钻孔分层函数
+        /// <summary>
+        /// 绘制钻孔分层函数
+        /// </summary>
+        /// <param name="_depth">层底深度</param>
+        /// <param name="_oldDepth">上一层层底深度</param>
+        /// <param name="_maxDepth">最大钻探深度</param>
+        /// <param name="_layerLabel">分层标签</param>
         private void DrawZkLayer(double _depth,double _oldDepth,double _maxDepth,string _layerLabel)
         {
             // 提取绘图区域宽度和高度
@@ -1094,8 +1274,13 @@ namespace GSYGeo
             this.ZkCanvas.DrawText(w - 100, y - 10, layerDepthLabel, 14, Brushes.DarkBlue, true, false, true);
             this.ZkCanvas.DrawText(50, (y + oldY) / 2 - 10, _layerLabel, 14, Brushes.Red, true, false, true);
         }
-        
-        // 绘制取样函数
+
+        /// <summary>
+        /// 绘制取样函数
+        /// </summary>
+        /// <param name="_depth">取样深度</param>
+        /// <param name="_maxDepth">最大钻探深度</param>
+        /// <param name="_isDisturbed">是否为扰动样，true为扰动</param>
         private void DrawZkSample(double _depth,double _maxDepth,bool _isDisturbed)
         {
             // 提取绘图区域宽度和高度
@@ -1112,7 +1297,13 @@ namespace GSYGeo
             this.ZkCanvas.DrawCircle(w / 2 + 20, y, 5, !_isDisturbed);
         }
 
-        // 绘制标贯函数
+        /// <summary>
+        /// 绘制标贯/动探函数
+        /// </summary>
+        /// <param name="_depth">标贯/动探深度</param>
+        /// <param name="_maxDepth">最大钻探深度</param>
+        /// <param name="_value">标贯/动探击数</param>
+        /// <param name="_type">标贯/动探类型</param>
         private void DrawZkNTest(double _depth,double _maxDepth,double _value,ZkNTest.ntype _type)
         {
             // 提取绘图区域宽度和高度

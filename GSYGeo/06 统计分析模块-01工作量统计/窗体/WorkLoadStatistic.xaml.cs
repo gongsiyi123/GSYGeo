@@ -22,13 +22,18 @@ namespace GSYGeo
     {
         #region 参数定义
 
-        // 定义数据统计列表WordLoadDataGrid控件的数据源DataTable
+        /// <summary>
+        /// 定义数据统计列表WordLoadDataGrid控件的数据源DataTable
+        /// </summary>
         DataTable dtWL = new DataTable("Statistic");
 
         #endregion
 
         #region 构造函数
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public WorkLoadStatistic()
         {
             InitializeComponent();
@@ -44,7 +49,9 @@ namespace GSYGeo
 
         #region 统计数据
 
-        // 定义DataTable列
+        /// <summary>
+        /// 定义DataTable列
+        /// </summary>
         private string[] staName = new string[]
         {
             "type",
@@ -53,7 +60,9 @@ namespace GSYGeo
             "remark"
         };
 
-        // 定义工作项目数组
+        /// <summary>
+        /// 定义工作项目数组
+        /// </summary>
         public static string[] typeList = new string[]
         {
             "地形测绘",
@@ -73,7 +82,9 @@ namespace GSYGeo
             "天然建筑材料调查"
         };
 
-        // 定义单位数组
+        /// <summary>
+        /// 定义单位数组
+        /// </summary>
         public static string[] uniteList = new string[]
         {
             "km2",
@@ -93,10 +104,14 @@ namespace GSYGeo
             "处"
         };
 
-        // 定义工作量数组
+        /// <summary>
+        /// 定义工作量数组
+        /// </summary>
         public static string[] amountList = new string[15];
 
-        // 定义备注数组
+        /// <summary>
+        /// 定义备注数组
+        /// </summary>
         public static string[] remarkList = new string[]
         {
             "1:1000",
@@ -116,7 +131,9 @@ namespace GSYGeo
             ""
         };
 
-        // 初始化NTestStatisticDataGrid
+        /// <summary>
+        /// 初始化NTestStatisticDataGrid
+        /// </summary>
         private void InitialWordLoadStatisticDataGrid()
         {
             // 定义统计数据列表
@@ -161,7 +178,10 @@ namespace GSYGeo
             }
         }
 
-        // 筛选统计数据
+        /// <summary>
+        /// 筛选统计数据
+        /// </summary>
+        /// <returns></returns>
         private static StatisticWordLoad SelectStatisticData()
         {
             // 定义统计数据列表

@@ -19,13 +19,19 @@ namespace GSYGeo
     /// </summary>
     public partial class EditPeople : Window
     {
-        // 判断是新建还是编辑
+        /// <summary>
+        /// 判断是新建还是编辑
+        /// </summary>
         private bool isNew;
 
-        // 定义旧人员姓名变量
+        /// <summary>
+        /// 定义旧人员姓名变量
+        /// </summary>
         string oldName = null;
 
-        // 无参数的构造函数
+        /// <summary>
+        /// 无参数的构造函数
+        /// </summary>
         public EditPeople()
         {
             InitializeComponent();
@@ -34,7 +40,10 @@ namespace GSYGeo
             this.PeopleNameTextBox.Focus();
         }
 
-        // 带一个参数的构造函数，参数为人员姓名
+        /// <summary>
+        /// 带一个参数的构造函数，参数为人员姓名
+        /// </summary>
+        /// <param name="_name">人员姓名</param>
         public EditPeople(string _name)
         {
             InitializeComponent();
@@ -45,7 +54,11 @@ namespace GSYGeo
             this.PeopleNameTextBox.Focus();
         }
 
-        // 点击"确定"，新建和编辑人员时执行不同的操作
+        /// <summary>
+        /// 点击"确定"，新建和编辑人员时执行不同的操作
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(PeopleNameTextBox.Text) || string.IsNullOrWhiteSpace(PeopleNameTextBox.Text))

@@ -12,7 +12,10 @@ namespace GSYGeo
     /// </summary>
     public class GrainAnalysisTestDataBase
     {
-        // 初始化颗粒分析数据库，若基本表结构不存在则创建基本表结构
+        /// <summary>
+        /// 初始化颗粒分析数据库，若基本表结构不存在则创建基本表结构
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
         public static void Initial(string _projectName)
         {
             // 创建连接到设置信息数据库
@@ -29,7 +32,11 @@ namespace GSYGeo
             }
         }
 
-        // 重置并刷新土工常规数据库
+        /// <summary>
+        /// 重置并刷新土工常规数据库
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_gats">颗分试验数据列表</param>
         public static void Refresh(string _projectName,List<GrainAnalysisTest> _gats)
         {
             // 创建连接到设置信息数据库
@@ -50,13 +57,23 @@ namespace GSYGeo
             }
         }
 
-        // 查询全部数据
+        /// <summary>
+        /// 查询全部数据
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <returns></returns>
         public static List<GrainAnalysisTest> ReadAllData(string _projectName)
         {
             return SelectByZkAndLayer(_projectName, "", "");
         }
 
-        // 按钻孔和分层查询颗粒分析数据，若要筛选全部数据，则输入""
+        /// <summary>
+        /// 按钻孔和分层查询颗粒分析数据，若要筛选全部数据，则输入""
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_zkNumber">钻孔编号</param>
+        /// <param name="_layer">分层编号</param>
+        /// <returns></returns>
         public static List<GrainAnalysisTest> SelectByZkAndLayer(string _projectName, string _zkNumber, string _layer)
         {
             // 创建连接到设置信息数据库

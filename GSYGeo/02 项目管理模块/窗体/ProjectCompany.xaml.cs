@@ -19,7 +19,9 @@ namespace GSYGeo
     /// </summary>
     public partial class ProjectCompany : Window
     {
-        // 无参数的构造函数
+        /// <summary>
+        /// 无参数的构造函数
+        /// </summary>
         public ProjectCompany()
         {
             InitializeComponent();
@@ -33,7 +35,17 @@ namespace GSYGeo
             
         }
 
-        // 带参数的构造函数
+        /// <summary>
+        /// 带参数的构造函数
+        /// </summary>
+        /// <param name="_companyName">公司名称</param>
+        /// <param name="_companyCode">公司资质代码</param>
+        /// <param name="_drawer">绘图人</param>
+        /// <param name="_writer">报告编写人</param>
+        /// <param name="_checker">校核人</param>
+        /// <param name="_inspector">审查人</param>
+        /// <param name="_approver">核定人</param>
+        /// <param name="_finalApprover">批准人</param>
         public ProjectCompany(string _companyName,string _companyCode,string _drawer,string _writer,string _checker,string _inspector,string _approver,string _finalApprover)
         {
             InitializeComponent();
@@ -67,7 +79,9 @@ namespace GSYGeo
             this.FinalApproverComboBox.SelectedItem = _finalApprover;
         }
 
-        // 设置ComboBox数据
+        /// <summary>
+        /// 设置ComboBox数据
+        /// </summary>
         private void InitialComboBox()
         {
             if (SettingDataBase.ReadCompanyPeople() != null)
@@ -81,7 +95,11 @@ namespace GSYGeo
             }
         }
 
-        // Save命令的Excuted事件处理函数
+        /// <summary>
+        /// Save命令的Excuted事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBindingSave_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             
@@ -89,7 +107,11 @@ namespace GSYGeo
             this.Close();
         }
 
-        // Save命令的CanExcuted事件处理函数
+        /// <summary>
+        /// Save命令的CanExcuted事件处理函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CommandBindingSave_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             // 设置"确定"按钮的可用状态
@@ -99,7 +121,11 @@ namespace GSYGeo
             }
         }
 
-        // 点击"取消"按钮
+        /// <summary>
+        /// 点击"取消"按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;

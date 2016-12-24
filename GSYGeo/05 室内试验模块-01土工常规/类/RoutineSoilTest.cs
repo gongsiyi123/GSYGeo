@@ -6,13 +6,36 @@ using System.Threading.Tasks;
 
 namespace GSYGeo
 {
-    // 常规土工试验类
+    /// <summary>
+    /// 常规土工试验类
+    /// </summary>
     public class RoutineSoilTest
     {
-        // 无参数的构造函数
+        /// <summary>
+        /// 无参数的构造函数
+        /// </summary>
         public RoutineSoilTest() { }
 
-        // 带参数的构造函数
+        /// <summary>
+        /// 带参数的构造函数
+        /// </summary>
+        /// <param name="_zkNumber">钻孔编号</param>
+        /// <param name="_sampleDepth">取样深度</param>
+        /// <param name="_sampleLayer">取样所属分层</param>
+        /// <param name="_waterLevel">含水量</param>
+        /// <param name="_density">天然密度</param>
+        /// <param name="_specificGravity">比重</param>
+        /// <param name="_voidRatio">孔隙比</param>
+        /// <param name="_saturation">饱和度</param>
+        /// <param name="_liquidLimit">液限</param>
+        /// <param name="_plasticLimit">塑限</param>
+        /// <param name="_plasticIndex">塑性指数</param>
+        /// <param name="_liquidityIndex">液性指数</param>
+        /// <param name="_compressibility">压缩系数</param>
+        /// <param name="_modulus">压缩模量</param>
+        /// <param name="_frictionAngle">内摩擦角</param>
+        /// <param name="_cohesion">粘聚力</param>
+        /// <param name="_permeability">渗透系数</param>
         public RoutineSoilTest(string _zkNumber,double _sampleDepth,string _sampleLayer,double _waterLevel,double _density,double _specificGravity,double _voidRatio,double _saturation,double _liquidLimit,double _plasticLimit,double _plasticIndex,double _liquidityIndex,double _compressibility,double _modulus,double _frictionAngle,double _cohesion,double _permeability)
         {
             zkNumber = _zkNumber;
@@ -34,55 +57,89 @@ namespace GSYGeo
             permeability = _permeability;
         }
 
-        // 属性，取样孔号
+        /// <summary>
+        /// 取样孔号
+        /// </summary>
         public string zkNumber { get; set; }
 
-        // 属性，取样深度
+        /// <summary>
+        /// 取样深度
+        /// </summary>
         public double sampleDepth { get; set; }
 
-        // 属性，取样所属分层
+        /// <summary>
+        /// 取样所属分层
+        /// </summary>
         public string sampleLayer { get; set; }
-         
-        // 属性，含水量
+
+        /// <summary>
+        /// 含水量
+        /// </summary>
         public double waterLevel { get; set; }
 
-        // 属性，天然密度
+        /// <summary>
+        /// 天然密度
+        /// </summary>
         public double density { get; set; }
 
-        // 属性，土粒比重
+        /// <summary>
+        /// 土粒比重
+        /// </summary>
         public double specificGravity { get; set; }
 
-        // 属性，孔隙比
+        /// <summary>
+        /// 孔隙比
+        /// </summary>
         public double voidRatio { get; set; }
 
-        // 属性，饱和度
+        /// <summary>
+        /// 饱和度
+        /// </summary>
         public double saturation { get; set; }
 
-        // 属性，液限
+        /// <summary>
+        /// 液限
+        /// </summary>
         public double liquidLimit { get; set; }
 
-        // 属性，塑限
+        /// <summary>
+        /// 塑限
+        /// </summary>
         public double plasticLimit { get; set; }
 
-        // 属性，塑性指数
+        /// <summary>
+        /// 塑性指数
+        /// </summary>
         public double plasticIndex { get; set; }
 
-        // 属性，液性指数
+        /// <summary>
+        /// 液性指数
+        /// </summary>
         public double liquidityIndex { get; set; }
 
-        // 属性，压缩系数
+        /// <summary>
+        /// 压缩系数
+        /// </summary>
         public double compressibility { get; set; }
 
-        // 属性，压缩模量
+        /// <summary>
+        /// 压缩模量
+        /// </summary>
         public double modulus { get; set; }
 
-        // 属性，内摩擦角
+        /// <summary>
+        /// 内摩擦角
+        /// </summary>
         public double frictionAngle { get; set; }
 
-        // 属性，粘聚力
+        /// <summary>
+        /// 粘聚力
+        /// </summary>
         public double cohesion { get; set; }
 
-        // 属性，渗透系数
+        /// <summary>
+        /// 渗透系数
+        /// </summary>
         public double permeability { get; set; }
 
     }

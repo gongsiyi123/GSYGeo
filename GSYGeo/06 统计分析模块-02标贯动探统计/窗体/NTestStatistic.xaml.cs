@@ -23,16 +23,23 @@ namespace GSYGeo
     {
         #region 参数定义
 
-        // 定义数据统计列表NTestStatisticDataGrid控件的数据源DataTable
+        /// <summary>
+        /// 定义数据统计列表NTestStatisticDataGrid控件的数据源DataTable
+        /// </summary>
         DataTable dtNS = new DataTable("Statistic");
 
-        // 定义数据明细列表NTestDetailDataGrid控件的数据源DataTable
+        /// <summary>
+        /// 定义数据明细列表NTestDetailDataGrid控件的数据源DataTable
+        /// </summary>
         DataTable dtND = new DataTable("Detail");
 
         #endregion
 
         #region 构造函数
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public NTestStatistic()
         {
             InitializeComponent();
@@ -54,13 +61,17 @@ namespace GSYGeo
 
         #region 统计数据
 
-        // 定义统计项目
+        /// <summary>
+        /// 定义统计项目
+        /// </summary>
         private string[] staName = new string[]
         {
             "zkNumber","zkName","type","count","max","min","average","standardDeviation","variableCoefficient","correctionCoefficient","standardValue"
         };
-        
-        // 初始化NTestStatisticDataGrid，不带参数
+
+        /// <summary>
+        /// 初始化NTestStatisticDataGrid，不带参数
+        /// </summary>
         private void InitialNTestStatisticDataGrid()
         {
             // 定义统计数据列表
@@ -92,7 +103,10 @@ namespace GSYGeo
             }
         }
 
-        // 筛选统计数据
+        /// <summary>
+        /// 筛选统计数据
+        /// </summary>
+        /// <returns></returns>
         public static List<StatisticNTest> SelectStatisticData()
         {
             // 定义统计数据列表
@@ -135,7 +149,9 @@ namespace GSYGeo
 
         #region 查看明细
 
-        // 填充筛选ComboBox函数
+        /// <summary>
+        /// 填充筛选ComboBox函数
+        /// </summary>
         private void InitialComboBox()
         {
             List<string> layerNumberlist = ProjectDataBase.ReadLayerNumberList(Program.currentProject);
@@ -148,13 +164,17 @@ namespace GSYGeo
             this.LayerListComboBox.ItemsSource = layerlist;
         }
 
-        // 定义明细查看项目
+        /// <summary>
+        /// 定义明细查看项目
+        /// </summary>
         private string[] detName = new string[]
         {
             "zkNumber","nTestDepth","nTestValue","nTestType"
         };
 
-        // 初始化NTestDetailcDataGrid，不带参数
+        /// <summary>
+        /// 初始化NTestDetailcDataGrid，不带参数
+        /// </summary>
         private void InitialNTestDetailDataGrid()
         {
             // 定义NTestStatisticDataGrid数据列
@@ -245,6 +265,11 @@ namespace GSYGeo
 
         #region 其他
 
+        /// <summary>
+        /// 点击"关闭"按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
