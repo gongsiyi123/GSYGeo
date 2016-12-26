@@ -604,6 +604,29 @@ namespace GSYGeo
 
         #endregion
 
+        #region 统计分析模块-抗剪强度计算
+
+        /// <summary>
+        /// 单击菜单"统计分析"-"承载力和变形模量计算"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ShearStrengthCalculateMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ShearingStrengthCalculate();
+        }
+
+        /// <summary>
+        /// 抗剪强度计算函数
+        /// </summary>
+        private void ShearingStrengthCalculate()
+        {
+            ShearingStrengthCalculation calculation = new ShearingStrengthCalculation();
+            calculation.ShowDialog();
+        }
+
+        #endregion
+
         #region 绘图模块-绘制钻孔柱状图
 
         /// <summary>
@@ -965,5 +988,7 @@ namespace GSYGeo
         }
 
         #endregion
+
+        
     }
 }

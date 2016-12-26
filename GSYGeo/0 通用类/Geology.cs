@@ -32,6 +32,21 @@ namespace GSYGeo
             {"q3all","Q3al+l" },
             {"q3alpl","Q3al+pl" },
             {"q3dlcol","Q3dl+col" },
+            {"q2al","Q2al" },
+            {"q2all","Q2al+l" },
+            {"q2alpl","Q2al+pl" },
+            {"q2dlcol","Q2dl+col" },
+            {"zhendan","Z" },
+            {"hanwu","Ꞓ" },
+            {"aotao","O" },
+            {"zhiliu","S" },
+            {"nipen","D" },
+            {"shitan","C" },
+            {"erdie","P" },
+            {"sandie","T" },
+            {"zhuluo","J" },
+            {"baie","K" },
+            {"disan","E" }
         };
 
         /// <summary>

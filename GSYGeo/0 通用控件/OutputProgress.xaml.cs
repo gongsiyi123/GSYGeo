@@ -32,6 +32,7 @@ namespace GSYGeo
             RST,
             GAT,
             BearingAndModulus,
+            ShearingStrength,
             ZkCad,
             JkCad
         };
@@ -223,6 +224,8 @@ namespace GSYGeo
                 GATStatistic.OutputToWord(Path);
             else if (BWType == OutputType.BearingAndModulus)
                 BearingAndModulusCalculation.OutputToWord(Path);
+            else if (BWType == OutputType.ShearingStrength)
+                ShearingStrengthCalculation.OutputToWord(Path);
             else if (BWType == OutputType.ZkCad)
                 OutputZkToCad.OutputToCad(Path, OutputZkList, OutputScaleList);
             else if (BWType == OutputType.JkCad)

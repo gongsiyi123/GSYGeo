@@ -108,19 +108,19 @@ namespace GSYGeo
             if (CurrentStandard == "Hubei")
             {
                 // 初始化土质类型列表
-                foreach (string type in HubeiLocalStandard.RstSoilType)
+                foreach (string type in HubeiLocalStandardBearingAndModulus.RstSoilType)
                     RstTypes.Add(type);
-                foreach (string type in HubeiLocalStandard.CptSoilType)
+                foreach (string type in HubeiLocalStandardBearingAndModulus.CptSoilType)
                     CptTypes.Add(type);
-                foreach (string type in HubeiLocalStandard.NTestSoilType)
+                foreach (string type in HubeiLocalStandardBearingAndModulus.NTestSoilType)
                     NTestTypes.Add(type);
 
                 // 初始化当前选择的土质类型
                 for (int i = 0; i < layerName.Count; i++)
                 {
-                    SelectRstType.Add(HubeiLocalStandard.SelectRstSoilType(layerName[i]));
-                    SelectCptType.Add(HubeiLocalStandard.SelectCptSoilType(layerName[i]));
-                    SelectNTestType.Add(HubeiLocalStandard.SelectNTestSoilType(layerName[i]));
+                    SelectRstType.Add(HubeiLocalStandardBearingAndModulus.SelectRstSoilType(layerName[i]));
+                    SelectCptType.Add(HubeiLocalStandardBearingAndModulus.SelectCptSoilType(layerName[i]));
+                    SelectNTestType.Add(HubeiLocalStandardBearingAndModulus.SelectNTestSoilType(layerName[i]));
                 }
             }
         }

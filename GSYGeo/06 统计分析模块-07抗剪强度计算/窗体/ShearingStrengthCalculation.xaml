@@ -1,0 +1,117 @@
+﻿<Window x:Class="GSYGeo.ShearingStrengthCalculation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GSYGeo"
+        mc:Ignorable="d"
+        Title="抗剪强度计算" Height="300" Width="600" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" BorderBrush="LightGray" BorderThickness="0,0,0,1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="请选择分层：" Margin="5,5,0,5" VerticalAlignment="Center"/>
+                <ComboBox Grid.Column="1" Name="LayerComboBox" Margin="0,5,5,5" MinWidth="150" SelectionChanged="LayerComboBox_SelectionChanged"/>
+                <TextBlock Grid.Column="2" Name="StandardTextBlock" Margin="5" Foreground="Gray" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" BorderBrush="LightGray" BorderThickness="0,0,1,0">
+                <StackPanel>
+                    <TextBlock Margin="5,10,5,5" Text="按室内试验指标" HorizontalAlignment="Center"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="内摩擦角：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="粘聚力：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Name="RSTFrictionTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Name="RSTCohesionTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="0,0,1,0">
+                <StackPanel>
+                    <TextBlock Margin="5,10,5,5" Text="按Ps值" HorizontalAlignment="Center"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="土质类型：" Margin="5,5,0,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="计算指标：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="内摩擦角：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="粘聚力：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
+                        <ComboBox Grid.Row="0" Grid.Column="1" Name="CPTTypeComboBox" Margin="0,5,5,5" SelectionChanged="CPTTypeComboBox_SelectionChanged"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="CPTParameterTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Name="CPTFrictionTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Name="CPTCohesionTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="2" BorderBrush="LightGray">
+                <StackPanel>
+                    <TextBlock Margin="5,10,5,5" Text="按标贯击数" HorizontalAlignment="Center"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="土质类型：" Margin="5,5,0,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="计算指标：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="内摩擦角：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="粘聚力：" Margin="5,5,0,5" HorizontalAlignment="Right"/>
+                        <ComboBox Grid.Row="0" Grid.Column="1" Name="NTestTypeComboBox" Margin="0,5,5,5" SelectionChanged="NTestTypeComboBox_SelectionChanged"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="NTestParameterTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Name="NTestFrictionTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Name="NTestCohesionTextBox" Margin="0,5,5,5" IsReadOnly="True" HorizontalContentAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Border Grid.Row="2" Background="LightGray" BorderBrush="Gray" BorderThickness="0,1,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Name="OutputToWordButton" Content="输出为Word文档" Margin="5" Click="OutputToWordButton_Click"/>
+                <Button Grid.Column="2" Name="CloseButton" Content="关闭" Margin="5" IsCancel="True"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

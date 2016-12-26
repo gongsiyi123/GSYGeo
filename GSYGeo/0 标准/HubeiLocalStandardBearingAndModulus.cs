@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace GSYGeo
 {
     /// <summary>
-    /// 湖北省地方标准
+    /// 湖北省地方标准，查承载力和压缩模量
     /// </summary>
-    public class HubeiLocalStandard
+    public class HubeiLocalStandardBearingAndModulus
     {
         #region 土质识别
 

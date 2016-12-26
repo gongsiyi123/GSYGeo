@@ -120,6 +120,12 @@
     <Compile Include="06 统计分析模块-01工作量统计\窗体\WorkLoadStatistic.xaml.cs">
       <DependentUpon>WorkLoadStatistic.xaml</DependentUpon>
     </Compile>
+    <Compile Include="06 统计分析模块-07抗剪强度计算\窗体\ShearingStrengthCalculation.xaml.cs">
+      <DependentUpon>ShearingStrengthCalculation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="06 统计分析模块-07抗剪强度计算\窗体\ShearingStrengthToWord.xaml.cs">
+      <DependentUpon>ShearingStrengthToWord.xaml</DependentUpon>
+    </Compile>
     <Page Include="01 设置模块\窗体\EditPeople.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -199,10 +205,11 @@
     </Compile>
     <Compile Include="0 通用类\CAD.cs" />
     <Compile Include="0 通用类\Constants.cs" />
-    <Compile Include="0 标准\HubeiLocalStandard.cs" />
+    <Compile Include="0 标准\HubeiLocalStandardBearingAndModulus.cs" />
     <Compile Include="06 统计分析模块-06承载力压缩模量计算\窗体\BearingAndModulusToWord.xaml.cs">
       <DependentUpon>BearingAndModulusToWord.xaml</DependentUpon>
     </Compile>
+    <Compile Include="0 标准\HubeiLocalStandardShearingStrength.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -279,6 +286,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="06 统计分析模块-07抗剪强度计算\窗体\ShearingStrengthCalculation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="06 统计分析模块-07抗剪强度计算\窗体\ShearingStrengthToWord.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="02 项目管理模块\窗体\NewProject.xaml.cs">
@@ -341,6 +356,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="06 统计分析模块-06承载力压缩模量计算\类\" />
+    <Folder Include="06 统计分析模块-07抗剪强度计算\类\" />
     <Folder Include="07 绘图模块-01钻孔柱状图\类\" />
     <Folder Include="07 绘图模块-02静力触探曲线图\类\" />
     <Folder Include="10 帮助模块\类\" />

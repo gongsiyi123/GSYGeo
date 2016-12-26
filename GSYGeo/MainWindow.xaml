@@ -64,7 +64,7 @@
                 <MenuItem Header="颗粒分析试验统计" Name="GATStatisticMenu" Click="GATStatisticMenu_Click"/>
                 <Separator/>
                 <MenuItem Header="承载力和压缩模量计算" Name="BearAndModulusCalculateMenu" Click="BearAndModulusCalculateMenu_Click"/>
-                <MenuItem Header="抗剪强度计算(待开发)" Name="ShearStrengthCalculateMenu" IsEnabled="False"/>
+                <MenuItem Header="抗剪强度计算(待开发)" Name="ShearStrengthCalculateMenu" Click="ShearStrengthCalculateMenu_Click"/>
                 <MenuItem Header="桩侧、桩端阻力计算(待开发)" Name="PileResistanceCalculationMenu" IsEnabled="False"/>
             </MenuItem>
             <MenuItem Header="绘图" Name="DrawMenu">

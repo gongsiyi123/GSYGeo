@@ -62,7 +62,7 @@ namespace GSYGeo
         List<StatisticCPT> CptStatisticList = CPTStatistic.SelectStatisticData();
 
         /// <summary>
-        /// 承载力和压缩模量结构体
+        /// 承载力和压缩模量统计结构体
         /// </summary>
         public struct BearingAndModulus
         {
@@ -187,7 +187,7 @@ namespace GSYGeo
         private void InitialRSTTypeComboBox()
         {
             if (CurrentStandard == "Hubei")
-                this.RSTTypeComboBox.ItemsSource = HubeiLocalStandard.RstSoilType;
+                this.RSTTypeComboBox.ItemsSource = HubeiLocalStandardBearingAndModulus.RstSoilType;
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace GSYGeo
         private void InitialCPTTypeComboBox()
         {
             if (CurrentStandard == "Hubei")
-                this.CPTTypeComboBox.ItemsSource = HubeiLocalStandard.CptSoilType;
+                this.CPTTypeComboBox.ItemsSource = HubeiLocalStandardBearingAndModulus.CptSoilType;
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace GSYGeo
         private void InitialNTestTypeComboBox()
         {
             if (CurrentStandard == "Hubei")
-                this.NTestTypeComboBox.ItemsSource = HubeiLocalStandard.NTestSoilType;
+                this.NTestTypeComboBox.ItemsSource = HubeiLocalStandardBearingAndModulus.NTestSoilType;
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace GSYGeo
         {
             // 根据当前规范查承载力
             if (CurrentStandard == "Hubei")
-                return HubeiLocalStandard.SelectRstSoilType(_soilName);
+                return HubeiLocalStandardBearingAndModulus.SelectRstSoilType(_soilName);
 
             // 查询不到时返回"无法识别"
             return "无法识别";
@@ -245,14 +245,14 @@ namespace GSYGeo
         {
             // 根据当前规范查承载力
             if (CurrentStandard == "Hubei")
-                return HubeiLocalStandard.SelectCptSoilType(_soilName);
+                return HubeiLocalStandardBearingAndModulus.SelectCptSoilType(_soilName);
 
             // 查询不到时返回"无法识别"
             return "无法识别";
         }
 
         /// <summary>
-        /// 按标贯/动探查表时的土质类型识别
+        /// 按标贯查表时的土质类型识别
         /// </summary>
         /// <param name="_soilName">岩土名称</param>
         /// <returns></returns>
@@ -260,7 +260,7 @@ namespace GSYGeo
         {
             // 根据当前规范查承载力
             if (CurrentStandard == "Hubei")
-                return HubeiLocalStandard.SelectNTestSoilType(_soilName);
+                return HubeiLocalStandardBearingAndModulus.SelectNTestSoilType(_soilName);
 
             // 查询不到时返回"无法识别"
             return "无法识别";
@@ -285,16 +285,16 @@ namespace GSYGeo
                 // 土质类型为老黏性土
                 if (_soilType == "老黏性土")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingRstOldClay.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingRstOldClay.Data;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingRstOldClay.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingRstOldClay.Data;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
 
                 // 土质类型为淤泥、淤泥质土
                 if (_soilType == "淤泥、淤泥质土")
                 {
-                    double[] paraRow = HubeiLocalStandard.BearingRstSludge.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingRstSludge.Data;
+                    double[] paraRow = HubeiLocalStandardBearingAndModulus.BearingRstSludge.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingRstSludge.Data;
                     return GeoMath.Interpolation(_numberRow, paraRow, values);
                 }
             }
@@ -319,27 +319,27 @@ namespace GSYGeo
                 // 土质类型为一般黏性土
                 if (_soilType == "一般黏性土")
                 {
-                    double[] paraRow = HubeiLocalStandard.BearingRstClay.ParaRow;
-                    double[] paraCol = HubeiLocalStandard.BearingRstClay.ParaCol;
-                    double[,] values = HubeiLocalStandard.BearingRstClay.Data;
+                    double[] paraRow = HubeiLocalStandardBearingAndModulus.BearingRstClay.ParaRow;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingRstClay.ParaCol;
+                    double[,] values = HubeiLocalStandardBearingAndModulus.BearingRstClay.Data;
                     return GeoMath.TwoWayInterpolation(_numberRow, _numberCol, paraRow, paraCol, values);
                 }
 
                 // 土质类型为新近沉积黏性土
                 if (_soilType == "新近沉积黏性土")
                 {
-                    double[] paraRow = HubeiLocalStandard.BearingRstNewClay.ParaRow;
-                    double[] paraCol = HubeiLocalStandard.BearingRstNewClay.ParaCol;
-                    double[,] values = HubeiLocalStandard.BearingRstNewClay.Data;
+                    double[] paraRow = HubeiLocalStandardBearingAndModulus.BearingRstNewClay.ParaRow;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingRstNewClay.ParaCol;
+                    double[,] values = HubeiLocalStandardBearingAndModulus.BearingRstNewClay.Data;
                     return GeoMath.TwoWayInterpolation(_numberRow, _numberCol, paraRow, paraCol, values);
                 }
 
                 // 土质类型为粉土
                 if (_soilType == "粉土")
                 {
-                    double[] paraRow = HubeiLocalStandard.BearingRstSilt.ParaRow;
-                    double[] paraCol = HubeiLocalStandard.BearingRstSilt.ParaCol;
-                    double[,] values = HubeiLocalStandard.BearingRstSilt.Data;
+                    double[] paraRow = HubeiLocalStandardBearingAndModulus.BearingRstSilt.ParaRow;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingRstSilt.ParaCol;
+                    double[,] values = HubeiLocalStandardBearingAndModulus.BearingRstSilt.Data;
                     return GeoMath.TwoWayInterpolation(_numberRow, _numberCol, paraRow, paraCol, values);
                 }
             }
@@ -520,48 +520,48 @@ namespace GSYGeo
                 // 土质类型为老黏性土
                 if (_soilType == "一般黏性土")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingAndModulusCptClay.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusCptClay.BearingData;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptClay.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptClay.BearingData;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
 
                 // 土质类型为老黏性土
                 if (_soilType == "老黏性土")
                 {
-                    double[] paraRow = HubeiLocalStandard.BearingAndModulusCptOldClay.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusCptOldClay.BearingData;
+                    double[] paraRow = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptOldClay.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptOldClay.BearingData;
                     return GeoMath.Interpolation(_numberRow, paraRow, values);
                 }
 
                 // 土质类型为粉土
                 if (_soilType == "粉土")
                 {
-                    double[] paraRow = HubeiLocalStandard.BearingAndModulusCptSilt.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusCptSilt.BearingData;
+                    double[] paraRow = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptSilt.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptSilt.BearingData;
                     return GeoMath.Interpolation(_numberRow, paraRow, values);
                 }
 
                 // 土质类型为素填土
                 if (_soilType == "素填土")
                 {
-                    double[] paraRow = HubeiLocalStandard.BearingAndModulusCptFill.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusCptFill.BearingData;
+                    double[] paraRow = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptFill.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptFill.BearingData;
                     return GeoMath.Interpolation(_numberRow, paraRow, values);
                 }
 
                 // 土质类型为粉细砂
                 if (_soilType == "粉、细砂土")
                 {
-                    double[] paraRow = HubeiLocalStandard.BearingAndModulusCptFineSand.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusCptFineSand.BearingData;
+                    double[] paraRow = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptFineSand.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptFineSand.BearingData;
                     return GeoMath.Interpolation(_numberRow, paraRow, values);
                 }
 
                 // 土质类型为中粗砂
                 if (_soilType == "中、粗砂土")
                 {
-                    double[] paraRow = HubeiLocalStandard.BearingAndModulusCptCoarseSand.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusCptCoarseSand.BearingData;
+                    double[] paraRow = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptCoarseSand.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptCoarseSand.BearingData;
                     return GeoMath.Interpolation(_numberRow, paraRow, values);
                 }
             }
@@ -585,48 +585,48 @@ namespace GSYGeo
                 // 土质类型为老黏性土
                 if (_soilType == "一般黏性土")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingAndModulusCptClay.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusCptClay.ModulusData;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptClay.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptClay.ModulusData;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
 
                 // 土质类型为老黏性土
                 if (_soilType == "老黏性土")
                 {
-                    double[] paraRow = HubeiLocalStandard.BearingAndModulusCptOldClay.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusCptOldClay.ModulusData;
+                    double[] paraRow = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptOldClay.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptOldClay.ModulusData;
                     return GeoMath.Interpolation(_numberRow, paraRow, values);
                 }
 
                 // 土质类型为粉土
                 if (_soilType == "粉土")
                 {
-                    double[] paraRow = HubeiLocalStandard.BearingAndModulusCptSilt.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusCptSilt.ModulusData;
+                    double[] paraRow = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptSilt.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptSilt.ModulusData;
                     return GeoMath.Interpolation(_numberRow, paraRow, values);
                 }
 
                 // 土质类型为素填土
                 if (_soilType == "素填土")
                 {
-                    double[] paraRow = HubeiLocalStandard.BearingAndModulusCptFill.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusCptFill.ModulusData;
+                    double[] paraRow = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptFill.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptFill.ModulusData;
                     return GeoMath.Interpolation(_numberRow, paraRow, values);
                 }
 
                 // 土质类型为粉细砂
                 if (_soilType == "粉、细砂土")
                 {
-                    double[] paraRow = HubeiLocalStandard.BearingAndModulusCptFineSand.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusCptFineSand.ModulusData;
+                    double[] paraRow = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptFineSand.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptFineSand.ModulusData;
                     return GeoMath.Interpolation(_numberRow, paraRow, values);
                 }
 
                 // 土质类型为中粗砂
                 if (_soilType == "中、粗砂土")
                 {
-                    double[] paraRow = HubeiLocalStandard.BearingAndModulusCptCoarseSand.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusCptCoarseSand.ModulusData;
+                    double[] paraRow = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptCoarseSand.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusCptCoarseSand.ModulusData;
                     return GeoMath.Interpolation(_numberRow, paraRow, values);
                 }
             }
@@ -714,56 +714,56 @@ namespace GSYGeo
                 // 土质类型为碎石土
                 if (_soilType == "碎石土")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingAndModulusNTestGravels.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusNTestGravels.BearingData;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestGravels.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestGravels.BearingData;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
 
                 // 土质类型为一般黏性土
                 if (_soilType=="一般黏性土")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingAndModulusNTestClay.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusNTestClay.BearingData;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestClay.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestClay.BearingData;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
 
                 // 土质类型为老黏性土
                 if (_soilType == "老黏性土")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingAndModulusNTestOldClay.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusNTestOldClay.BearingData;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestOldClay.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestOldClay.BearingData;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
 
                 // 土质类型为杂填土
                 if (_soilType == "杂填土")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingAndModulusNTestMixedFill.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusNTestMixedFill.BearingData;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestMixedFill.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestMixedFill.BearingData;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
 
                 // 土质类型为粉、细砂
                 if (_soilType == "粉、细砂")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingAndModulusNTestFineSand.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusNTestFineSand.BearingData;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestFineSand.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestFineSand.BearingData;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
 
                 // 土质类型为中、粗砂
                 if (_soilType == "中、粗砂")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingAndModulusNTestCoarseSand.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusNTestCoarseSand.BearingData;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestCoarseSand.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestCoarseSand.BearingData;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
 
                 // 土质类型为砾砂
                 if (_soilType == "砾砂")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingAndModulusNTestGravellySand.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusNTestGravellySand.BearingData;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestGravellySand.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestGravellySand.BearingData;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
             }
@@ -787,40 +787,40 @@ namespace GSYGeo
                 // 土质类型为一般黏性土
                 if (_soilType == "一般黏性土")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingAndModulusNTestClay.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusNTestClay.ModulusData;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestClay.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestClay.ModulusData;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
 
                 // 土质类型为老黏性土
                 if (_soilType == "老黏性土")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingAndModulusNTestOldClay.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusNTestOldClay.ModulusData;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestOldClay.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestOldClay.ModulusData;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
 
                 // 土质类型为杂填土
                 if (_soilType == "杂填土")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingAndModulusNTestMixedFill.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusNTestMixedFill.ModulusData;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestMixedFill.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestMixedFill.ModulusData;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
 
                 // 土质类型为粉、细砂
                 if (_soilType == "粉、细砂")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingAndModulusNTestFineSand.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusNTestFineSand.ModulusData;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestFineSand.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestFineSand.ModulusData;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
 
                 // 土质类型为中、粗砂
                 if (_soilType == "中、粗砂")
                 {
-                    double[] paraCol = HubeiLocalStandard.BearingAndModulusNTestCoarseSand.ParaCol;
-                    double[] values = HubeiLocalStandard.BearingAndModulusNTestCoarseSand.ModulusData;
+                    double[] paraCol = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestCoarseSand.ParaCol;
+                    double[] values = HubeiLocalStandardBearingAndModulus.BearingAndModulusNTestCoarseSand.ModulusData;
                     return GeoMath.Interpolation(_numberRow, paraCol, values);
                 }
             }

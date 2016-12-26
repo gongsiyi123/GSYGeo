@@ -687,5 +687,15 @@ namespace GSYGeo
             // 返回
             return table;
         }
+
+        /// <summary>
+        /// 添加抗剪强度综合取值表
+        /// </summary>
+        /// <param name="_ssStatistic">抗剪强度综合取值数据</param>
+        /// <returns></returns>
+        public MSWord.Table AddShearingStrengthTable(List<ShearingStrengthCalculation.ShearingStrength> _ssStatistic)
+        {
+            return null;
+        }
     }
 }
