@@ -64,7 +64,7 @@
                 <MenuItem Header="颗粒分析试验统计" Name="GATStatisticMenu" Click="GATStatisticMenu_Click"/>
                 <Separator/>
                 <MenuItem Header="承载力和压缩模量计算" Name="BearAndModulusCalculateMenu" Click="BearAndModulusCalculateMenu_Click"/>
-                <MenuItem Header="抗剪强度计算(待开发)" Name="ShearStrengthCalculateMenu" Click="ShearStrengthCalculateMenu_Click"/>
+                <MenuItem Header="抗剪强度计算" Name="ShearStrengthCalculateMenu" Click="ShearStrengthCalculateMenu_Click"/>
                 <MenuItem Header="桩侧、桩端阻力计算(待开发)" Name="PileResistanceCalculationMenu" IsEnabled="False"/>
             </MenuItem>
             <MenuItem Header="绘图" Name="DrawMenu">
@@ -74,7 +74,7 @@
                 <MenuItem Header="启动CAD绘制剖面图(待开发)" Name="StartCadMenu" IsEnabled="False"/>
             </MenuItem>
             <MenuItem Header="报告" Name="ReportMenu">
-                <MenuItem Header="生成参数统计表格(待开发)" Name="ParameterStatisticMenu" IsEnabled="False"/>
+                <MenuItem Header="生成参数统计表格" Name="ParameterStatisticMenu" Click="ParameterStatisticMenu_Click"/>
                 <Separator/>
                 <MenuItem Header="生成勘察报告(待开发)" Name="GeotechnicalReportProductMenu" IsEnabled="False"/>
                 <MenuItem Header="勘察报告设置(待开发)" Name="GeotechnicalReportSettingMenu" IsEnabled="False"/>

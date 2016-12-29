@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
 
 namespace GSYGeo
 {
@@ -49,17 +50,17 @@ namespace GSYGeo
         /// <summary>
         /// 预加载标贯/动探统计列表
         /// </summary>
-        List<StatisticNTest> NTestStatisticList = NTestStatistic.SelectStatisticData();
+        static List<StatisticNTest> NTestStatisticList;
 
         /// <summary>
         /// 预加载试验指标统计列表
         /// </summary>
-        List<StatisticRST> RstStatisticList = RSTStatistic.SelectStatisticData();
+        static List<StatisticRST> RstStatisticList;
 
         /// <summary>
         /// 预加载Ps值统计列表
         /// </summary>
-        List<StatisticCPT> CptStatisticList = CPTStatistic.SelectStatisticData();
+        static List<StatisticCPT> CptStatisticList;
 
         /// <summary>
         /// 承载力和压缩模量统计结构体
@@ -89,12 +90,12 @@ namespace GSYGeo
         /// <summary>
         /// 实例化承载力和压缩模量统计结构体
         /// </summary>
-        public BearingAndModulus StatisticResult = new BearingAndModulus();
+        public static BearingAndModulus StatisticResult = new BearingAndModulus();
 
         /// <summary>
         /// 初始化试验指标统计结构体
         /// </summary>
-        private void ClearRstStatisticResult()
+        private static void ClearRstStatisticResult()
         {
             StatisticResult.RstType = "无法识别";
             StatisticResult.BearingByRst = "/";
@@ -107,7 +108,7 @@ namespace GSYGeo
         /// <summary>
         /// 初始化Ps值统计结构体
         /// </summary>
-        private void ClearCptStatisticResult()
+        private static void ClearCptStatisticResult()
         {
             StatisticResult.CptType = "无法识别";
             StatisticResult.CptParameter = "/";
@@ -121,7 +122,7 @@ namespace GSYGeo
         /// <summary>
         /// 初始化标贯动探统计结构体
         /// </summary>
-        private void ClearNTestStatisticResult()
+        private static void ClearNTestStatisticResult()
         {
             StatisticResult.NTestType = "无法识别";
             StatisticResult.NTestParameter = "/";
@@ -140,7 +141,7 @@ namespace GSYGeo
         /// <summary>
         /// 临时存储土工试验指标字符串
         /// </summary>
-        private string RstParameter = "/";
+        private static string RstParameter = "/";
 
         #endregion
 
@@ -152,6 +153,12 @@ namespace GSYGeo
         public BearingAndModulusCalculation()
         {
             InitializeComponent();
+
+            // 实例化计算中窗体,执行预加载
+            OutputStatisticToWord.ShowCalculatingProgress(OutputProgress.OutputType.PreLoadAll);
+            NTestStatisticList = OutputStatisticToWord.NTestStatisticList;
+            RstStatisticList = OutputStatisticToWord.RstStatisticList;
+            CptStatisticList = OutputStatisticToWord.CptStatisticList;
 
             // 初始化选框和标签
             InitialStandardTextBlock();
@@ -351,7 +358,7 @@ namespace GSYGeo
         /// <summary>
         /// 根据试验指标计算承载力函数
         /// </summary>
-        public void CalcuByRst(List<StatisticRST> _rstStatisticList,string _soilType)
+        public static void CalcuByRst(List<StatisticRST> _rstStatisticList,string _soilType)
         {
             // 没有统计数据时退出
             if (_rstStatisticList == null)
@@ -485,8 +492,8 @@ namespace GSYGeo
         private void FillRstTextBox()
         {
             this.RSTParameterTextBox.Text = RstParameter;
-            this.RSTBearingTextBox.Text = StatisticResult.BearingByRst;
-            this.RSTModulusTextBox.Text = StatisticResult.ModulusByRst;
+            this.RSTBearingTextBox.Text = StatisticResult.BearingByRst == "/" ? "/" : StatisticResult.BearingByRst + " kPa";
+            this.RSTModulusTextBox.Text = StatisticResult.ModulusByRst == "/" ? "/" : StatisticResult.ModulusByRst + " MPa";
         }
         
         /// <summary>
@@ -638,7 +645,7 @@ namespace GSYGeo
         /// <summary>
         /// 根据Ps计算承载力和压缩模量函数
         /// </summary>
-        public void CalcuByCpt(List<StatisticCPT> _cptStatisticList,string _soilType)
+        public static void CalcuByCpt(List<StatisticCPT> _cptStatisticList,string _soilType)
         {
             // 没有统计数据时退出
             if (_cptStatisticList == null)
@@ -678,9 +685,9 @@ namespace GSYGeo
         /// </summary>
         private void FillCptTextBox()
         {
-            this.CPTParameterTextBox.Text = StatisticResult.CptParameter;
-            this.CPTBearingTextBox.Text = StatisticResult.BearingByCpt;
-            this.CPTModulusTextBox.Text = StatisticResult.ModulusByCpt;
+            this.CPTParameterTextBox.Text = StatisticResult.CptParameter == "/" ? "/" : StatisticResult.CptParameter + " MPa";
+            this.CPTBearingTextBox.Text = StatisticResult.BearingByCpt == "/" ? "/" : StatisticResult.BearingByCpt + " kPa";
+            this.CPTModulusTextBox.Text = StatisticResult.ModulusByCpt == "/" ? "/" : StatisticResult.ModulusByCpt + " MPa";
         }
 
         /// <summary>
@@ -832,7 +839,7 @@ namespace GSYGeo
         /// <summary>
         /// 根据标贯/动探计算承载力和压缩模量函数
         /// </summary>
-        public void CalcuByNTest(List<StatisticNTest> _nTestStatisticList,string _soilType)
+        public static void CalcuByNTest(List<StatisticNTest> _nTestStatisticList,string _soilType)
         {
             // 没有统计数据时退出
             if (_nTestStatisticList == null)
@@ -915,9 +922,9 @@ namespace GSYGeo
         /// </summary>
         private void FillNTestTextBox()
         {
-            this.NTestParameterTextBox.Text = StatisticResult.NTestParameter;
-            this.NTestBearingTextBox.Text = StatisticResult.BearingByNTest;
-            this.NTestModulusTextBox.Text = StatisticResult.ModulusByNTest;
+            this.NTestParameterTextBox.Text = StatisticResult.NTestParameter == "/" ? "/" : StatisticResult.NTestParameter + " 击";
+            this.NTestBearingTextBox.Text = StatisticResult.BearingByNTest == "/" ? "/" : StatisticResult.BearingByNTest + " kPa";
+            this.NTestModulusTextBox.Text = StatisticResult.ModulusByNTest == "/" ? "/" : StatisticResult.ModulusByNTest + " MPa";
         }
 
         /// <summary>
@@ -950,56 +957,9 @@ namespace GSYGeo
             // 点击"确认并输出"按钮后，启动输出程序
             if (output.DialogResult==true)
             {
-                // 清空统计列表结构体
-                statisticListOutput.Clear();
-
-                // 赋值统计结构体列表
-                for(int i = 0; i < output.dtLayer.Rows.Count; i++)
-                {
-                    // 更新当前的分层编号和分层名称
-                    LayerNumber = ProjectDataBase.ReadLayerNumberList(Program.currentProject)[i];
-                    LayerName = ProjectDataBase.ReadLayerNameList(Program.currentProject)[i];
-
-                    // 获取传递的土质参数
-                    StatisticResult.layerInfo = output.dtLayer.Rows[i]["layerInfo"].ToString();
-                    StatisticResult.RstType = output.dtLayer.Rows[i]["currentRstType"].ToString();
-                    StatisticResult.CptType = output.dtLayer.Rows[i]["currentCptType"].ToString();
-                    StatisticResult.NTestType = output.dtLayer.Rows[i]["currentNTestType"].ToString();
-
-                    // 根据传递的土质类型重新计算参数
-                    CalcuByRst(RstStatisticList, StatisticResult.RstType);
-                    CalcuByCpt(CptStatisticList, StatisticResult.CptType);
-                    CalcuByNTest(NTestStatisticList, StatisticResult.NTestType);
-
-                    // 赋值其他参数
-                    StatisticResult.CptParameter = StatisticResult.CptParameter == "/" ? "/" : StatisticResult.CptParameter.Substring(StatisticResult.CptParameter.IndexOf("=") + 1);
-                    StatisticResult.NTestParameter = StatisticResult.NTestParameter == "/" ? "/" : StatisticResult.NTestParameter.Substring(StatisticResult.NTestParameter.IndexOf("=") + 1);
-
-                    double[] tmp = new double[3] { 9999, 9999, 9999 };
-                    double num;
-
-                    if (double.TryParse(StatisticResult.BearingByRst, out num))
-                        tmp[0] = num;
-                    if (double.TryParse(StatisticResult.BearingByCpt, out num))
-                        tmp[1] = num;
-                    if (double.TryParse(StatisticResult.BearingByNTest, out num))
-                        tmp[2] = num;
-                    StatisticResult.BearingFinal = tmp.Min() < 9999 ? tmp.Min().ToString("0") : "/";
-
-                    for (int k = 0; k < 3; k++)
-                        tmp[k] = 9999;
-                    if (double.TryParse(StatisticResult.ModulusByRst, out num))
-                        tmp[0] = num;
-                    if (double.TryParse(StatisticResult.ModulusByCpt, out num))
-                        tmp[1] = num;
-                    if (double.TryParse(StatisticResult.ModulusByNTest, out num))
-                        tmp[2] = num;
-                    StatisticResult.ModulusFinal = tmp.Min() < 9999 ? tmp.Min().ToString("0.0") : "/";
-
-                    // 添加到列表
-                    statisticListOutput.Add(StatisticResult);
-                }
-
+                // 计算统计结果
+                CalcuOutput(output.dtLayer, RstStatisticList, CptStatisticList, NTestStatisticList);
+                
                 // 选择输出目录
                 string folderPath;
                 System.Windows.Forms.FolderBrowserDialog programPathBrowser = new System.Windows.Forms.FolderBrowserDialog();
@@ -1015,6 +975,66 @@ namespace GSYGeo
 
                 // 启动输出窗体
                 ShowProgressBar(path);
+            }
+        }
+
+        /// <summary>
+        /// 计算统计结果
+        /// </summary>
+        /// <param name="_dt">从土质类型窗口获取的DataTable</param>
+        /// <param name="_rstStaList">试验指标统计列表</param>
+        /// <param name="_cptStaList">静力触探摩阻力统计列表</param>
+        /// <param name="_ntestStaList">标贯/动探统计列表</param>
+        public static void CalcuOutput(DataTable _dt, List<StatisticRST> _rstStaList, List<StatisticCPT> _cptStaList, List<StatisticNTest> _ntestStaList)
+        {
+            // 清空统计列表结构体
+            statisticListOutput.Clear();
+
+            // 赋值统计结构体列表
+            for (int i = 0; i < _dt.Rows.Count; i++)
+            {
+                // 更新当前的分层编号和分层名称
+                LayerNumber = ProjectDataBase.ReadLayerNumberList(Program.currentProject)[i];
+                LayerName = ProjectDataBase.ReadLayerNameList(Program.currentProject)[i];
+
+                // 获取传递的土质参数
+                StatisticResult.layerInfo = _dt.Rows[i]["layerInfo"].ToString();
+                StatisticResult.RstType = _dt.Rows[i]["currentRstType"].ToString();
+                StatisticResult.CptType = _dt.Rows[i]["currentCptType"].ToString();
+                StatisticResult.NTestType = _dt.Rows[i]["currentNTestType"].ToString();
+
+                // 根据传递的土质类型重新计算参数
+                CalcuByRst(_rstStaList, StatisticResult.RstType);
+                CalcuByCpt(_cptStaList, StatisticResult.CptType);
+                CalcuByNTest(_ntestStaList, StatisticResult.NTestType);
+
+                // 赋值其他参数
+                StatisticResult.CptParameter = StatisticResult.CptParameter == "/" ? "/" : StatisticResult.CptParameter.Substring(StatisticResult.CptParameter.IndexOf("=") + 1);
+                StatisticResult.NTestParameter = StatisticResult.NTestParameter == "/" ? "/" : StatisticResult.NTestParameter.Substring(StatisticResult.NTestParameter.IndexOf("=") + 1);
+
+                double[] tmp = new double[3] { 9999, 9999, 9999 };
+                double num;
+
+                if (double.TryParse(StatisticResult.BearingByRst, out num))
+                    tmp[0] = num;
+                if (double.TryParse(StatisticResult.BearingByCpt, out num))
+                    tmp[1] = num;
+                if (double.TryParse(StatisticResult.BearingByNTest, out num))
+                    tmp[2] = num;
+                StatisticResult.BearingFinal = tmp.Min() < 9999 ? tmp.Min().ToString("0") : "/";
+
+                for (int k = 0; k < 3; k++)
+                    tmp[k] = 9999;
+                if (double.TryParse(StatisticResult.ModulusByRst, out num))
+                    tmp[0] = num;
+                if (double.TryParse(StatisticResult.ModulusByCpt, out num))
+                    tmp[1] = num;
+                if (double.TryParse(StatisticResult.ModulusByNTest, out num))
+                    tmp[2] = num;
+                StatisticResult.ModulusFinal = tmp.Min() < 9999 ? tmp.Min().ToString("0.0") : "/";
+
+                // 添加到列表
+                statisticListOutput.Add(StatisticResult);
             }
         }
 

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
 
 namespace GSYGeo
 {
@@ -49,17 +50,17 @@ namespace GSYGeo
         /// <summary>
         /// 预加载标贯/动探统计列表
         /// </summary>
-        List<StatisticNTest> NTestStatisticList = NTestStatistic.SelectStatisticData();
+        static List<StatisticNTest> NTestStatisticList;
 
         /// <summary>
         /// 预加载试验指标统计列表
         /// </summary>
-        List<StatisticRST> RstStatisticList = RSTStatistic.SelectStatisticData();
+        static List<StatisticRST> RstStatisticList;
 
         /// <summary>
         /// 预加载Ps值统计列表
         /// </summary>
-        List<StatisticCPT> CptStatisticList = CPTStatistic.SelectStatisticData();
+        static List<StatisticCPT> CptStatisticList;
 
         /// <summary>
         /// 抗剪强度统计结构体
@@ -89,12 +90,12 @@ namespace GSYGeo
         /// <summary>
         /// 实例化承载力和压缩模量统计结构体
         /// </summary>
-        public ShearingStrength StatisticResult = new ShearingStrength();
+        public static ShearingStrength StatisticResult = new ShearingStrength();
 
         /// <summary>
         /// 初始化试验指标统计结构体
         /// </summary>
-        private void ClearRstStatisticResult()
+        private static void ClearRstStatisticResult()
         {
             StatisticResult.RstType = "无法识别";
             StatisticResult.FrictionByRst = "/";
@@ -107,7 +108,7 @@ namespace GSYGeo
         /// <summary>
         /// 初始化Ps值统计结构体
         /// </summary>
-        private void ClearCptStatisticResult()
+        private static void ClearCptStatisticResult()
         {
             StatisticResult.CptType = "无法识别";
             StatisticResult.CptParameter = "/";
@@ -121,7 +122,7 @@ namespace GSYGeo
         /// <summary>
         /// 初始化标贯动探统计结构体
         /// </summary>
-        private void ClearNTestStatisticResult()
+        private static void ClearNTestStatisticResult()
         {
             StatisticResult.NTestType = "无法识别";
             StatisticResult.NTestParameter = "/";
@@ -147,6 +148,12 @@ namespace GSYGeo
         public ShearingStrengthCalculation()
         {
             InitializeComponent();
+
+            // 实例化计算中窗体,执行预加载
+            OutputStatisticToWord.ShowCalculatingProgress(OutputProgress.OutputType.PreLoadAll);
+            NTestStatisticList = OutputStatisticToWord.NTestStatisticList;
+            RstStatisticList = OutputStatisticToWord.RstStatisticList;
+            CptStatisticList = OutputStatisticToWord.CptStatisticList;
 
             // 初始化选框和标签
             InitialStandardTextBlock();
@@ -243,7 +250,7 @@ namespace GSYGeo
         /// <summary>
         /// 根据试验指标计算抗剪强度函数
         /// </summary>
-        public void CalcuByRst(List<StatisticRST> _rstStatisticList)
+        public static void CalcuByRst(List<StatisticRST> _rstStatisticList)
         {
             // 没有统计数据时退出
             if (_rstStatisticList == null)
@@ -268,8 +275,14 @@ namespace GSYGeo
             ClearRstStatisticResult();
 
             // 直接赋值抗剪强度
-            StatisticResult.FrictionByRst = averageList[0] == Constants.NullNumber ? "/" : averageList[0].ToString("0.0");
-            StatisticResult.CohesionByRst = averageList[1] == Constants.NullNumber ? "/" : averageList[1].ToString("0.0");
+            if (averageList.Count > 0)
+                StatisticResult.FrictionByRst = averageList[0] == Constants.NullNumber ? "/" : averageList[0].ToString("0.0");
+            else
+                StatisticResult.FrictionByRst = "/";
+            if (averageList.Count > 1)
+                StatisticResult.CohesionByRst = averageList[1] == Constants.NullNumber ? "/" : averageList[1].ToString("0.0");
+            else
+                StatisticResult.CohesionByRst = "/";
         }
 
         /// <summary>
@@ -277,8 +290,8 @@ namespace GSYGeo
         /// </summary>
         private void FillRstTextBox()
         {
-            this.RSTFrictionTextBox.Text = StatisticResult.FrictionByRst;
-            this.RSTCohesionTextBox.Text = StatisticResult.CohesionByRst;
+            this.RSTFrictionTextBox.Text = StatisticResult.FrictionByRst == "/" ? "/" : StatisticResult.FrictionByRst + " °";
+            this.RSTCohesionTextBox.Text = StatisticResult.CohesionByRst == "/" ? "/" : StatisticResult.CohesionByRst + " kPa";
         }
 
         #endregion
@@ -354,7 +367,7 @@ namespace GSYGeo
         /// <summary>
         /// 根据Ps计算抗剪强度函数
         /// </summary>
-        public void CalcuByCpt(List<StatisticCPT> _cptStatisticList, string _soilType)
+        public static void CalcuByCpt(List<StatisticCPT> _cptStatisticList, string _soilType)
         {
             // 没有统计数据时退出
             if (_cptStatisticList == null)
@@ -394,9 +407,9 @@ namespace GSYGeo
         /// </summary>
         private void FillCptTextBox()
         {
-            this.CPTParameterTextBox.Text = StatisticResult.CptParameter;
-            this.CPTFrictionTextBox.Text = StatisticResult.FrictionByCpt;
-            this.CPTCohesionTextBox.Text = StatisticResult.CohesionByCpt;
+            this.CPTParameterTextBox.Text = StatisticResult.CptParameter == "/" ? "/" : StatisticResult.CptParameter + " MPa";
+            this.CPTFrictionTextBox.Text = StatisticResult.FrictionByCpt == "/" ? "/" : StatisticResult.FrictionByCpt + " °";
+            this.CPTCohesionTextBox.Text = StatisticResult.CohesionByCpt == "/" ? "/" : StatisticResult.CohesionByCpt + " kPa";
         }
 
         /// <summary>
@@ -482,7 +495,7 @@ namespace GSYGeo
         /// <summary>
         /// 根据标贯计算承载力和压缩模量函数
         /// </summary>
-        public void CalcuByNTest(List<StatisticNTest> _nTestStatisticList, string _soilType)
+        public static void CalcuByNTest(List<StatisticNTest> _nTestStatisticList, string _soilType)
         {
             // 没有统计数据时退出
             if (_nTestStatisticList == null)
@@ -535,9 +548,9 @@ namespace GSYGeo
         /// </summary>
         private void FillNTestTextBox()
         {
-            this.NTestParameterTextBox.Text = StatisticResult.NTestParameter;
-            this.NTestFrictionTextBox.Text = StatisticResult.FrictionByNTest;
-            this.NTestCohesionTextBox.Text = StatisticResult.CohesionByNTest;
+            this.NTestParameterTextBox.Text = StatisticResult.NTestParameter == "/" ? "/" : StatisticResult.NTestParameter + " 击";
+            this.NTestFrictionTextBox.Text = StatisticResult.FrictionByNTest == "/" ? "/" : StatisticResult.FrictionByNTest + " °";
+            this.NTestCohesionTextBox.Text = StatisticResult.CohesionByNTest == "/" ? "/" : StatisticResult.CohesionByNTest + " kPa";
         }
 
         /// <summary>
@@ -563,7 +576,87 @@ namespace GSYGeo
         /// <param name="e"></param>
         private void OutputToWordButton_Click(object sender, RoutedEventArgs e)
         {
+            // 实例化BearingAndModulusToWord窗口类，启动窗口
+            ShearingStrengthToWord output = new ShearingStrengthToWord(CurrentStandard);
+            output.ShowDialog();
 
+            // 点击"确认并输出"按钮后，启动输出程序
+            if (output.DialogResult == true)
+            {
+                // 计算统计结果
+                CalcuOutput(output.dtLayer, RstStatisticList, CptStatisticList, NTestStatisticList);
+
+                // 选择输出目录
+                string folderPath;
+                System.Windows.Forms.FolderBrowserDialog programPathBrowser = new System.Windows.Forms.FolderBrowserDialog();
+                if (programPathBrowser.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    folderPath = programPathBrowser.SelectedPath;
+                else
+                    return;
+                string path = folderPath + @"\" + Program.currentProject + @"-抗剪强度综合统计表.doc";
+
+                // 启动输出窗体
+                ShowProgressBar(path);
+            }
+        }
+
+        /// <summary>
+        /// 计算统计结果
+        /// </summary>
+        /// <param name="_dt">从土质类型窗口获取的DataTable</param>
+        /// <param name="_rstStaList">试验指标统计列表</param>
+        /// <param name="_cptStaList">静力触探摩阻力统计列表</param>
+        /// <param name="_ntestStaList">标贯/动探统计列表</param>
+        public static void CalcuOutput(DataTable _dt,List<StatisticRST> _rstStaList,List<StatisticCPT> _cptStaList,List<StatisticNTest> _ntestStaList)
+        {
+            // 清空统计列表结构体
+            statisticListOutput.Clear();
+
+            // 赋值统计结构体列表
+            for (int i = 0; i < _dt.Rows.Count; i++)
+            {
+                // 更新当前的分层编号和分层名称
+                LayerNumber = ProjectDataBase.ReadLayerNumberList(Program.currentProject)[i];
+                LayerName = ProjectDataBase.ReadLayerNameList(Program.currentProject)[i];
+
+                // 获取传递的土质参数
+                StatisticResult.layerInfo = _dt.Rows[i]["layerInfo"].ToString();
+                StatisticResult.CptType = _dt.Rows[i]["currentCptType"].ToString();
+                StatisticResult.NTestType = _dt.Rows[i]["currentNTestType"].ToString();
+
+                // 根据传递的土质类型重新计算参数
+                CalcuByRst(_rstStaList);
+                CalcuByCpt(_cptStaList, StatisticResult.CptType);
+                CalcuByNTest(_ntestStaList, StatisticResult.NTestType);
+
+                // 赋值其他参数
+                StatisticResult.CptParameter = StatisticResult.CptParameter == "/" ? "/" : StatisticResult.CptParameter.Substring(StatisticResult.CptParameter.IndexOf("=") + 1);
+                StatisticResult.NTestParameter = StatisticResult.NTestParameter == "/" ? "/" : StatisticResult.NTestParameter.Substring(StatisticResult.NTestParameter.IndexOf("=") + 1);
+
+                double[] tmp = new double[3] { 9999, 9999, 9999 };
+                double num;
+
+                if (double.TryParse(StatisticResult.FrictionByRst, out num))
+                    tmp[0] = num;
+                if (double.TryParse(StatisticResult.FrictionByCpt, out num))
+                    tmp[1] = num;
+                if (double.TryParse(StatisticResult.FrictionByNTest, out num))
+                    tmp[2] = num;
+                StatisticResult.FrictionFinal = tmp.Min() < 9999 ? tmp.Min().ToString("0") : "/";
+
+                for (int k = 0; k < 3; k++)
+                    tmp[k] = 9999;
+                if (double.TryParse(StatisticResult.CohesionByRst, out num))
+                    tmp[0] = num;
+                if (double.TryParse(StatisticResult.CohesionByCpt, out num))
+                    tmp[1] = num;
+                if (double.TryParse(StatisticResult.CohesionByNTest, out num))
+                    tmp[2] = num;
+                StatisticResult.CohesionFinal = tmp.Min() < 9999 ? tmp.Min().ToString("0") : "/";
+
+                // 添加到列表
+                statisticListOutput.Add(StatisticResult);
+            }
         }
 
         /// <summary>
@@ -622,8 +715,5 @@ namespace GSYGeo
         }
 
         #endregion
-        
-        
-        
     }
 }

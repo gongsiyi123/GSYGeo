@@ -21,17 +21,12 @@ namespace GSYGeo
         public TreeViewBinding()
         {
             // 初始化导航树，添加一级节点
-            treeItem = new ObservableCollection<TreeViewItem>();
-            treeItem.Add(new TreeViewItem { Header = "基本信息", Margin = new System.Windows.Thickness(0, 5, 0, 0) });
-            treeItem.Add(new TreeViewItem { Header = "钻孔" });
-            treeItem.Add(new TreeViewItem { Header = "原位测试" });
-            treeItem.Add(new TreeViewItem { Header = "室内试验" });
+            InitialFirstTreeItem();
         }
 
         /// <summary>
         /// 属性，TreeViewItem列表
         /// </summary>
-        private ObservableCollection<TreeViewItem> treeItem;
         public ObservableCollection<TreeViewItem> TreeItem
         {
             get
@@ -43,6 +38,19 @@ namespace GSYGeo
                 treeItem = value;
             }
         }
+        private ObservableCollection<TreeViewItem> treeItem;
+
+        /// <summary>
+        /// 初始化导航树，添加一级节点
+        /// </summary>
+        public void InitialFirstTreeItem()
+        {
+            treeItem = new ObservableCollection<TreeViewItem>();
+            treeItem.Add(new TreeViewItem { Header = "基本信息", Margin = new System.Windows.Thickness(0, 5, 0, 0) });
+            treeItem.Add(new TreeViewItem { Header = "钻孔" });
+            treeItem.Add(new TreeViewItem { Header = "原位测试" });
+            treeItem.Add(new TreeViewItem { Header = "室内试验" });
+        }
 
         /// <summary>
         /// 方法，重置导航树为初始结构
@@ -53,11 +61,7 @@ namespace GSYGeo
             treeItem.Clear();
 
             // 初始化导航树，添加一级节点
-            treeItem = new ObservableCollection<TreeViewItem>();
-            treeItem.Add(new TreeViewItem { Header = "基本信息", Margin = new System.Windows.Thickness(0, 5, 0, 0) });
-            treeItem.Add(new TreeViewItem { Header = "钻孔" });
-            treeItem.Add(new TreeViewItem { Header = "原位测试" });
-            treeItem.Add(new TreeViewItem { Header = "室内试验" });
+            InitialFirstTreeItem();
         }
 
         /// <summary>

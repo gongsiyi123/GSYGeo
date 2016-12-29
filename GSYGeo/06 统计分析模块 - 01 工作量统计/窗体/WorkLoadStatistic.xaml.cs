@@ -182,7 +182,7 @@ namespace GSYGeo
         /// 筛选统计数据
         /// </summary>
         /// <returns></returns>
-        private static StatisticWordLoad SelectStatisticData()
+        public static StatisticWordLoad SelectStatisticData()
         {
             // 定义统计数据列表
             StatisticWordLoad statisticData = new StatisticWordLoad();

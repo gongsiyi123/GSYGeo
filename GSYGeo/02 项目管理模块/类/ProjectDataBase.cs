@@ -25,12 +25,28 @@ namespace GSYGeo
             foreach(FileInfo file in folder.GetFiles("*.gsygeo"))
             {
                 string s = file.Name.Remove(file.Name.Count() - 7);
-                if (s != "设置信息")
+                if (s != "设置信息" && !string.IsNullOrEmpty(s) && !string.IsNullOrWhiteSpace(s))
                 {
                     projectList.Add(file.Name.Remove(file.Name.Count() - 7));
                 }
             }
             return projectList;
+        }
+
+        /// <summary>
+        /// 清理名称为空的项目数据库文件
+        /// </summary>
+        public static void ClearEmpthProject()
+        {
+            List<string> projectList = new List<string>();
+            string path = Program.ReadProgramPath();
+            DirectoryInfo folder = new DirectoryInfo(path);
+            foreach (FileInfo file in folder.GetFiles("*.gsygeo"))
+            {
+                string s = file.Name.Remove(file.Name.Count() - 7);
+                if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
+                    file.Delete();
+            }
         }
 
         /// <summary>

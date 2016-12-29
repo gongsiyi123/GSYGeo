@@ -1,0 +1,27 @@
+﻿<Window x:Class="GSYGeo.OutputStatisticToWord"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GSYGeo"
+        mc:Ignorable="d"
+        Title="生成参数统计表格" Height="300" Width="220" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <ListBox Grid.Row="0" Name="SelectTableListBox" Margin="5"/>
+        <CheckBox Grid.Row="1" Name="IsSelectAllCheckBox" Content="全选" Margin="5" Checked="IsSelectAllCheckBox_Checked" Unchecked="IsSelectAllCheckBox_Unchecked"/>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Name="CommitButton" Content="确定" Margin="5" Click="CommitButton_Click"/>
+            <Button Grid.Column="2" Name="CancelButton" Content="取消" Margin="5" IsCancel="True"/>
+        </Grid>
+    </Grid>
+</Window>

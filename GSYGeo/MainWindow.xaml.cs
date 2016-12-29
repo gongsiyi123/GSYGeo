@@ -71,6 +71,9 @@ namespace GSYGeo
             {
                 SettingDataBase.Create();
             }
+
+            // 清理空数据文件
+            ProjectDataBase.ClearEmpthProject();
         }
 
         // 设置菜单可用性函数
@@ -672,6 +675,29 @@ namespace GSYGeo
 
         #endregion
 
+        #region 报告模块-生成参数统计表格
+
+        /// <summary>
+        /// 单击菜单"报告"-"生成参数统计表格"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ParameterStatisticMenu_Click(object sender, RoutedEventArgs e)
+        {
+            AllStaTables();
+        }
+
+        /// <summary>
+        /// 输出所有参数统计表格函数
+        /// </summary>
+        private void AllStaTables()
+        {
+            OutputStatisticToWord allStatistic = new OutputStatisticToWord();
+            allStatistic.ShowDialog();
+        }
+
+        #endregion
+
         #region 帮助模块
 
         // 单击菜单"帮助"-"更新日志"
@@ -756,7 +782,8 @@ namespace GSYGeo
                 string projectPath = folderPath + @"\" + dChild + @"\";
 
                 // 新建项目
-                ProjectDataBase.Create(projectName);
+                if (!string.IsNullOrEmpty(projectName) && !string.IsNullOrWhiteSpace(projectName))
+                    ProjectDataBase.Create(projectName);
 
                 // 读取分层信息
                 StreamReader reader = new StreamReader(projectPath + "基本信息.txt");
@@ -988,7 +1015,5 @@ namespace GSYGeo
         }
 
         #endregion
-
-        
     }
 }

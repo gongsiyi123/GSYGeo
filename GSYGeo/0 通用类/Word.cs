@@ -85,6 +85,34 @@ namespace GSYGeo
         }
 
         /// <summary>
+        /// 批量添加统计表格
+        /// </summary>
+        /// <param name="_wordLoadStatistic">勘察工作量数据</param>
+        /// <param name="_nTestStatistic">标贯/动探统计数据</param>
+        /// <param name="_cptStatistic">静力触探摩阻力统计数据</param>
+        /// <param name="_rstStatistic">土工常规试验统计数据</param>
+        /// <param name="_gatStatistic">颗粒分析试验数据</param>
+        /// <param name="_bamStatistic">承载力和压缩模量综合取值数据</param>
+        /// <param name="_ssStatistic">抗剪强度综合取值数据</param>
+        public void AddAllStatisticTable(List<string> outputList, StatisticWordLoad _wordLoadStatistic, List<StatisticNTest> _nTestStatistic, List<StatisticCPT> _cptStatistic, List<StatisticRST> _rstStatistic, List<StatisticGAT> _gatStatistic, List<BearingAndModulusCalculation.BearingAndModulus> _bamStatistic, List<ShearingStrengthCalculation.ShearingStrength> _ssStatistic)
+        {
+            if(outputList.Contains("勘察工作量统计"))
+                AddWorkLoadStatisticTable(_wordLoadStatistic);
+            if (outputList.Contains("标贯/动探统计"))
+                AddNTestStatisticTable(_nTestStatistic);
+            if (outputList.Contains("静力触探摩阻力统计"))
+                AddPsStatisticTable(_cptStatistic);
+            if (outputList.Contains("土工常规试验统计"))
+                AddRSTStatisticTable(_rstStatistic);
+            if (outputList.Contains("颗粒分析试验统计"))
+                AddGATStatisticTable(_gatStatistic);
+            if (outputList.Contains("承载力和压缩模量综合取值"))
+                AddBearingAndModulusTable(_bamStatistic);
+            if (outputList.Contains("抗剪强度综合取值"))
+                AddShearingStrengthTable(_ssStatistic);
+        }
+
+        /// <summary>
         /// 添加勘察工作量统计表格
         /// </summary>
         /// <param name="_wordLoadStatistic">勘察工作量数据</param>
@@ -212,7 +240,7 @@ namespace GSYGeo
         public MSWord.Table AddNTestStatisticTable(List<StatisticNTest> _nTestStatistic)
         {
             // 填写表格标题
-            Doc.Paragraphs.Last.Range.Text = "表3 标贯/动探锤击数统计表";
+            Doc.Paragraphs.Last.Range.Text = "表2 标贯/动探锤击数统计表";
             Doc.Paragraphs.Last.Range.Font.Bold = 1;
             Doc.Paragraphs.Last.Range.Font.Size = 12;
             App.Selection.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
@@ -283,7 +311,7 @@ namespace GSYGeo
         public MSWord.Table AddPsStatisticTable(List<StatisticCPT> _cptStatistic)
         {
             // 填写表格标题
-            Doc.Paragraphs.Last.Range.Text = "表4 静力触探摩阻力统计表";
+            Doc.Paragraphs.Last.Range.Text = "表3 静力触探摩阻力统计表";
             Doc.Paragraphs.Last.Range.Font.Bold = 1;
             Doc.Paragraphs.Last.Range.Font.Size = 12;
             App.Selection.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
@@ -374,7 +402,7 @@ namespace GSYGeo
             }
 
             // 填写表格标题
-            Doc.Paragraphs.Last.Range.Text = "表2 土工常规试验成果统计表";
+            Doc.Paragraphs.Last.Range.Text = "表4 土工常规试验成果统计表";
             Doc.Paragraphs.Last.Range.Font.Bold = 1;
             Doc.Paragraphs.Last.Range.Font.Size = 12;
             App.Selection.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
@@ -695,7 +723,93 @@ namespace GSYGeo
         /// <returns></returns>
         public MSWord.Table AddShearingStrengthTable(List<ShearingStrengthCalculation.ShearingStrength> _ssStatistic)
         {
-            return null;
+            // 填写表格标题
+            Doc.Paragraphs.Last.Range.Text = "表7 抗剪强度综合取值表";
+            Doc.Paragraphs.Last.Range.Font.Bold = 1;
+            Doc.Paragraphs.Last.Range.Font.Size = 12;
+            App.Selection.Range.ParagraphFormat.Alignment = WdParagraphAlignment.wdAlignParagraphCenter;
+            object unite = MSWord.WdUnits.wdStory;
+            App.Selection.EndKey(ref unite, ref Nothing);
+
+            // 定义表格对象
+            MSWord.Table table = Tables.Add(App.Selection.Range, _ssStatistic.Count + 2, 11, ref Nothing, ref Nothing);
+
+            // 填充列标题
+            table.Cell(1, 1).Range.Text = "分层编号及名称";
+            table.Cell(1, 2).Range.Text = "土工试验";
+            table.Cell(1, 4).Range.Text = "静力触探试验";
+            table.Cell(1, 7).Range.Text = "标贯/动探";
+            table.Cell(1, 10).Range.Text = "综合取值";
+            string[] rowheader = new string[]
+            {
+                "φ\n(kPa)",
+                "C\n(MPa)",
+                "Ps\n(MPa)",
+                "φ\n(kPa)",
+                "C\n(MPa)",
+                "N\n(击)",
+                "φ\n(kPa)",
+                "C\n(MPa)",
+                "φ\n(kPa)",
+                "C\n(MPa)"
+            };
+            for (int i = 1; i < table.Columns.Count; i++)
+                table.Cell(2, i + 1).Range.Text = rowheader[i - 1];
+
+            // 设置文档格式
+            Doc.PageSetup.LeftMargin = 50F;
+            Doc.PageSetup.RightMargin = 50F;
+
+            // 设置表格格式
+            table.Select();
+            App.Selection.Tables[1].Rows.Alignment = WdRowAlignment.wdAlignRowCenter;
+
+            foreach (Row row in table.Rows)
+            {
+                row.Range.Bold = 0;
+                row.Cells[10].Range.Bold = 1;
+                row.Cells[11].Range.Bold = 1;
+            }
+            table.Rows[1].Range.Bold = 1;
+
+            table.Range.Font.Size = 10.0F;
+
+            table.Range.ParagraphFormat.Alignment = MSWord.WdParagraphAlignment.wdAlignParagraphCenter;
+            table.Range.Cells.VerticalAlignment = MSWord.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+
+            table.Borders.OutsideLineStyle = MSWord.WdLineStyle.wdLineStyleDouble;
+            table.Borders.InsideLineStyle = MSWord.WdLineStyle.wdLineStyleSingle;
+
+            float[] columnWidth = new float[] { 100, 40, 40, 40, 40, 40, 40, 40, 40, 40, 40 };
+            for (int i = 1; i <= table.Columns.Count; i++)
+                table.Columns[i].Width = columnWidth[i - 1];
+
+            // 填充试验数据
+            for (int i = 0; i < _ssStatistic.Count; i++)
+            {
+                table.Cell(i + 3, 1).Range.Text = _ssStatistic[i].layerInfo;
+                table.Cell(i + 3, 2).Range.Text = _ssStatistic[i].FrictionByRst == "-0.19880205" || _ssStatistic[i].FrictionByRst == "-0.2" ? "/" : _ssStatistic[i].FrictionByRst;
+                table.Cell(i + 3, 3).Range.Text = _ssStatistic[i].CohesionByRst == "-0.19880205" || _ssStatistic[i].CohesionByRst == "-0.2" ? "/" : _ssStatistic[i].CohesionByRst;
+                table.Cell(i + 3, 4).Range.Text = _ssStatistic[i].CptParameter == "-0.19880205" || _ssStatistic[i].CptParameter == "-0.2" ? "/" : _ssStatistic[i].CptParameter;
+                table.Cell(i + 3, 5).Range.Text = _ssStatistic[i].FrictionByCpt == "-0.19880205" || _ssStatistic[i].FrictionByCpt == "-0.2" ? "/" : _ssStatistic[i].FrictionByCpt;
+                table.Cell(i + 3, 6).Range.Text = _ssStatistic[i].CohesionByRst == "-0.19880205" || _ssStatistic[i].CohesionByRst == "-0.2" ? "/" : _ssStatistic[i].CohesionByRst;
+                table.Cell(i + 3, 7).Range.Text = _ssStatistic[i].NTestParameter == "-0.19880205" || _ssStatistic[i].NTestParameter == "-0.2" ? "/" : _ssStatistic[i].NTestParameter;
+                table.Cell(i + 3, 8).Range.Text = _ssStatistic[i].FrictionByNTest == "-0.19880205" || _ssStatistic[i].FrictionByNTest == "-0.2" ? "/" : _ssStatistic[i].FrictionByNTest;
+                table.Cell(i + 3, 9).Range.Text = _ssStatistic[i].CohesionByNTest == "-0.19880205" || _ssStatistic[i].CohesionByNTest == "-0.2" ? "/" : _ssStatistic[i].CohesionByNTest;
+                table.Cell(i + 3, 10).Range.Text = _ssStatistic[i].FrictionFinal == "-0.19880205" || _ssStatistic[i].FrictionFinal == "-0.2" ? "/" : _ssStatistic[i].FrictionFinal;
+                table.Cell(i + 3, 11).Range.Text = _ssStatistic[i].CohesionFinal == "-0.19880205" || _ssStatistic[i].CohesionFinal == "-0.2" ? "/" : _ssStatistic[i].CohesionFinal;
+            }
+
+            // 合并层号及名称单元格
+            table.Cell(1, 10).Merge(table.Cell(1, 11));
+            table.Cell(1, 7).Merge(table.Cell(1, 9));
+            table.Cell(1, 4).Merge(table.Cell(1, 6));
+            table.Cell(1, 2).Merge(table.Cell(1, 3));
+            table.Cell(1, 1).Merge(table.Cell(2, 1));
+
+            // 返回
+            return table;
         }
+
     }
 }

@@ -32,7 +32,7 @@ namespace GSYGeo
         /// 定义数据明细列表NTestDetailDataGrid控件的数据源DataTable
         /// </summary>
         DataTable dtND = new DataTable("Detail");
-
+        
         #endregion
 
         #region 构造函数
@@ -43,7 +43,10 @@ namespace GSYGeo
         public NTestStatistic()
         {
             InitializeComponent();
-            
+
+            // 实例化计算中窗体,执行预加载
+            OutputStatisticToWord.ShowCalculatingProgress(OutputProgress.OutputType.PreLoadNtest);
+
             // 初始化DataTable
             InitialNTestStatisticDataGrid();
             InitialNTestDetailDataGrid();
@@ -75,7 +78,7 @@ namespace GSYGeo
         private void InitialNTestStatisticDataGrid()
         {
             // 定义统计数据列表
-            List<StatisticNTest> statisticList = SelectStatisticData();
+            List<StatisticNTest> statisticList = OutputStatisticToWord.NTestStatisticList;
 
             // 定义NTestStatisticDataGrid数据列
             foreach (string sta in staName)

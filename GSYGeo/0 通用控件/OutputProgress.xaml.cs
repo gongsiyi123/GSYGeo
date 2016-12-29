@@ -26,6 +26,10 @@ namespace GSYGeo
         /// </summary>
         public enum OutputType
         {
+            PreLoadAll,
+            PreLoadNtest,
+            PreLoadBam,
+            PreLoadSs,
             WordLoad,
             NTest,
             Ps,
@@ -33,6 +37,7 @@ namespace GSYGeo
             GAT,
             BearingAndModulus,
             ShearingStrength,
+            AllTables,
             ZkCad,
             JkCad
         };
@@ -226,6 +231,8 @@ namespace GSYGeo
                 BearingAndModulusCalculation.OutputToWord(Path);
             else if (BWType == OutputType.ShearingStrength)
                 ShearingStrengthCalculation.OutputToWord(Path);
+            else if (BWType == OutputType.AllTables)
+                OutputStatisticToWord.OutputToWord(Path);
             else if (BWType == OutputType.ZkCad)
                 OutputZkToCad.OutputToCad(Path, OutputZkList, OutputScaleList);
             else if (BWType == OutputType.JkCad)
@@ -238,10 +245,10 @@ namespace GSYGeo
         /// <param name="_obj"></param>
         private void ReadProgress(object _obj)
         {
-            for (int i = 0; i <= 95; i++)
+            for (int i = 0; i <= 99; i++)
             {
                 bgWorker.ReportProgress(i);
-                Thread.Sleep(50);
+                Thread.Sleep(100);
             }
         }
 

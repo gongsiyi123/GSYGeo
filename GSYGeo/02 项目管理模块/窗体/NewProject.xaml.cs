@@ -118,6 +118,10 @@ namespace GSYGeo
                 projectSetting.Province = this.ProjectProvinceTextBox.Text;
                 projectSetting.City = this.ProjectCityTextBox.Text;
 
+                // 检查项目名是否为空
+                if (string.IsNullOrEmpty(projectSetting.Name) || string.IsNullOrWhiteSpace(projectSetting.Name))
+                    return;
+
                 // 检测是否有同名项目
                 List<string> projectList = ProjectDataBase.ReadProjectList();
                 if (projectList != null && projectList.Contains(projectSetting.Name))

@@ -60,6 +60,22 @@ namespace GSYGeo
             // 内部测试版0.2.2_alpha发布
             UpdateContent.Add("1、项目管理模块，新增部分地质年代和成因选项");
             AddUpdate("0.2.2_alpha", "2016.12.26", UpdateContent);
+
+            // 内部测试版0.2.3_alpha发布
+            UpdateContent.Add("1、统计分析模块，新增抗剪强度综合取值和Word表格输出功能");
+            UpdateContent.Add("2、统计分析模块，承载力和压缩模量计算、抗剪强度计算界面新增单位显示");
+            UpdateContent.Add("3、项目管理模块，新增第四系以前的地质年代和成因选项，精确到系");
+            AddUpdate("0.2.3_alpha", "2017.1.1", UpdateContent);
+
+            // 内部测试版0.3.0_alpha发布
+            UpdateContent.Add("1、报告模块，新增批量输出参数统计Word表格功能");
+            UpdateContent.Add("2、项目管理模块，修复了启动程序时偶尔会生成一个名称为空的项目文件的错误");
+            AddUpdate("0.3.0_alpha", "2017.1.3", UpdateContent);
+
+            // 内部测试版0.3.1_alpha发布
+            UpdateContent.Add("1、对程序后台计算时间较长的模块新增了后台计算提示");
+            UpdateContent.Add("2、报告模块，修复了输出承载力和压缩模量综合取值表时一个数据预加载错误，该错误可导致程序崩溃");
+            AddUpdate("0.3.1_alpha", "2017.1.3", UpdateContent);
         }
 
         /// <summary>
