@@ -76,6 +76,10 @@ namespace GSYGeo
             UpdateContent.Add("1、对程序后台计算时间较长的模块新增了后台计算提示");
             UpdateContent.Add("2、报告模块，修复了输出承载力和压缩模量综合取值表时一个数据预加载错误，该错误可导致程序崩溃");
             AddUpdate("0.3.1_alpha", "2017.1.3", UpdateContent);
+
+            // 内部测试版0.3.2_alpha发布
+            UpdateContent.Add("1、绘图模块，修复了输出钻孔柱状图和静力触探曲线图的一个文字缺失错误");
+            AddUpdate("0.3.2_alpha", "2017.1.6", UpdateContent);
         }
 
         /// <summary>

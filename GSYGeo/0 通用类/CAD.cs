@@ -521,7 +521,7 @@ namespace GSYGeo
 
                     if (j < _zk.Layers.Count - 1)
                         AddLine(120 + xDis, layerY, 130 + xDis, layerY);
-                    DxfMText text = AddMText(_zk.Layers[j].Depth.ToString("0.00") + "(" + (_zk.Altitude - _zk.Layers[j].Depth).ToString("0.00"), 132 + xDis, layerY, 25, 3, _style2);
+                    DxfMText text = AddMText(_zk.Layers[j].Depth.ToString("0.00") + "(" + (_zk.Altitude - _zk.Layers[j].Depth).ToString("0.00") + ")", 132 + xDis, layerY, 25, 3, _style2);
                     text.AttachmentPoint = AttachmentPoint.MiddleLeft;
 
                     try
@@ -717,7 +717,7 @@ namespace GSYGeo
 
                     if (j < _jk.Layers.Count - 1)
                         AddLine(123 + xDis, layerY, 130 + xDis, layerY);
-                    DxfMText text = AddMText(_jk.Layers[j].Depth.ToString("0.00") + "(" + (_jk.Altitude - _jk.Layers[j].Depth).ToString("0.00"), 121 + xDis, layerY + 1.5, 33, 3, _style2);
+                    DxfMText text = AddMText(_jk.Layers[j].Depth.ToString("0.00") + "(" + (_jk.Altitude - _jk.Layers[j].Depth).ToString("0.00") + ")", 121 + xDis, layerY + 1.5, 33, 3, _style2);
                     text.AttachmentPoint = AttachmentPoint.MiddleLeft;
 
                     try
