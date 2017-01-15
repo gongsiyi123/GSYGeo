@@ -84,6 +84,9 @@
     <Compile Include="06 统计分析模块 - 06 承载力压缩模量计算\窗体\BearingAndModulusCalculation.xaml.cs">
       <DependentUpon>BearingAndModulusCalculation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="07 绘图模块 - 03 工程地质剖面图\窗体\ProfileManager.xaml.cs">
+      <DependentUpon>ProfileManager.xaml</DependentUpon>
+    </Compile>
     <Compile Include="10 帮助模块\窗体\UpdateLog.xaml.cs">
       <DependentUpon>UpdateLog.xaml</DependentUpon>
     </Compile>
@@ -143,6 +146,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="06 统计分析模块 - 06 承载力压缩模量计算\窗体\BearingAndModulusCalculation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="07 绘图模块 - 03 工程地质剖面图\窗体\ProfileManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -305,10 +312,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="07 绘图模块 - 03 工程地质剖面图\窗体\ProfileManager.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="07 绘图模块 - 03 工程地质剖面图\窗体\PlaneManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -352,14 +355,11 @@
     <Compile Include="08 报告模块 - 01 参数统计表格\窗体\OutputStatisticToWord.xaml.cs">
       <DependentUpon>OutputStatisticToWord.xaml</DependentUpon>
     </Compile>
-    <Compile Include="07 绘图模块 - 03 工程地质剖面图\窗体\ProfileManager.xaml.cs">
-      <DependentUpon>ProfileManager.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="07 绘图模块 - 03 工程地质剖面图\类\ProfileAltitudePoint.cs" />
+    <Compile Include="07 绘图模块 - 03 工程地质剖面图\类\ProfileDataBase.cs" />
     <Compile Include="07 绘图模块 - 03 工程地质剖面图\窗体\PlaneManager.xaml.cs">
       <DependentUpon>PlaneManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="07 绘图模块 - 03 工程地质剖面图\类\ProfileAltitudePoint.cs" />
-    <Compile Include="07 绘图模块 - 03 工程地质剖面图\类\ProfileDataBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -79,7 +79,7 @@ namespace GSYGeo
                     double xAxis = _altitudePointList[i].X;
                     double yAxis = _altitudePointList[i].Y;
                     string zkNumber = _altitudePointList[i].ZkNumber;
-                    sql = "insert into profileAltitudePoint(profileName,number,xAxis,yAxis,isZk) values('" + _profileName + "'," + number + "," + xAxis + "," + yAxis + "," + isZk + ")";
+                    sql = "insert into profileAltitudePoint(profileName,number,xAxis,yAxis,zkNumber) values('" + _profileName + "'," + number + "," + xAxis + "," + yAxis + "," + zkNumber + ")";
                     new SQLiteCommand(sql, conn).ExecuteNonQuery();
                 }
             }
@@ -99,7 +99,7 @@ namespace GSYGeo
                 // 打开连接
                 conn.Open();
 
-                // 清空数据
+                // 清空所有数据
                 sql = "delete from profileBasicInfo where name='" + _name + "'";
                 new SQLiteCommand(sql, conn).ExecuteNonQuery();
                 sql = "delete from profileAltitudePoint where profileName='" + _name + "'";

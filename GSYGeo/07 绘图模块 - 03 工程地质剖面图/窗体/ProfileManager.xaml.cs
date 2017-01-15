@@ -22,7 +22,6 @@ namespace GSYGeo
         public ProfileManager()
         {
             InitializeComponent();
-            
         }
     }
 }
