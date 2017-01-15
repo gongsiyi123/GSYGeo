@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace GSYGeo
 {
     /// <summary>
-    /// PlaneManager.xaml 的交互逻辑
+    /// PlanaManager.xaml 的交互逻辑
     /// </summary>
-    public partial class PlaneManager : Window
+    public partial class PlanaManager : Window
     {
-        public PlaneManager()
+        public PlanaManager()
         {
             InitializeComponent();
         }

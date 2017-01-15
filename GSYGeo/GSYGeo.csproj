@@ -312,7 +312,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="07 绘图模块 - 03 工程地质剖面图\窗体\PlaneManager.xaml">
+    <Page Include="07 绘图模块 - 03 工程地质剖面图\窗体\PlanaManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -357,8 +357,8 @@
     </Compile>
     <Compile Include="07 绘图模块 - 03 工程地质剖面图\类\ProfileAltitudePoint.cs" />
     <Compile Include="07 绘图模块 - 03 工程地质剖面图\类\ProfileDataBase.cs" />
-    <Compile Include="07 绘图模块 - 03 工程地质剖面图\窗体\PlaneManager.xaml.cs">
-      <DependentUpon>PlaneManager.xaml</DependentUpon>
+    <Compile Include="07 绘图模块 - 03 工程地质剖面图\窗体\PlanaManager.xaml.cs">
+      <DependentUpon>PlanaManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
