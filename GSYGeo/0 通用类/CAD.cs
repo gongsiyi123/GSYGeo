@@ -347,6 +347,7 @@ namespace GSYGeo
             hatchName.Add("橄榄岩", "gly");
             hatchName.Add("燧石灰岩", "sshy");
             hatchName.Add("鲕状灰岩", "ezhy");
+            hatchName.Add("粉细砂", "fs"); // 粉细砂按粉砂填充
 
             if (hatchName.ContainsKey(_hatchName))
                 return hatchName[_hatchName];

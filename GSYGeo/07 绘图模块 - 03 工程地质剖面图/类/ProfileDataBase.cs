@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,11 @@ namespace GSYGeo
                 // 打开连接
                 conn.Open();
 
+                // 新建平面底图基本信息表
+                // 表头 平面底图名称name 平面底图路径path
+                sql = "create table if not exists planeBasicInfo(name varchar(255),path varchar(255))";
+                new SQLiteCommand(sql, conn).ExecuteNonQuery();
+
                 // 新建剖面图基本信息表
                 // 表头 剖面图名称name 平面底图名称plane
                 sql = "create table if not exists profileBasicInfo(name varchar(255),plane varchar(255))";
@@ -34,6 +40,51 @@ namespace GSYGeo
                 // 表头 高程点编号number x坐标xAxis y坐标yAxis 高程altitude 当前点的钻孔zkNumber（无钻孔时存储空字符）
                 sql = "create table if not exists profileAltitudePoint(profileName varchar(255),number int,xAxis double,yAxis double,altitude double,zkNumber varchar(255))";
                 new SQLiteCommand(sql, conn).ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// 重命名平面底图
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_oldName">旧名称</param>
+        /// <param name="_newName">新名称</param>
+        public static void RenamePlane(string _projectName,string _oldName,string _newName)
+        {
+            // 创建连接到设置信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\" + _projectName + ".gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 重命名
+                sql = "update planeBasicInfo set name=" + _newName + " where name=" + _oldName;
+                new SQLiteCommand(sql, conn).ExecuteNonQuery();
+            }
+        }
+
+        /// <summary>
+        /// 检查平面底图的文件路径是否存在
+        /// </summary>
+        /// <param name="_projectName">项目名称</param>
+        /// <param name="_name">平面底图名称</param>
+        public static bool IsExistPlanePath(string _projectName,string _name)
+        {
+            // 创建连接到设置信息数据库
+            string sql = "Data Source=" + Program.ReadProgramPath() + "\\" + _projectName + ".gsygeo";
+            using (SQLiteConnection conn = new SQLiteConnection(sql))
+            {
+                // 打开连接
+                conn.Open();
+
+                // 检查
+                sql = "select path from planeBasicInfo where name=" + _name;
+                SQLiteDataReader reader = new SQLiteCommand(sql, conn).ExecuteReader();
+                reader.Read();
+                string path = reader["path"].ToString();
+
+                return File.Exists(path);
             }
         }
 

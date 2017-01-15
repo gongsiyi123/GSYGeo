@@ -80,6 +80,10 @@ namespace GSYGeo
             // 内部测试版0.3.2_alpha发布
             UpdateContent.Add("1、绘图模块，修复了输出钻孔柱状图和静力触探曲线图的一个文字缺失错误");
             AddUpdate("0.3.2_alpha", "2017.1.6", UpdateContent);
+
+            // 内部测试版0.3.3_alpha发布
+            UpdateContent.Add("1、绘图模块，输出钻孔柱状图时将“粉细砂”按“粉砂”进行填充");
+            AddUpdate("0.3.3_alpha", "2017.1.19", UpdateContent);
         }
 
         /// <summary>

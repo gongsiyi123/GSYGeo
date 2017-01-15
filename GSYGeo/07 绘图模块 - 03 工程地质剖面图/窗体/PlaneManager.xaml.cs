@@ -17,9 +17,9 @@ namespace GSYGeo
     /// <summary>
     /// PlanaManager.xaml 的交互逻辑
     /// </summary>
-    public partial class PlanaManager : Window
+    public partial class PlaneManager : Window
     {
-        public PlanaManager()
+        public PlaneManager()
         {
             InitializeComponent();
         }
